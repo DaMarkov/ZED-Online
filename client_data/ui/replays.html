@@ -1,0 +1,46 @@
+<h1>Open Replay</h1>
+
+<div style="width: 48em;">
+
+
+<style>
+      select { display:block; width: 28em; height: 20em; }
+      option > code { color:red;
+                      display:inline-block;
+                      border:1px solid #DCB;
+                      width:1.4em;
+                      margin-right:2px;
+                      text-align:center;
+                      }
+      option:current > code { border-color:transparent; }
+</style>
+
+
+
+<div style="margin-bottom: 2em; float: right;" #div_thumbnail>
+</div>
+
+<select type="tree" style="width: 360px" size="18" #replay_list>
+</select>
+
+<div style="width: 60%; padding-left: 20px; padding-top: 20px;">
+    <u>Meta data</u>
+    <div style="padding-left: 20px; margin-top:10px; margin-bottom:10px;">
+        <span style="width:13em;">Filename:&nbsp;</span><span #filename /><br />
+        <span style="width:13em;">Length:&nbsp;</span><span #length /><br />
+        <span style="width:13em;">Played on version&nbsp;</span><span #version />
+    </div>
+
+    <div style="margin-top: 2em;">
+        <input type="checkbox" value="1" #record>Record video<br>
+
+        <span>Filename:</span>
+        <input disabled type="text" value="Unnamed.mp4" #video-filename />
+        <button disabled class="bigbuttonNoMargin" style="margin-top: 0.5em; width: 80px; height: 17px;" #replay-browse>Browse</button>
+    </div>
+</div>
+
+<button class="bigbutton" style="margin-top: 3em;" #open_replay>Watch replay</button>
+<button class="bigbuttonNoMargin" style="margin-top: 3em" #main>Back</button>
+
+</div>

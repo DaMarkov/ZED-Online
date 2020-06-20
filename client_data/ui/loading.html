@@ -1,0 +1,39 @@
+<html>
+<head>
+<style>
+
+html
+{
+	background: linear-gradient(to bottom, #fff, gold);
+    flow: horizontal;
+    padding: 0em;
+    border-spacing: 0em;
+    margin: 0;
+}
+
+
+progress#bar
+{
+	height: 30dip;
+	width: 500dip;
+}
+
+</style>
+
+<script type="text/tiscript">
+
+function self.ready()
+{
+	$(#bar).state.busy = true;
+}
+
+</script>
+
+</head>
+<body>
+	<div style="margin-top:20em; text-align:center;" #divbar>
+		Loading game data ...<br/>
+		<progress #bar />
+	</div>
+</body>
+</html>

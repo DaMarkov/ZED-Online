@@ -1,0 +1,107 @@
+<h1>Local Multiplayer</h1>
+
+<div style="width: 40em;">
+
+<style>
+
+select
+{ 
+    display:block;
+	flow: table;
+	height:max-content;
+	max-height:200dip;/*max-content*/
+	width:400dip;
+    padding:0;
+    border-collapse:collapse;
+    border:1dip solid grey;
+}
+select option { flow:table-row; }
+select option span { border:1dip solid grey; padding:4dip 8dip; }
+select option:current span:last-child { background:green; }
+select option span:nth-child(2)
+{ 
+    width:*;
+	overflow-x:hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+}
+select option span:nth-child(3)
+{ 
+    width:7em;
+	overflow-x:hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+} 
+
+progress
+{
+	height: 30dip;
+	width: 500dip;
+}
+
+</style>
+
+	Your network name: <span #network_name></span><br/>
+
+	<div style="margin-top:1em; margin-left:2em; margin-bottom:1em; visibility: none;" #div_wait1>
+		Network interface 1: <span #network_desc1></span><br/>
+		<!--Your network IP address: <span #network_ip1></span><br/>
+		Your network IP subnet mask: <span #network_mask1></span><br/>-->
+        <div #div_progress1>
+		    Searching local network ...<br/>
+		    <progress value="0" max="1" #bar1 />
+        </div>
+	</div>
+
+	<div style="margin-top:1em; margin-left:2em; margin-bottom:1em; visibility: none;" #div_wait2>
+		Network interface 2: <span #network_desc2></span><br/>
+		<!--Your network IP address: <span #network_ip2></span><br/>
+		Your network IP subnet mask: <span #network_mask2></span><br/>-->
+        <div #div_progress2>
+            Searching local network ...<br />
+            <progress value="0" max="1" #bar2 />
+        </div>
+	</div>
+
+	<div style="margin-top:1em; margin-left:2em; margin-bottom:1em; visibility: none;" #div_wait3>
+		Network interface 3: <span #network_desc3></span><br/>
+		<!--Your network IP address: <span #network_ip3></span><br/>
+		Your network IP subnet mask: <span #network_mask3></span><br/>-->
+        <div #div_progress3>
+		    Searching local network ...<br/>
+		    <progress value="0" max="1" #bar3 />
+        </div>
+	</div>
+
+	<div style="margin-top:1em; margin-left:2em; margin-bottom:1em; visibility: none;" #div_wait4>
+		Network interface 4: <span #network_desc4></span><br/>
+		<!--Your network IP address: <span #network_ip4></span><br/>
+		Your network IP subnet mask: <span #network_mask4></span><br/>-->
+        <div #div_progress4>
+		    Searching local network ...<br/>
+		    <progress value="0" max="1" #bar4 />
+        </div>
+	</div>
+
+	<div style="margin-top:0em; margin-bottom:0em;" #div_online>
+		Game server list
+		<select|list #serverlist>
+		</select>
+
+		Network device list
+		<select|list #devicelist>
+		</select>
+
+		<div style="margin-top:2em;">
+			<button class="bigbutton" #create_game>Create game</button>
+			<button class="bigbutton" #join_game>Join game</button>
+			<div style="margin-top:1em;">
+				<button class="bigbutton" #direct_connection>Direct connection</button>
+			</div>
+		</div>
+	</div>
+
+
+	<button class="bigbuttonNoMargin" #main>Cancel</button>
+
+</div>

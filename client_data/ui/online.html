@@ -1,0 +1,86 @@
+<h1>Online Play</h1>
+
+<div style="width: 40em;">
+
+<style>
+
+select
+{ 
+    display:block;
+	flow: table;
+	height:max-content;
+	width:400dip;
+    padding:0; 
+    border-collapse:collapse;
+    border:0dip solid grey;
+}
+select option { flow:table-row; }
+select option span { border:0dip solid grey; padding:4dip 8dip; }
+select option:current span:nth-child(3) { background:green; }
+select option span:nth-child(2)
+{ 
+    width:*;
+	overflow-x:hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+}
+select option span:nth-child(3)
+{ 
+    width:3.5em;
+	overflow-x:hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+} 
+
+</style>
+
+	<div style="margin-top:2em; margin-left:2em; margin-bottom:1em;" #div_wait>
+		Connecting to gateway ...<br/>
+		<progress #bar />
+	</div>
+
+    <div style="margin-top:0em; margin-bottom:0em; visibility: none;" #div_noserver>
+        <span #serverlist_message></span><br />
+
+        <button class="bigbutton" #create_game>Create game</button>
+        <button class="bigbutton" #transfer_maps>Transfer maps</button>
+        <button class="bigbutton" #direct_connection>Direct connection</button>
+    </div>
+
+	<div style="margin-top:0em; margin-bottom:0em; visibility: none;" #div_online>
+		<select|list #serverlist>
+		</select>
+
+		<div style="margin-top:2em;">
+			<button class="bigbutton" #create_game>Create server</button>
+			<button class="bigbutton" #join_game>Join server</button>
+            <button class="bigbutton" #transfer_maps>Transfer maps</button>
+			<div style="margin-top:1em;">
+				<button class="bigbutton" #direct_connection>Direct connection</button>
+			</div>
+		</div>
+	</div>
+
+    <div style="margin-top:0em; margin-bottom:0em; visibility: none;" #div_online_chat>
+        <div style="margin-top:2.5em; margin-bottom:0em; float: right;">
+            Players online:
+            <select|list style="margin-top:1em; margin-bottom:1em; width: max-content; height:max-content;" size="180" #gateway-online-list>
+            </select>
+        </div>
+        <textarea style="margin-top: 3em" cols="44" rows="12" spellcheck="no" readonly #gateway-chat></textarea>
+        <br />
+        <input type="text" value="" maxlength="256" size="44" spellcheck="yes" #gateway-chat-message />
+    </div>
+
+	<div style="margin-top:0em; margin-bottom:0em; visibility: none;" #div_offline>
+		Could not connect to server :-(<br>
+		Please check your internet connection and try again later.
+
+		<button class="bigbutton" #create_game>Create server anyway</button>
+		<button class="bigbutton" #direct_connection>Join server anyway</button>
+	</div>
+
+
+	<button style="margin-top:1em; margin-bottom:0em;" class="bigbuttonNoMargin" #main>Cancel</button>
+
+</div>

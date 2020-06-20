@@ -1,0 +1,162 @@
+<style>
+option > code
+{
+    color:red;
+    display:inline-block;
+    border:1px solid #DCB;
+    width:1.4em;
+    margin-right:2px;
+    text-align:center;
+}
+option:current > code { border-color:transparent; }
+</style>
+
+
+<table><tr><td width="50%">
+<h1>Create Game</h1>
+<div style="margin-bottom: 2em;" #div_name>
+	<span>Name of the game:</span>
+	<input type="text" value="Unnamed Battlefield" #name/>
+</div>
+
+<select style="display:block; width: 360px; height: 20em;" type="tree" size="18" #map_list>
+
+    <option value="0">
+        <caption>2 Players</caption>
+
+    <option value="0">
+        <caption>Desert</caption>
+        <option value="2_desert_1"><code>2D</code>2 Desert - Map 1</option>
+    </option>
+
+    <option value="0">
+        <caption>Volcanic</caption>
+        <option value="2_volcanic_1"><code>2V</code>2 Volcanic - Map 1</option>
+    </option>
+
+    <option value="0">
+        <caption>Arctic</caption>
+    <option value="2_arctic_1"><code>2A</code>2 Arctic - Map 1</option>
+    </option>
+
+    <option value="0">
+        <caption>Jungle</caption>
+        <option value="2_jungle_1"><code>2A</code>2 Jungle - Map 1</option>
+    </option>
+
+
+    <option value="0">
+      <caption>City</caption>
+      <option value="2_city_1"><code>2C</code>2 City - Map 1</option>
+      <option value="2_city_2"><code>2C</code>2 City - Map 2</option>
+    </option>
+    </option>
+
+
+    <option value="0">
+        <caption>3 Players</caption>
+
+    <option value="0">
+        <caption>Desert</caption>
+        <option value="3_desert_1"><code>3D</code>3 Desert - Map 1</option>
+        <option value="3_desert_2"><code>3D</code>3 Desert - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>Volcanic</caption>
+        <option value="3_volcanic_1"><code>3V</code>3 Volcanic - Map 1</option>
+        <option value="3_volcanic_2"><code>3V</code>3 Volcanic - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>Arctic</caption>
+        <option value="3_arctic_1"><code>3A</code>3 Arctic - Map 1</option>
+        <option value="3_arctic_2"><code>3A</code>3 Arctic - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>Jungle</caption>
+        <option value="3_jungle_1"><code>3J</code>3 Jungle - Map 1</option>
+        <option value="3_jungle_2"><code>3J</code>3 Jungle - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>City</caption>
+        <option value="3_city_1"><code>3C</code>3 City - Map 1</option>
+        <option value="3_city_2"><code>3C</code>3 City - Map 2</option>
+    </option>
+
+    </option>
+
+
+    <option value="0">
+        <caption>4 Players</caption>
+
+    <option value="0">
+        <caption>Desert</caption>
+        <option value="4_desert_1"><code>4D</code>4 Desert - Map 1</option>
+        <option value="4_desert_2"><code>4D</code>4 Desert - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>Volcanic</caption>
+        <option value="4_volcanic_1"><code>4V</code>4 Volcanic - Map 1</option>
+        <option value="4_volcanic_2"><code>4V</code>4 Volcanic - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>Arctic</caption>
+        <option value="4_arctic_1"><code>4A</code>4 Arctic - Map 1</option>
+        <option value="4_arctic_2"><code>4A</code>4 Arctic - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>Jungle</caption>
+        <option value="4_jungle_1"><code>4J</code>4 Jungle - Map 1</option>
+        <option value="4_jungle_2"><code>4J</code>4 Jungle - Map 2</option>
+    </option>
+
+    <option value="0">
+        <caption>City</caption>
+        <option value="4_city_1"><code>4C</code>4 City - Map 1</option>
+        <option value="4_city_2"><code>4C</code>4 City - Map 2</option>
+    </option>
+
+    </option>
+</select>
+
+
+<button class="bigbutton" style="margin-top: 2.5em;" #create_final>Create game</button>
+<button class="bigbuttonNoMargin" style="margin-top: 2em" #back_create_game>Back</button>
+
+
+<div style="width: 60%; padding-left: 20px; padding-top: 20px;">
+    <u>Additional options</u><br /><br />
+    Game mode<br />
+    <select style="width: 130px; margin-bottom: 0.8em" novalue="Select game mode" #gamemode>
+        <option value="0" selected>Deathmatch</option>
+        <option value="1">Team Deathmatch</option>
+        <option value="2">Cooperative</option>
+    </select><br />
+
+    Desired team<br />
+    <select style="margin-bottom: 0.8em height: 2em; width: 70px;" #desired-team>
+        <option value="0">Neutral</option>
+        <option value="1" selected>Red</option>
+        <option value="2">Blue</option>
+        <option value="3">Green</option>
+        <option value="4">Yellow</option>
+    </select><br />
+
+    Game speed<br />
+    <input type="hslider" min="0" max="6" value="3" step="1" #game-speed />
+    <b id="game-speed-buddy">Normal</b>
+</div>
+</td>
+
+
+
+<td width="40%" valign="top">
+    <div style="margin-left: 1em; margin-top: 5em; margin-bottom: 2em;" #div_thumbnail>
+    </div>
+</td></tr></table>

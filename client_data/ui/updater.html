@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>ZED Online Updater</title>
+<style>
+
+html
+{
+	background: linear-gradient(to bottom, #fff, red);
+    flow: horizontal;
+    padding: 0em;
+    border-spacing: 0em;
+    margin: 0;
+}
+
+
+a
+{
+	display: inline-block;
+	margin: 20px auto;
+	width: 260px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 20px 30px;
+	margin: 0px 0px 0px 0px;
+}
+
+a.button
+{
+	color: rgba(30, 22, 54, 0.6);
+	box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button:hover
+{
+	color: rgba(0, 0, 200, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 5px inset;
+}
+
+
+
+.bigbutton
+{
+    width: 150px;
+    height: 25px;
+    margin: 0px 90px 0px 0px;
+    padding: 5px 0px 5px 0px;
+    color: rgb(0, 0, 0);
+}
+
+.bigbutton:hover
+{
+    color: rgb(128, 0, 0);
+}
+
+.bigbuttonNoMargin
+{
+    width: 150px;
+    height: 25px;
+    margin: 0px 0px 5px 0px;
+    padding: 5px 0px 5px 0px;
+    color: rgb(0, 0, 0);
+}
+
+.bigbuttonNoMargin:hover
+{
+    color: rgb(128, 0, 0);
+}
+
+progress#bar
+{
+	height: 30dip;
+	width: 500dip;
+}
+
+
+section
+{
+	size:*; 
+	flow:grid(1 1 1,
+              2 5 3,
+              2 5 4);
+    border-spacing:0dip; /* defines spacing between cells */
+}
+      
+section > * {   }
+      
+section > header  { height: 0.1em; }
+section > nav  {  width:0.5em; }
+section > aside  { width:25em; }
+section > main  {  width: *; height: 20em }
+section > footer  { width: 25em; height: 15em; }
+      
+</style>
+
+
+<script type="text/tiscript">
+const sec = $(#mainmenu);
+
+
+function self.ready()
+{
+	$(.version).value = view.getVersion();
+
+	$(#bar).state.busy = true;
+}
+
+</script>
+
+
+</head>
+<body>
+	<section>
+		<header></header>
+		<nav></nav>
+		<aside>
+		</aside>
+		<footer>
+			<a class="button">
+				<b>ZED Online</b><br>
+				Version <span class="version"></span><br>
+				<br>
+				Powered by ZOD Engine (2017-11-19)<br>
+				Ported to SDL2<br>
+				<br>
+				This application uses Sciter Engine<br>
+				Copyright Terra Informatica Software,&nbsp;Inc.
+			</a>
+		</footer>
+		<main>
+			<section #mainmenu>
+
+			<h1 #title>Downloading update</h1>
+
+			<div style="margin-bottom:10em;">
+				<span #message>Connecting to server</span>...<br/><br/>
+				<progress #bar />
+			</div>
+
+			</section>
+			<div style="margin-top: 1*;">
+				A remake of the 1996 classic
+			</div>
+		</main>
+	</section>
+</body>
+</html>

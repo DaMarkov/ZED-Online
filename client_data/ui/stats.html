@@ -1,0 +1,477 @@
+<h1>Statistics</h1>
+
+<div style="width:47em; height:38.3em; visibility: visible;" #panel_stats_general>
+	<table width="100%" style="font-size:15pt;">
+		<tr>
+			<td width="14em">
+                <div style="margin-bottom:2em; text-align: right; width: 14em;">
+                    Name: <span #username></span><br />
+                    Games played: <span #games></span><br />
+                    Time played: <span #time></span><br />
+                    <br />
+                    Forts conquered: <span #conquered></span><br />
+                    Teams eliminated: <span #eliminated></span><br />
+                    Forts destroyed: <span #destroyed></span><br />
+                    <br />
+                    Buildings destroyed: <span #bu_destroyed></span><br />
+                    Buildings repaired: <span #bu_repaired></span><br />
+                    Bridges destroyed: <span #br_destroyed></span><br />
+                    Bridges repaired: <span #br_repaired></span><br />
+
+                    Units repaired: <span #units_repaired></span><br />
+                    Units sniped: <span #units_sniped></span><br />
+                    Flags conquered: <span #flags_conquered></span><br />
+                    <br />
+                    Units selected: <span #units></span><br />
+                    Commands issued: <span #commands></span><br />
+                    <br /><br />
+                    Rank: <span #rank></span><br />
+                </div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
+<div style="width:55em; visibility: none;" #panel_stats_units>
+<table width="100%" style="font-size:13pt;">
+<tr>
+<td>
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/portraits/grunt_red/SHEADBI2_0002.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #grunt_b></span><br/>
+		Destroyed: <span #grunt_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/portraits/psycho_red/SHEADBI3_0002.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #psycho_b></span><br/>
+		Destroyed: <span #psycho_d></span>
+	</div>
+</div>
+
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/portraits/tough_red/SHEADBI0_0002.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #tough_b></span><br/>
+		Destroyed: <span #tough_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/portraits/sniper_red/SHEADBI4_0002.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #sniper_b></span><br/>
+		Destroyed: <span #sniper_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/portraits/pyro_red/SHEADBI1_0002.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #pyro_b></span><br/>
+		Destroyed: <span #pyro_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:0em;">
+	<div style="float:left;">
+		<img src="../assets/hud/portraits/laser_red/SHEADBI1_0002.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #laser_b></span><br/>
+		Destroyed: <span #laser_d></span>
+	</div>
+</div>
+
+</td>
+
+<td>
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_jeep_red.png"/>
+	</div>
+	<div style="padding-top:0.2em;">
+		Produced: <span #jeep_b></span><br/>
+		Destroyed: <span #jeep_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_light_red.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #light_b></span><br/>
+		Destroyed: <span #light_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_medium_red.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #medium_b></span><br/>
+		Destroyed: <span #medium_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_heavy_red.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #heavy_b></span><br/>
+		Destroyed: <span #heavy_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_missile_launcher_red.png"/>
+	</div>
+	<div style="padding-top:0.5em;">
+		Produced: <span #missile_b></span><br/>
+		Destroyed: <span #missile_d></span>
+	</div>
+</div>
+</td>
+
+<td>
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_apc_red.png"/>
+	</div>
+	<div style="padding-top:0.3em;">
+		Produced: <span #apc_b></span><br/>
+		Destroyed: <span #apc_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_crane_red.png"/>
+	</div>
+	<div style="padding-top:0.4em;">
+		Produced: <span #crane_b></span><br/>
+		Destroyed: <span #crane_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_gatling_red.png"/>
+	</div>
+	<div style="padding-top:0.2em;">
+		Produced: <span #gatling_b></span><br/>
+		Destroyed: <span #gatling_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_gun_red.png"/>
+	</div>
+	<div style="padding-top:0.0em;">
+		Produced: <span #gun_b></span><br/>
+		Destroyed: <span #gun_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_howitzer_red.png"/>
+	</div>
+	<div style="padding-top:0.2em;">
+		Produced: <span #howitzer_b></span><br/>
+		Destroyed: <span #howitzer_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:2em;">
+	<div style="float:left;">
+		<img src="../assets/hud/icon_missile_cannon_red.png"/>
+	</div>
+	<div style="padding-top:0.3em;">
+		Produced: <span #rocket_b></span><br/>
+		Destroyed: <span #rocket_d></span>
+	</div>
+</div>
+
+<div style="margin-bottom:1em; visibility: none">
+	<div style="float:left; visibility: none">
+		<img />
+	</div>
+	<div style="padding-top:0.1em;">
+		Produced: <span #firetruck_b></span><br/>
+		Destroyed: <span #firetruck_d></span>
+	</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+
+
+
+
+<div style="width:52em; visibility: none;" #panel_stats_times>
+    <table width="100%" style="font-size:13pt;">
+        <tr>
+            <td width="10em">
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_1>Level 1:</a> <span #time_1></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_2>Level 2:</a> <span #time_2></span>
+                    </div>
+                </div>
+
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_3>Level 3:</a> <span #time_3></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_4>Level 4:</a> <span #time_4></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_5>Level 5:</a> <span #time_5></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_6>Level 6:</a> <span #time_6></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_7>Level 7:</a> <span #time_7></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_8>Level 8:</a> <span #time_8></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_9>Level 9:</a> <span #time_9></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_10>Level 10:</a> <span #time_10></span>
+                    </div>
+                </div>
+
+            </td>
+
+            <td>
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_11>Level 11:</a> <span #time_11></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_12>Level 12:</a> <span #time_12></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_13>Level 13:</a> <span #time_13></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_14>Level 14:</a> <span #time_14></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_15>Level 15:</a> <span #time_15></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_16>Level 16:</a> <span #time_16></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_17>Level 17:</a> <span #time_17></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_18>Level 18:</a> <span #time_18></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_19>Level 19:</a> <span #time_19></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:2em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_20>Level 20:</a> <span #time_20></span>
+                    </div>
+                </div>
+
+            </td>
+
+            <td>
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_21>Level 21:</a> <span #time_21></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_22>Level 22:</a> <span #time_22></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_23>Level 23:</a> <span #time_23></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_24>Level 24:</a> <span #time_24></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_25>Level 25:</a> <span #time_25></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_26>Level 26:</a> <span #time_26></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_27>Level 27:</a> <span #time_27></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_28>Level 28:</a> <span #time_28></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_29>Level 29:</a> <span #time_29></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_30>Level 30:</a> <span #time_30></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_31>Level 31:</a> <span #time_31></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_32>Level 32:</a> <span #time_32></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_33>Level 33:</a> <span #time_33></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_34>Level 34:</a> <span #time_34></span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:0em;">
+                    <div style="float:left;">
+                        <a href="#" #highscore_35>Level 35:</a> <span #time_35></span>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div style="width:52em; visibility: none;" #panel_highscore>
+    <h1>Highscore</h1>
+
+    <div style="font-size:13pt;" #highscore_field>
+    </div>
+</div>
+
+
+<br/><br/><br/>
+
+<div>
+    <button class="bigbuttonNoMargin" #main>Back</button>
+    <button class="bigbuttonNoMargin" #stats_general>General statistics</button>
+    <button class="bigbuttonNoMargin" #stats_units>Unit statistics</button>
+    <button class="bigbuttonNoMargin" #stats_times>Single player times</button>
+</div>

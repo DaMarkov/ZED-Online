@@ -1,0 +1,45 @@
+<h1>Transfer Maps</h1>
+
+<div style="width: 48em;">
+
+
+    <style>
+        select {
+            display: block;
+            width: 28em;
+            height: 20em;
+        }
+
+        option > code {
+            color: red;
+            display: inline-block;
+            border: 1px solid #DCB;
+            width: 1.4em;
+            margin-right: 2px;
+            text-align: center;
+        }
+
+        option:current > code {
+            border-color: transparent;
+        }
+    </style>
+
+
+    <div style="margin-bottom: 2em; float: right;">
+        Maps stored on this system
+        <select type="tree" style="width: 360px" size="18" #map_list>            
+        </select>
+
+    </div>
+
+    Available online maps
+    <select type="tree" style="width: 360px" size="18" #server_map_list>
+    </select>
+
+    
+
+    <button class="bigbutton" style="margin-top: 3em;" #download_map>Download map</button>
+    <button class="bigbutton" style="margin-top: 3em;" #upload_map>Upload map</button>
+    <button class="bigbuttonNoMargin" style="margin-top: 3em" #back_create_game>Back</button>
+
+</div>

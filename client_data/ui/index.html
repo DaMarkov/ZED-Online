@@ -1,0 +1,1948 @@
+﻿<html>
+<head>
+<title>ZED Online</title>
+<style>
+
+html
+{
+	background: linear-gradient(to bottom, #fff, gold);
+    flow: horizontal;
+    padding: 0em;
+    border-spacing: 0em;
+    margin: 0;
+    cursor: url(win_cursor.png) 0 0;
+}
+
+input
+{
+    cursor: url(win_cursor.png) 0 0;
+}
+
+.slider
+{
+    cursor: url(win_cursor.png) 0 0;
+}
+
+a.button
+{
+    display: inline-block;
+    margin: 20px auto;
+    width: 260px;
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 20px 30px;
+    margin: 0px 0px 0px 0px;
+    cursor: url(win_cursor.png) 0 0;
+    color: rgba(30, 22, 54, 0.6);
+    box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button:hover
+{
+	color: rgba(200, 0, 0, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 5px inset;
+}
+
+
+
+.bigbutton
+{
+    width: 150px;
+    height: 25px;
+    margin: 0px 90px 0px 0px;
+    padding: 5px 0px 5px 0px;
+    color: rgb(0, 0, 0);
+    cursor: url(win_cursor.png) 0 0;
+}
+
+.bigbutton:hover
+{
+    color: rgb(128, 0, 0);
+}
+
+.bigbuttonNoMargin
+{
+    width: 150px;
+    height: 25px;
+    margin: 0px 0px 5px 0px;
+    padding: 5px 0px 5px 0px;
+    color: rgb(0, 0, 0);
+    cursor: url(win_cursor.png) 0 0;
+}
+
+.bigbuttonNoMargin:hover
+{
+    color: rgb(128, 0, 0);
+}
+
+progress#bar
+{
+	height: 20dip;
+	width: 300dip;
+}
+
+
+section
+{
+	size:*; 
+	flow:grid(1 1 1,
+              2 5 3,
+              2 5 4);
+    border-spacing:0dip; /* defines spacing between cells */
+}
+      
+section > * {   }
+      
+section > header  { height: 0.1em; }
+section > nav  {  width:0.5em; }
+section > aside  { width:25em; }
+section > main  {  width: *; height: 20em }
+section > footer  { width: 25em; height: 15em; }
+
+
+
+.lobbyClass
+{ 
+    display:block;
+    flow: table;
+    height:max-content;
+    width:400dip;
+    padding:0; 
+    border-collapse:collapse;
+    border:1dip solid grey;
+}
+.lobbyClass option { flow:table-row; }
+.lobbyClass option span { border:1dip solid grey; padding:4dip 8dip; }
+.lobbyClass option:current span:last-child { background:green; }
+.lobbyClass option span:nth-child(2)
+{ 
+    width:*;
+    overflow-x:hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+.lobbyClass option span:nth-child(3)
+{ 
+    width:3.5em;
+    overflow-x:hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+.lobbyClass option span:nth-child(4)
+{ 
+    width:5.0em;
+    overflow-x:hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+
+button[type=checkbox]
+{ 
+    style-set: std-checkbox-base;
+    background-image:url(stock:frame); 
+    background-size:16dip 16dip; 
+        background-position: 0 50%; 
+        background-repeat:no-repeat;
+        foreground:none;
+        stroke:red;
+        stroke-width:1dip;
+        padding: 1dip 1dip 1dip 20dip;
+}
+button[type=checkbox]:checked
+{
+        foreground-image:url(stock:checkmark); 
+        foreground-size:9dip 9dip; 
+        foreground-position: 4dip 50%; 
+        foreground-repeat: no-repeat; 
+}
+      
+button[type=checkbox]:hover
+{
+    stroke:#0af;
+}
+      
+</style>
+
+
+<script type="text/tiscript">
+    const sec = $(#mainmenu);
+
+    var online = 1;
+
+
+    function self.ready()
+    {
+        $(.version).value = view.getVersion();
+        view.registerLoadFrame(loadFrame);
+        view.registerGoOnline(goOnline);
+        view.registerHighscore(highscore);
+        $(#username).value = view.getUsername();
+        $(#gateway).value  = view.getGatewayName();
+        $(#rank).value     = view.getStatsRank();
+
+        if (!view.isLoggedIn())
+        {
+            loadFrame("login");
+            $(#main).state.disabled = true;
+        }
+
+        if (view.getOS() == "Linux")
+        {
+            $(#lan).state.disabled = true;
+            $(#editor).state.disabled = true;
+        }
+    }
+
+
+    function goOnline()
+    {
+        loadFrame("online");
+
+        $(#bar).state.busy = true;
+        view.searchForGames(1);
+    }
+
+
+    function loadFrame(frameToLoad)
+    {
+        sec.load(frameToLoad + ".html");
+
+        if (frameToLoad == "main")
+        {
+            view.searchForGames(0);
+            $(#username).value = view.getUsername();
+            $(#gateway).value  = view.getGatewayName();
+            $(#rank).value     = view.getStatsRank();
+
+            if (view.getOS() == "Linux")
+            {
+                $(#lan).state.disabled = true;
+                $(#editor).state.disabled = true;
+            }
+        }
+    }
+
+    function pointsToString(points)
+    {
+        if (points == 0)
+            return "Keep on playing";
+        else if (points == 1)
+            return "Great!";
+        else if (points == 2)
+            return "Fantastic!!";
+        else if (points == 3)
+            return "Perfect!!!";
+        return "";
+    }
+
+    self.on("click", "a[href^=http]", function(evt)
+    {
+        var href = this.attributes["href"];
+        Sciter.launch(href);//will open the url in default browser
+        return true;//consume the event
+    });
+
+
+    event click $(button#main)
+    {
+        loadFrame("main");
+    }
+
+    event click $(button#singleplayer)
+    {
+        loadFrame("single_player");
+        var level = view.getNumLevelCompleted();
+
+        if (level >= 20)
+        {
+            $(#campaign).style#visibility  = "visible";
+            $(#expansion).style#visibility = "visible";
+        }
+        if (level >= 35)
+            $(#beta).style#visibility = "visible";
+
+        for (var i = 1; i <= level; i++)
+        {
+            $(#start_level_{i}).value = $(#start_level_{i}).html + " ✔";
+            $(#start_level_{i+1}).state.disabled = false;
+        }
+    }
+
+    event click $(button#options)
+    {
+        loadFrame("options");
+
+        var lang  = view.getLanguage();
+        var musicIngame = view.getMusicIngame();
+        var musicMenu = view.getMusicMenu();
+        var sound = view.getSound();
+        var fullscreen = view.getFullscreen();
+        var screen   = view.getScreenMode();
+        var renderer = view.getRenderer();
+        var controls = view.getControls();
+        var keyscroll   = view.getKeyScrollSpeed();
+        var mousescroll = view.getMouseScrollSpeed();
+        var dragscroll  = view.getDragScrollSpeed();
+        var sensitivity = view.getMouseSensitivity();
+        var musicvolume = view.getMusicVolume();
+        var soundvolume = view.getSoundVolume();
+        var resolution  = view.getResolution();
+        var resolutionWidth  = view.getResolutionWidth();
+        var resolutionHeight = view.getResolutionHeight();
+        var cutscenes   = view.getCutscenes();
+
+        $(#language).$(option[value="{lang}"]).execCommand("set-current");
+        $(#music-ingame).checked = musicIngame;
+        $(#music-menu).checked   = musicMenu;
+        $(#sounds).checked = sound;
+        $(#fullscreen).checked = fullscreen;
+        $(#screenmode).$(option[value="{screen}"]).execCommand("set-current");
+        $(#renderer).$(option[value="{renderer}"]).execCommand("set-current");
+        $(#controls).$(option[value="{controls}"]).execCommand("set-current");
+
+        if (resolution != "640 480" && resolution != "800 600" && resolution != "1024 768" && resolution != "1440 1080")
+            $(#resolution).options.$append(<option value="{resolution}">{resolutionWidth}x{resolutionHeight}</option>);
+
+        $(#resolution).$(option[value="{resolution}"]).execCommand("set-current");
+
+        var cuts = [];
+        if (cutscenes%2 == 1)
+            cuts.push(1);
+        cutscenes /= 2;
+
+        if (cutscenes%2 == 1)
+            cuts.push(2);
+        cutscenes /= 2;
+
+        if (cutscenes%2 == 1)
+            cuts.push(4);
+        cutscenes /= 2;
+
+        if (cutscenes%2 == 1)
+            cuts.push(8);
+        cutscenes /= 2;
+
+        if (cutscenes%2 == 1)
+            cuts.push(16);
+        cutscenes /= 2;
+
+        $(#cutscenes).value = cuts;
+
+        $(#keyscroll).value   = keyscroll;
+        $(#mousescroll).value = mousescroll;
+        $(#dragscroll).value  = dragscroll;
+        $(#sensitivity).value = sensitivity;
+        $(#musicvolume).value = musicvolume;
+        $(#soundvolume).value = soundvolume;
+
+        $(#zoom).value = view.getZoom();
+        $(#zoom-control).value = view.getZoomControls();
+
+        if (renderer != 1)
+        {
+            $(#zoom).state.disabled = true;
+            $(#zoom-control).state.disabled = true;
+        }
+
+        addHotkeyOptions($(#hk_fullscreen), $(#hk_fullscreen_mod));
+        addHotkeyOptions($(#hk_screenshot), $(#hk_screenshot_mod));
+        addHotkeyOptions($(#hk_renderer),   $(#hk_renderer_mod));
+        addHotkeyOptions($(#hk_scaling),    $(#hk_scaling_mod));
+        addHotkeyOptions($(#hk_fps),        $(#hk_fps_mod));
+        addHotkeyOptions($(#hk_chat),       $(#hk_chat_mod));
+        addHotkeyOptions($(#hk_change_color),       $(#hk_change_color_mod));
+        addHotkeyOptions($(#hk_change_enemy_color), $(#hk_change_enemy_color_mod));
+        addHotkeyOptions($(#hk_hold_position), $(#hk_hold_position_mod));
+        addHotkeyOptions($(#hk_patrol_move),   $(#hk_patrol_move_mod));
+        addHotkeyOptions($(#hk_pause),      $(#hk_pause_mod));
+        addHotkeyOptions($(#hk_boss),       $(#hk_boss_mod));
+        addHotkeyOptions($(#hk_selectall),  $(#hk_selectall_mod));
+        addHotkeyOptions($(#hk_gotofort),   $(#hk_gotofort_mod));
+        addHotkeyOptions($(#hk_surrender),  $(#hk_surrender_mod));
+        addHotkeyOptions($(#hk_overlay),    $(#hk_overlay_mod));
+        addHotkeyOptions($(#hk_exit),       $(#hk_exit_mod));
+        addHotkeyOptions($(#hk_cancel),     $(#hk_cancel_mod));
+
+        addHotkeyOptions($(#grunt),      $(#grunt_mod));
+        addHotkeyOptions($(#psycho),     $(#psycho_mod));
+        addHotkeyOptions($(#tough),      $(#tough_mod));
+        addHotkeyOptions($(#sniper),     $(#sniper_mod));
+        addHotkeyOptions($(#pyro),       $(#pyro_mod));
+        addHotkeyOptions($(#laser),      $(#laser_mod));
+        addHotkeyOptions($(#jeep),       $(#jeep_mod));
+        addHotkeyOptions($(#light),      $(#light_mod));
+        addHotkeyOptions($(#medium),     $(#medium_mod));
+        addHotkeyOptions($(#heavy),      $(#heavy_mod));
+        addHotkeyOptions($(#mo_rocket),  $(#mo_rocket_mod));
+        addHotkeyOptions($(#apc),        $(#apc_mod));
+        addHotkeyOptions($(#crane),      $(#crane_mod));
+        addHotkeyOptions($(#gatling),    $(#gatling_mod));
+        addHotkeyOptions($(#gun),        $(#gun_mod));
+        addHotkeyOptions($(#howitzer),   $(#howitzer_mod));
+        addHotkeyOptions($(#rocket),     $(#rocket_mod));
+
+        addDefaultOptions($(#default_fort_1), 0, 0);
+        addDefaultOptions($(#default_fort_2), 0, 1);
+        addDefaultOptions($(#default_fort_3), 0, 2);
+        addDefaultOptions($(#default_fort_4), 0, 3);
+        addDefaultOptions($(#default_fort_5), 0, 4);
+
+        addDefaultOptions($(#default_robot_1), 1, 0);
+        addDefaultOptions($(#default_robot_2), 1, 1);
+        addDefaultOptions($(#default_robot_3), 1, 2);
+        addDefaultOptions($(#default_robot_4), 1, 3);
+        addDefaultOptions($(#default_robot_5), 1, 4);
+        addDefaultOptions($(#default_robot_6), 1, 5);
+
+        addDefaultOptions($(#default_vehicle_1), 2, 0);
+        addDefaultOptions($(#default_vehicle_2), 2, 1);
+        addDefaultOptions($(#default_vehicle_3), 2, 2);
+        addDefaultOptions($(#default_vehicle_4), 2, 3);
+        addDefaultOptions($(#default_vehicle_5), 2, 4);
+        addDefaultOptions($(#default_vehicle_6), 2, 5);
+
+        $(#select_units).$(option[value="{view.getCustomControlsSelectUnits()}"]).execCommand("set-current");
+        $(#issue_comands).$(option[value="{view.getCustomControlsIssueCommand()}"]).execCommand("set-current");
+
+        $(#drag_scroll_mod).$(option[value="{view.getCustomControlsDragScroll_mod()}"]).execCommand("set-current");
+        $(#drag_scroll).$(option[value="{view.getCustomControlsDragScroll()}"]).execCommand("set-current");
+
+        $(#remove_selection_mod).$(option[value="{view.getCustomControlsRemoveSelection_mod()}"]).execCommand("set-current");
+        $(#remove_selection).$(option[value="{view.getCustomControlsRemoveSelection()}"]).execCommand("set-current");
+
+        $(#additive).$(option[value="{view.getCustomControlsAdditiveSelection()}"]).execCommand("set-current");
+        $(#add_waypoint).$(option[value="{view.getCustomControlsAdditiveWaypoint()}"]).execCommand("set-current");
+        $(#closest_unit).$(option[value="{view.getCustomControlsNearestOnly()}"]).execCommand("set-current");
+        $(#rally_point).$(option[value="{view.getCustomControlsRallyPoint()}"]).execCommand("set-current");
+
+        $(#custom_focus_camera).checked = view.getCustomControlsFocusCamera();
+        $(#exclude_cranes).checked = view.getCustomControlsNoBoxSelectForCrane();
+        $(#custom_clear_after_goto_event).checked = view.getCustomControlsClearSelectionIfNoLastEvent();
+
+        $(#save_group).$(option[value="{view.getCustomControlsSaveGroup()}"]).execCommand("set-current");
+        $(#load_group).$(option[value="{view.getCustomControlsLoadGroup()}"]).execCommand("set-current");
+
+        $(#hold_position_mod).$(option[value="{view.getCustomControlsHoldPosition_mod()}"]).execCommand("set-current");
+        $(#hold_position).$(option[value="{view.getCustomControlsHoldPosition()}"]).execCommand("set-current");
+
+        if ($(#controls).value != 3)
+            $(#configure_custom).state.disabled = true;
+        else
+            $(#configure_custom).state.disabled = false;
+    }
+
+    event click $(button#stats)
+    {
+        loadFrame("stats");
+
+        $(#username).value        = view.getUsername();
+        $(#time).value            = view.getStatsTimePlayed();
+        $(#games).value           = view.getStatsNumGames();
+        $(#conquered).value       = view.getStatsConquered();
+        $(#eliminated).value      = view.getStatsElimination();
+        $(#destroyed).value       = view.getStatsDestruction();
+        $(#bu_destroyed).value    = view.getStatsBuildingsDestroyed();
+        $(#bu_repaired).value     = view.getStatsBuildingsRepaired();
+        $(#br_destroyed).value    = view.getStatsBridgesDestroyed();
+        $(#br_repaired).value     = view.getStatsBridgesRepaired();
+        $(#units_repaired).value  = view.getStatsUnitsRepaired();
+        $(#units_sniped).value    = view.getStatsUnitsSniped();
+        $(#flags_conquered).value = view.getStatsFlagsConquered();
+        $(#units).value           = view.getStatsUnitsSelected();
+        $(#commands).value        = view.getStatsCommandsIssued();
+        $(#rank).value            = view.getStatsRank();
+
+        var points = view.getStatsPoints();
+        points %= 25;
+        if (points <= 5)
+            $(#rank).attributes["title"] = "Congratulations on your new rank";
+        else if (points < 20)
+            $(#rank).attributes["title"] = "Keep playing to earn the next rank";
+        else if (20 <= points && points <= 23)
+            $(#rank).attributes["title"] = "Your are close to the next rank!";
+        else if (points == 24)
+            $(#rank).attributes["title"] = "Your are very close to the next rank!!";
+
+
+        $(#time).attributes["title"]   = pointsToString(view.getStatsPointsFrom(0));
+        $(#games).attributes["title"]  = pointsToString(view.getStatsPointsFrom(1));
+        $(#conquered).attributes["title"]   = pointsToString(view.getStatsPointsFrom(2));
+        $(#eliminated).attributes["title"]  = pointsToString(view.getStatsPointsFrom(3));
+        $(#destroyed).attributes["title"]   = pointsToString(view.getStatsPointsFrom(4));
+        $(#bu_destroyed).attributes["title"]  = pointsToString(view.getStatsPointsFrom(5));
+        $(#bu_repaired).attributes["title"]   = pointsToString(view.getStatsPointsFrom(6));
+        $(#br_destroyed).attributes["title"]  = pointsToString(view.getStatsPointsFrom(7));
+        $(#br_repaired).attributes["title"]   = pointsToString(view.getStatsPointsFrom(8));
+        $(#units_repaired).attributes["title"]  = pointsToString(view.getStatsPointsFrom(9));
+        $(#units_sniped).attributes["title"]    = pointsToString(view.getStatsPointsFrom(10));
+        $(#units).attributes["title"]     = pointsToString(view.getStatsPointsFrom(11));
+        $(#commands).attributes["title"]  = pointsToString(view.getStatsPointsFrom(12));
+        $(#flags_conquered).attributes["title"]  = pointsToString(view.getStatsPointsFrom(49));
+
+
+        $(#grunt_b).value  = view.getStatsUnitsBuilt(0)/3;
+        $(#grunt_d).value  = view.getStatsUnitsDestroyed(0)/3;
+        $(#psycho_b).value = view.getStatsUnitsBuilt(1)/3;
+        $(#psycho_d).value = view.getStatsUnitsDestroyed(1)/3;
+        $(#tough_b).value  = view.getStatsUnitsBuilt(2)/2;
+        $(#tough_d).value  = view.getStatsUnitsDestroyed(2)/2;
+        $(#sniper_b).value = view.getStatsUnitsBuilt(3)/3;
+        $(#sniper_d).value = view.getStatsUnitsDestroyed(3)/3;
+        $(#pyro_b).value   = view.getStatsUnitsBuilt(4)/4;
+        $(#pyro_d).value   = view.getStatsUnitsDestroyed(4)/4;
+        $(#laser_b).value  = view.getStatsUnitsBuilt(5)/4;
+        $(#laser_d).value  = view.getStatsUnitsDestroyed(5)/4;
+
+        $(#jeep_b).value    = view.getStatsUnitsBuilt(6);
+        $(#jeep_d).value    = view.getStatsUnitsDestroyed(6);
+        $(#light_b).value   = view.getStatsUnitsBuilt(7);
+        $(#light_d).value   = view.getStatsUnitsDestroyed(7);
+        $(#medium_b).value  = view.getStatsUnitsBuilt(8);
+        $(#medium_d).value  = view.getStatsUnitsDestroyed(8);
+        $(#heavy_b).value   = view.getStatsUnitsBuilt(9);
+        $(#heavy_d).value   = view.getStatsUnitsDestroyed(9);
+        $(#missile_b).value = view.getStatsUnitsBuilt(10);
+        $(#missile_d).value = view.getStatsUnitsDestroyed(10);
+
+        $(#apc_b).value   = view.getStatsUnitsBuilt(11);
+        $(#apc_d).value   = view.getStatsUnitsDestroyed(11);
+        $(#crane_b).value = view.getStatsUnitsBuilt(12);
+        $(#crane_d).value = view.getStatsUnitsDestroyed(12);
+
+        $(#gatling_b).value  = view.getStatsUnitsBuilt(13);
+        $(#gatling_d).value  = view.getStatsUnitsDestroyed(13);
+        $(#gun_b).value      = view.getStatsUnitsBuilt(14);
+        $(#gun_d).value      = view.getStatsUnitsDestroyed(14);
+        $(#howitzer_b).value = view.getStatsUnitsBuilt(15);
+        $(#howitzer_d).value = view.getStatsUnitsDestroyed(15);
+        $(#rocket_b).value   = view.getStatsUnitsBuilt(16);
+        $(#rocket_d).value   = view.getStatsUnitsDestroyed(16);
+
+
+        $(#grunt_b).attributes["title"]  = pointsToString(view.getStatsPointsFrom(13));
+        $(#grunt_d).attributes["title"]  = pointsToString(view.getStatsPointsFrom(14));
+        $(#psycho_b).attributes["title"] = pointsToString(view.getStatsPointsFrom(15));
+        $(#psycho_d).attributes["title"] = pointsToString(view.getStatsPointsFrom(16));
+        $(#tough_b).attributes["title"]  = pointsToString(view.getStatsPointsFrom(17));
+        $(#tough_d).attributes["title"]  = pointsToString(view.getStatsPointsFrom(18));
+        $(#sniper_b).attributes["title"] = pointsToString(view.getStatsPointsFrom(19));
+        $(#sniper_d).attributes["title"] = pointsToString(view.getStatsPointsFrom(20));
+        $(#pyro_b).attributes["title"]   = pointsToString(view.getStatsPointsFrom(21));
+        $(#pyro_d).attributes["title"]   = pointsToString(view.getStatsPointsFrom(22));
+        $(#laser_b).attributes["title"]  = pointsToString(view.getStatsPointsFrom(23));
+        $(#laser_d).attributes["title"]  = pointsToString(view.getStatsPointsFrom(24));
+
+        $(#jeep_b).attributes["title"]    = pointsToString(view.getStatsPointsFrom(25));
+        $(#jeep_d).attributes["title"]    = pointsToString(view.getStatsPointsFrom(26));
+        $(#light_b).attributes["title"]   = pointsToString(view.getStatsPointsFrom(27));
+        $(#light_d).attributes["title"]   = pointsToString(view.getStatsPointsFrom(28));
+        $(#medium_b).attributes["title"]  = pointsToString(view.getStatsPointsFrom(29));
+        $(#medium_d).attributes["title"]  = pointsToString(view.getStatsPointsFrom(30));
+        $(#heavy_b).attributes["title"]   = pointsToString(view.getStatsPointsFrom(31));
+        $(#heavy_d).attributes["title"]   = pointsToString(view.getStatsPointsFrom(32));
+        $(#missile_b).attributes["title"] = pointsToString(view.getStatsPointsFrom(33));
+        $(#missile_d).attributes["title"] = pointsToString(view.getStatsPointsFrom(34));
+
+        $(#apc_b).attributes["title"]   = pointsToString(view.getStatsPointsFrom(35));
+        $(#apc_d).attributes["title"]   = pointsToString(view.getStatsPointsFrom(36));
+        $(#crane_b).attributes["title"] = pointsToString(view.getStatsPointsFrom(37));
+        $(#crane_d).attributes["title"] = pointsToString(view.getStatsPointsFrom(38));
+
+        $(#gatling_b).attributes["title"]  = pointsToString(view.getStatsPointsFrom(39));
+        $(#gatling_d).attributes["title"]  = pointsToString(view.getStatsPointsFrom(40));
+        $(#gun_b).attributes["title"]      = pointsToString(view.getStatsPointsFrom(41));
+        $(#gun_d).attributes["title"]      = pointsToString(view.getStatsPointsFrom(42));
+        $(#howitzer_b).attributes["title"] = pointsToString(view.getStatsPointsFrom(43));
+        $(#howitzer_d).attributes["title"] = pointsToString(view.getStatsPointsFrom(44));
+        $(#rocket_b).attributes["title"]   = pointsToString(view.getStatsPointsFrom(45));
+        $(#rocket_d).attributes["title"]   = pointsToString(view.getStatsPointsFrom(46));
+
+
+        $(#time_1).value  = view.getStatsLevelTime(1);
+        $(#time_2).value  = view.getStatsLevelTime(2);
+        $(#time_3).value  = view.getStatsLevelTime(3);
+        $(#time_4).value  = view.getStatsLevelTime(4);
+        $(#time_5).value  = view.getStatsLevelTime(5);
+        $(#time_6).value  = view.getStatsLevelTime(6);
+        $(#time_7).value  = view.getStatsLevelTime(7);
+        $(#time_8).value  = view.getStatsLevelTime(8);
+        $(#time_9).value  = view.getStatsLevelTime(9);
+        $(#time_10).value = view.getStatsLevelTime(10);
+        $(#time_11).value = view.getStatsLevelTime(11);
+        $(#time_12).value = view.getStatsLevelTime(12);
+        $(#time_13).value = view.getStatsLevelTime(13);
+        $(#time_14).value = view.getStatsLevelTime(14);
+        $(#time_15).value = view.getStatsLevelTime(15);
+        $(#time_16).value = view.getStatsLevelTime(16);
+        $(#time_17).value = view.getStatsLevelTime(17);
+        $(#time_18).value = view.getStatsLevelTime(18);
+        $(#time_19).value = view.getStatsLevelTime(19);
+        $(#time_20).value = view.getStatsLevelTime(20);
+        $(#time_21).value = view.getStatsLevelTime(21);
+        $(#time_22).value = view.getStatsLevelTime(22);
+        $(#time_23).value = view.getStatsLevelTime(23);
+        $(#time_24).value = view.getStatsLevelTime(24);
+        $(#time_25).value = view.getStatsLevelTime(25);
+        $(#time_26).value = view.getStatsLevelTime(26);
+        $(#time_27).value = view.getStatsLevelTime(27);
+        $(#time_28).value = view.getStatsLevelTime(28);
+        $(#time_29).value = view.getStatsLevelTime(29);
+        $(#time_30).value = view.getStatsLevelTime(30);
+        $(#time_31).value = view.getStatsLevelTime(31);
+        $(#time_32).value = view.getStatsLevelTime(32);
+        $(#time_33).value = view.getStatsLevelTime(33);
+        $(#time_34).value = view.getStatsLevelTime(34);
+        $(#time_35).value = view.getStatsLevelTime(35);
+    }
+
+    event click $(button#save_options)
+    {
+        view.setLanguage($(#language).value);
+        view.setMusicIngame($(#music-ingame).state.checked);
+        view.setMusicMenu($(#music-menu).state.checked);
+        view.setSound($(#sounds).state.checked);
+
+        view.setFullscreen($(#fullscreen).state.checked);
+        view.setScreenMode($(#screenmode).value);
+        view.setRenderer($(#renderer).value);
+        view.setControls($(#controls).value);
+
+        view.setResolution($(#resolution).value);
+
+        view.setKeyScrollSpeed($(#keyscroll).value);
+        view.setMouseScrollSpeed($(#mousescroll).value);
+        view.setDragScrollSpeed($(#dragscroll).value);
+        view.setMouseSensitivity($(#sensitivity).value);
+
+        view.setMusicVolume($(#musicvolume).value);
+        view.setSoundVolume($(#soundvolume).value);
+
+        var cuts = $(#cutscenes).value;
+        var sum = 0;
+
+        if (cuts)
+        {
+            for (var i=0; i < cuts.length;i++)
+                sum += cuts[i];
+        }
+
+        view.setCutscenes(sum);
+
+        view.setZoom($(#zoom).value);
+        view.setZoomControls($(#zoom-control).value);
+
+        view.saveOptions();
+
+        loadFrame("main");
+    }
+
+    event click $(button#save_custom)
+    {
+        view.setCustomControlsFocusCamera($(#custom_focus_camera).state.checked);
+        view.setCustomControlsNoBoxSelectForCrane($(#exclude_cranes).state.checked);
+        view.setCustomControlsClearSelectionIfNoLastEvent($(#custom_clear_after_goto_event).state.checked);
+
+        view.setCustomControlsSelectUnits($(#select_units).value);
+        view.setCustomControlsIssueCommand($(#issue_comands).value);
+
+        view.setCustomControlsDragScroll($(#drag_scroll_mod).value, $(#drag_scroll).value);
+        view.setCustomControlsRemoveSelection($(#remove_selection_mod).value, $(#remove_selection).value);
+        view.setCustomControlsAdditiveSelection($(#additive).value);
+        view.setCustomControlsAdditiveWaypoint($(#add_waypoint).value);
+        view.setCustomControlsNearestOnly($(#closest_unit).value);
+        view.setCustomControlsRallyPoint($(#rally_point).value);
+
+        view.setCustomControlsSaveGroup($(#save_group).value);
+        view.setCustomControlsLoadGroup($(#load_group).value);
+        view.setCustomControlsHoldPosition($(#hold_position_mod).value, $(#hold_position).value);
+
+        $(#options_panel).style#visibility = "visible";
+        $(#configure_custom_panel).style#visibility = "none";
+    }
+
+    event click $(button#cancel_options)
+    {
+        view.checkMusicIsRunning();
+        loadFrame("main");
+    }
+
+    function addHotkeyOptions(select, select_mod)
+    {
+        select_mod.options.$append(<option value="0">&lt;None&gt;</option>);
+        select_mod.options.$append(<option value="1">Ctrl</option>);
+        select_mod.options.$append(<option value="2">Alt</option>);
+        select_mod.options.$append(<option value="4">Shift</option>);
+        select_mod.options.$append(<option value="3">Ctrl+Alt</option>);
+        select_mod.options.$append(<option value="5">Ctrl+Shift</option>);
+        select_mod.options.$append(<option value="6">Alt+Shift</option>);
+        select_mod.options.$append(<option value="7">Ctrl+Alt+Shift</option>);
+
+        select.options.$append(<option value="13">Return</option>);
+        select.options.$append(<option value="32">Space</option>);
+        select.options.$append(<option value="9">Tab</option>);
+        select.options.$append(<option value="27">Escape</option>);
+        select.options.$append(<option value="36">Home</option>);
+
+        select.options.$append(<option value="49">1</option>);
+        select.options.$append(<option value="50">2</option>);
+        select.options.$append(<option value="51">3</option>);
+        select.options.$append(<option value="52">4</option>);
+        select.options.$append(<option value="53">5</option>);
+        select.options.$append(<option value="54">6</option>);
+        select.options.$append(<option value="55">7</option>);
+        select.options.$append(<option value="56">8</option>);
+        select.options.$append(<option value="57">9</option>);
+        select.options.$append(<option value="48">0</option>);
+
+        select.options.$append(<option value="112">F1</option>);
+        select.options.$append(<option value="113">F2</option>);
+        select.options.$append(<option value="114">F3</option>);
+        select.options.$append(<option value="115">F4</option>);
+        select.options.$append(<option value="116">F5</option>);
+        select.options.$append(<option value="117">F6</option>);
+        select.options.$append(<option value="118">F7</option>);
+        select.options.$append(<option value="119">F8</option>);
+        select.options.$append(<option value="120">F9</option>);
+        select.options.$append(<option value="121">F10</option>);
+        select.options.$append(<option value="122">F11</option>);
+        select.options.$append(<option value="123">F12</option>);
+
+        select.options.$append(<option value="65">A</option>);
+        select.options.$append(<option value="66">B</option>);
+        select.options.$append(<option value="67">C</option>);
+        select.options.$append(<option value="68">D</option>);
+        select.options.$append(<option value="69">E</option>);
+        select.options.$append(<option value="70">F</option>);
+        select.options.$append(<option value="71">G</option>);
+        select.options.$append(<option value="72">H</option>);
+        select.options.$append(<option value="73">I</option>);
+        select.options.$append(<option value="74">J</option>);
+        select.options.$append(<option value="75">K</option>);
+        select.options.$append(<option value="76">L</option>);
+        select.options.$append(<option value="77">M</option>);
+        select.options.$append(<option value="78">N</option>);
+        select.options.$append(<option value="79">O</option>);
+        select.options.$append(<option value="80">P</option>);
+        select.options.$append(<option value="81">Q</option>);
+        select.options.$append(<option value="82">R</option>);
+        select.options.$append(<option value="83">S</option>);
+        select.options.$append(<option value="84">T</option>);
+        select.options.$append(<option value="85">U</option>);
+        select.options.$append(<option value="86">V</option>);
+        select.options.$append(<option value="87">W</option>);
+        select.options.$append(<option value="88">X</option>);
+        select.options.$append(<option value="89">Y</option>);
+        select.options.$append(<option value="90">Z</option>);
+    }
+
+    function addDefaultOptions(select, building, buildingLevel)
+    {
+        if ((building == 0 && buildingLevel >= 0) || (building == 1 && buildingLevel >= 0))
+            select.options.$append(<option value="0">Grunts</option>);
+
+        if ((building == 0 && buildingLevel >= 1) || (building == 1 && buildingLevel >= 1))
+            select.options.$append(<option value="1">Psycho</option>);
+
+        if ((building == 0 && buildingLevel >= 2) || (building == 1 && buildingLevel >= 2))
+        {
+            select.options.$append(<option value="2">Toughs</option>);
+            select.options.$append(<option value="3">Sniper</option>);
+        }
+
+        if ((building == 0 && buildingLevel >= 3) || (building == 1 && buildingLevel >= 3))
+            select.options.$append(<option value="4">Pyro</option>);
+        if ((building == 0 && buildingLevel >= 4) || (building == 1 && buildingLevel >= 4))
+            select.options.$append(<option value="5">Laser</option>);
+
+
+        if ((building == 0 && buildingLevel >= 0) || (building == 2 && buildingLevel >= 0))
+            select.options.$append(<option value="6">Jeep</option>);
+
+        if ((building == 0 && buildingLevel >= 1) || (building == 2 && buildingLevel >= 0))
+            select.options.$append(<option value="7">Light</option>);
+
+        if ((building == 0 && buildingLevel >= 2) || (building == 2 && buildingLevel >= 2))
+            select.options.$append(<option value="8">Medium</option>);
+
+        if ((building == 0 && buildingLevel >= 4) || (building == 2 && buildingLevel >= 3))
+            select.options.$append(<option value="9">Heavy</option>);
+        if ((building == 0 && buildingLevel >= 4) || (building == 2 && buildingLevel >= 4))
+            select.options.$append(<option value="10">Mobile Rocket</option>);
+
+        if ((building == 0 && buildingLevel >= 3) || (building == 2 && buildingLevel >= 3))
+        {
+            select.options.$append(<option value="11">APC</option>);
+            select.options.$append(<option value="12">Crane</option>);
+        }
+
+
+        if ((building == 0 && buildingLevel >= 0) || (building == 1 && buildingLevel >= 0) || (building == 2 && buildingLevel >= 0))
+            select.options.$append(<option value="13">Gatling</option>);
+        if ((building == 0 && buildingLevel >= 1) || (building == 1 && buildingLevel >= 2) || (building == 2 && buildingLevel >= 1))
+            select.options.$append(<option value="14">Gun</option>);
+        if ((building == 0 && buildingLevel >= 2) || (building == 1 && buildingLevel >= 3) || (building == 2 && buildingLevel >= 3))
+            select.options.$append(<option value="15">Howitzer</option>);
+        if ((building == 0 && buildingLevel >= 4) || (building == 1 && buildingLevel >= 5) || (building == 2 && buildingLevel >= 5))
+            select.options.$append(<option value="16">Rocket</option>);
+
+
+        select.$(option[value="{view.getDefaultUnit(building, buildingLevel)}"]).execCommand("set-current");
+    }
+
+    event click $(button#hotkeys)
+    {
+        $(#options_panel).style#visibility = "none";
+        $(#hotkeys_panel).style#visibility = "visible";
+        $(#default_panel).style#visibility = "none";
+
+
+        $(#hk_fullscreen_mod).$(option[value="{view.getHotkeyFullscreen_mod()}"]).execCommand("set-current");
+        $(#hk_fullscreen).$(option[value="{view.getHotkeyFullscreen()}"]).execCommand("set-current");
+
+        $(#hk_screenshot_mod).$(option[value="{view.getHotkeyScreenshot_mod()}"]).execCommand("set-current");
+        $(#hk_screenshot).$(option[value="{view.getHotkeyScreenshot()}"]).execCommand("set-current");
+
+        $(#hk_renderer_mod).$(option[value="{view.getHotkeyRenderer_mod()}"]).execCommand("set-current");
+        $(#hk_renderer).$(option[value="{view.getHotkeyRenderer()}"]).execCommand("set-current");
+
+        $(#hk_scaling_mod).$(option[value="{view.getHotkeyScaling_mod()}"]).execCommand("set-current");
+        $(#hk_scaling).$(option[value="{view.getHotkeyScaling()}"]).execCommand("set-current");
+
+        $(#hk_fps_mod).$(option[value="{view.getHotkeyFPS_mod()}"]).execCommand("set-current");
+        $(#hk_fps).$(option[value="{view.getHotkeyFPS()}"]).execCommand("set-current");
+
+        $(#hk_chat_mod).$(option[value="{view.getHotkeyChat_mod()}"]).execCommand("set-current");
+        $(#hk_chat).$(option[value="{view.getHotkeyChat()}"]).execCommand("set-current");
+
+        $(#hk_change_color_mod).$(option[value="{view.getHotkeyChangeColor_mod()}"]).execCommand("set-current");
+        $(#hk_change_color).$(option[value="{view.getHotkeyChangeColor()}"]).execCommand("set-current");
+
+        $(#hk_change_enemy_color_mod).$(option[value="{view.getHotkeyChangeEnemyColor_mod()}"]).execCommand("set-current");
+        $(#hk_change_enemy_color).$(option[value="{view.getHotkeyChangeEnemyColor()}"]).execCommand("set-current");
+
+        $(#hk_hold_position_mod).$(option[value="{view.getHotkeyHoldPosition_mod()}"]).execCommand("set-current");
+        $(#hk_hold_position).$(option[value="{view.getHotkeyHoldPosition()}"]).execCommand("set-current");
+
+        $(#hk_patrol_move_mod).$(option[value="{view.getHotkeyPatrolMove_mod()}"]).execCommand("set-current");
+        $(#hk_patrol_move).$(option[value="{view.getHotkeyPatrolMove()}"]).execCommand("set-current");
+
+        $(#hk_pause_mod).$(option[value="{view.getHotkeyPause_mod()}"]).execCommand("set-current");
+        $(#hk_pause).$(option[value="{view.getHotkeyPause()}"]).execCommand("set-current");
+
+        $(#hk_boss_mod).$(option[value="{view.getHotkeyBoss_mod()}"]).execCommand("set-current");
+        $(#hk_boss).$(option[value="{view.getHotkeyBoss()}"]).execCommand("set-current");
+
+        $(#hk_selectall_mod).$(option[value="{view.getHotkeySelectAll_mod()}"]).execCommand("set-current");
+        $(#hk_selectall).$(option[value="{view.getHotkeySelectAll()}"]).execCommand("set-current");
+
+        $(#hk_gotofort_mod).$(option[value="{view.getHotkeyGoToFort_mod()}"]).execCommand("set-current");
+        $(#hk_gotofort).$(option[value="{view.getHotkeyGoToFort()}"]).execCommand("set-current");
+
+        $(#hk_surrender_mod).$(option[value="{view.getHotkeySurrender_mod()}"]).execCommand("set-current");
+        $(#hk_surrender).$(option[value="{view.getHotkeySurrender()}"]).execCommand("set-current");
+
+        $(#hk_overlay_mod).$(option[value="{view.getHotkeyOverlay_mod()}"]).execCommand("set-current");
+        $(#hk_overlay).$(option[value="{view.getHotkeyOverlay()}"]).execCommand("set-current");
+
+        $(#hk_exit_mod).$(option[value="{view.getHotkeyExit_mod()}"]).execCommand("set-current");
+        $(#hk_exit).$(option[value="{view.getHotkeyExit()}"]).execCommand("set-current");
+
+        $(#hk_cancel_mod).$(option[value="{view.getHotkeyCancel_mod()}"]).execCommand("set-current");
+        $(#hk_cancel).$(option[value="{view.getHotkeyCancel()}"]).execCommand("set-current");
+
+        $(#grunt_mod).$(option[value="{view.getHotkeyUnit_mod(0)}"]).execCommand("set-current");
+        $(#grunt).$(option[value="{view.getHotkeyUnit(0)}"]).execCommand("set-current");
+
+        $(#psycho_mod).$(option[value="{view.getHotkeyUnit_mod(1)}"]).execCommand("set-current");
+        $(#psycho).$(option[value="{view.getHotkeyUnit(1)}"]).execCommand("set-current");
+
+        $(#tough_mod).$(option[value="{view.getHotkeyUnit_mod(2)}"]).execCommand("set-current");
+        $(#tough).$(option[value="{view.getHotkeyUnit(2)}"]).execCommand("set-current");
+
+        $(#sniper_mod).$(option[value="{view.getHotkeyUnit_mod(3)}"]).execCommand("set-current");
+        $(#sniper).$(option[value="{view.getHotkeyUnit(3)}"]).execCommand("set-current");
+
+        $(#pyro_mod).$(option[value="{view.getHotkeyUnit_mod(4)}"]).execCommand("set-current");
+        $(#pyro).$(option[value="{view.getHotkeyUnit(4)}"]).execCommand("set-current");
+
+        $(#laser_mod).$(option[value="{view.getHotkeyUnit_mod(5)}"]).execCommand("set-current");
+        $(#laser).$(option[value="{view.getHotkeyUnit(5)}"]).execCommand("set-current");
+
+        $(#jeep_mod).$(option[value="{view.getHotkeyUnit_mod(6)}"]).execCommand("set-current");
+        $(#jeep).$(option[value="{view.getHotkeyUnit(6)}"]).execCommand("set-current");
+
+        $(#light_mod).$(option[value="{view.getHotkeyUnit_mod(7)}"]).execCommand("set-current");
+        $(#light).$(option[value="{view.getHotkeyUnit(7)}"]).execCommand("set-current");
+
+        $(#medium_mod).$(option[value="{view.getHotkeyUnit_mod(8)}"]).execCommand("set-current");
+        $(#medium).$(option[value="{view.getHotkeyUnit(8)}"]).execCommand("set-current");
+
+        $(#heavy_mod).$(option[value="{view.getHotkeyUnit_mod(9)}"]).execCommand("set-current");
+        $(#heavy).$(option[value="{view.getHotkeyUnit(9)}"]).execCommand("set-current");
+
+        $(#mo_rocket_mod).$(option[value="{view.getHotkeyUnit_mod(10)}"]).execCommand("set-current");
+        $(#mo_rocket).$(option[value="{view.getHotkeyUnit(10)}"]).execCommand("set-current");
+
+        $(#apc_mod).$(option[value="{view.getHotkeyUnit_mod(11)}"]).execCommand("set-current");
+        $(#apc).$(option[value="{view.getHotkeyUnit(11)}"]).execCommand("set-current");
+
+        $(#crane_mod).$(option[value="{view.getHotkeyUnit_mod(12)}"]).execCommand("set-current");
+        $(#crane).$(option[value="{view.getHotkeyUnit(12)}"]).execCommand("set-current");
+
+        $(#gatling_mod).$(option[value="{view.getHotkeyUnit_mod(13)}"]).execCommand("set-current");
+        $(#gatling).$(option[value="{view.getHotkeyUnit(13)}"]).execCommand("set-current");
+
+        $(#gun_mod).$(option[value="{view.getHotkeyUnit_mod(14)}"]).execCommand("set-current");
+        $(#gun).$(option[value="{view.getHotkeyUnit(14)}"]).execCommand("set-current");
+
+        $(#howitzer_mod).$(option[value="{view.getHotkeyUnit_mod(9)}"]).execCommand("set-current");
+        $(#howitzer).$(option[value="{view.getHotkeyUnit(9)}"]).execCommand("set-current");
+
+        $(#rocket_mod).$(option[value="{view.getHotkeyUnit_mod(15)}"]).execCommand("set-current");
+        $(#rocket).$(option[value="{view.getHotkeyUnit(15)}"]).execCommand("set-current");
+    }
+
+    event click $(button#default)
+    {
+        $(#options_panel).style#visibility = "none";
+        $(#hotkeys_panel).style#visibility = "none";
+        $(#default_panel).style#visibility = "visible";
+    }
+
+    event click $(button#configure_custom)
+    {
+        $(#options_panel).style#visibility = "none";
+        $(#configure_custom_panel).style#visibility = "visible";
+    }
+
+    event click $(button#back_to_options)
+    {
+        $(#options_panel).style#visibility = "visible";
+        $(#hotkeys_panel).style#visibility = "none";
+        $(#default_panel).style#visibility = "none";
+        $(#configure_custom_panel).style#visibility = "none";
+    }
+
+    event click $(button#stats_general)
+    {
+        $(#panel_stats_general).style#visibility = "visible";
+        $(#panel_stats_units).style#visibility   = "none";
+        $(#panel_stats_times).style#visibility   = "none";
+        $(#panel_highscore).style#visibility     = "none";
+    }
+
+    event click $(button#stats_units)
+    {
+        $(#panel_stats_general).style#visibility = "none";
+        $(#panel_stats_units).style#visibility   = "visible";
+        $(#panel_stats_times).style#visibility   = "none";
+        $(#panel_highscore).style#visibility     = "none";
+    }
+
+    event click $(button#stats_times)
+    {
+        $(#panel_stats_general).style#visibility = "none";
+        $(#panel_stats_units).style#visibility   = "none";
+        $(#panel_stats_times).style#visibility   = "visible";
+        $(#panel_highscore).style#visibility     = "none";
+    }
+
+    event click $(button#campaign)
+    {
+        $(#panel_campaign).style#visibility  = "visible";
+        $(#panel_expansion).style#visibility = "none";
+        $(#panel_beta).style#visibility      = "none";
+    }
+
+    event click $(button#expansion)
+    {
+        $(#panel_campaign).style#visibility  = "none";
+        $(#panel_expansion).style#visibility = "visible";
+        $(#panel_beta).style#visibility      = "none";
+    }
+
+    event click $(button#beta)
+    {
+        $(#panel_campaign).style#visibility  = "none";
+        $(#panel_expansion).style#visibility = "none";
+        $(#panel_beta).style#visibility      = "visible";
+    }
+
+    event click $(button#save_hotkeys)
+    {
+        view.setHotkeyCancel(    $(#hk_cancel_mod).value,     $(#hk_cancel).value);
+        view.setHotkeyFullscreen($(#hk_fullscreen_mod).value, $(#hk_fullscreen).value);
+        view.setHotkeyScreenshot($(#hk_screenshot_mod).value, $(#hk_screenshot).value);
+        view.setHotkeyRenderer(  $(#hk_renderer_mod).value,   $(#hk_renderer).value);
+        view.setHotkeyScaling(   $(#hk_scaling_mod).value,    $(#hk_scaling).value);
+        view.setHotkeyFPS(       $(#hk_fps_mod).value,        $(#hk_fps).value);
+        view.setHotkeyChat(      $(#hk_chat_mod).value,       $(#hk_chat).value);
+        view.setHotkeyChangeColor(      $(#hk_change_color_mod).value,       $(#hk_change_color).value);
+        view.setHotkeyChangeEnemyColor( $(#hk_change_enemy_color_mod).value, $(#hk_change_enemy_color).value);
+        view.setHotkeyHoldPosition( $(#hk_hold_position_mod).value, $(#hk_hold_position).value);
+        view.setHotkeyPatrolMove(   $(#hk_patrol_move_mod).value,   $(#hk_patrol_move).value);
+        view.setHotkeyPause(     $(#hk_pause_mod).value,      $(#hk_pause).value);
+        view.setHotkeyBoss(      $(#hk_boss_mod).value,       $(#hk_boss).value);
+        view.setHotkeySelectAll( $(#hk_selectall_mod).value,  $(#hk_selectall).value);
+        view.setHotkeyGoToFort(  $(#hk_gotofort_mod).value,   $(#hk_gotofort).value);
+        view.setHotkeySurrender( $(#hk_surrender_mod).value,  $(#hk_surrender).value);
+        view.setHotkeyOverlay(   $(#hk_overlay_mod).value,    $(#hk_overlay).value);
+        view.setHotkeyExit(      $(#hk_exit_mod).value,       $(#hk_exit).value);
+
+        view.setHotkeyUnit( 0, $(#grunt_mod).value,     $(#grunt).value);
+        view.setHotkeyUnit( 1, $(#psycho_mod).value,    $(#psycho).value);
+        view.setHotkeyUnit( 2, $(#tough_mod).value,     $(#tough).value);
+        view.setHotkeyUnit( 3, $(#sniper_mod).value,    $(#sniper).value);
+        view.setHotkeyUnit( 4, $(#pyro_mod).value,      $(#pyro).value);
+        view.setHotkeyUnit( 5, $(#laser_mod).value,     $(#laser).value);
+        view.setHotkeyUnit( 6, $(#jeep_mod).value,      $(#jeep).value);
+        view.setHotkeyUnit( 7, $(#light_mod).value,     $(#light).value);
+        view.setHotkeyUnit( 8, $(#medium_mod).value,    $(#medium).value);
+        view.setHotkeyUnit( 9, $(#heavy_mod).value,     $(#heavy).value);
+        view.setHotkeyUnit(10, $(#mo_rocket_mod).value, $(#mo_rocket).value);
+        view.setHotkeyUnit(11, $(#apc_mod).value,       $(#apc).value);
+        view.setHotkeyUnit(12, $(#crane_mod).value,     $(#crane).value);
+        view.setHotkeyUnit(13, $(#gatling_mod).value,   $(#gatling).value);
+        view.setHotkeyUnit(14, $(#gun_mod).value,       $(#gun).value);
+        view.setHotkeyUnit(15, $(#howitzer_mod).value,  $(#howitzer).value);
+        view.setHotkeyUnit(16, $(#rocket_mod).value,    $(#rocket).value);
+
+        $(#options_panel).style#visibility = "visible";
+        $(#hotkeys_panel).style#visibility = "none";
+
+        view.saveOptions();
+    }
+
+    event click $(button#save_default)
+    {
+        view.setDefaultUnit(0, 0, $(#default_fort_1).value);
+        view.setDefaultUnit(0, 1, $(#default_fort_2).value);
+        view.setDefaultUnit(0, 2, $(#default_fort_3).value);
+        view.setDefaultUnit(0, 3, $(#default_fort_4).value);
+        view.setDefaultUnit(0, 4, $(#default_fort_5).value);
+
+        view.setDefaultUnit(1, 0, $(#default_robot_1).value);
+        view.setDefaultUnit(1, 1, $(#default_robot_2).value);
+        view.setDefaultUnit(1, 2, $(#default_robot_3).value);
+        view.setDefaultUnit(1, 3, $(#default_robot_4).value);
+        view.setDefaultUnit(1, 4, $(#default_robot_5).value);
+        view.setDefaultUnit(1, 5, $(#default_robot_6).value);
+
+        view.setDefaultUnit(2, 0, $(#default_vehicle_1).value);
+        view.setDefaultUnit(2, 1, $(#default_vehicle_2).value);
+        view.setDefaultUnit(2, 2, $(#default_vehicle_3).value);
+        view.setDefaultUnit(2, 3, $(#default_vehicle_4).value);
+        view.setDefaultUnit(2, 4, $(#default_vehicle_5).value);
+        view.setDefaultUnit(2, 5, $(#default_vehicle_6).value);
+
+        $(#options_panel).style#visibility = "visible";
+        $(#default_panel).style#visibility = "none";
+
+        view.saveOptions();
+    }
+
+    event click $(button#reset_hotkeys)
+    {
+        if (view.resetHotkeys())
+        {
+            $(#hk_fullscreen_mod).$(option[value="{view.getHotkeyFullscreen_mod()}"]).execCommand("set-current");
+            $(#hk_fullscreen).$(option[value="{view.getHotkeyFullscreen()}"]).execCommand("set-current");
+
+            $(#hk_screenshot_mod).$(option[value="{view.getHotkeyScreenshot_mod()}"]).execCommand("set-current");
+            $(#hk_screenshot).$(option[value="{view.getHotkeyScreenshot()}"]).execCommand("set-current");
+
+            $(#hk_renderer_mod).$(option[value="{view.getHotkeyRenderer_mod()}"]).execCommand("set-current");
+            $(#hk_renderer).$(option[value="{view.getHotkeyRenderer()}"]).execCommand("set-current");
+
+            $(#hk_scaling_mod).$(option[value="{view.getHotkeyScaling_mod()}"]).execCommand("set-current");
+            $(#hk_scaling).$(option[value="{view.getHotkeyScaling()}"]).execCommand("set-current");
+
+            $(#hk_fps_mod).$(option[value="{view.getHotkeyFPS_mod()}"]).execCommand("set-current");
+            $(#hk_fps).$(option[value="{view.getHotkeyFPS()}"]).execCommand("set-current");
+
+            $(#hk_chat_mod).$(option[value="{view.getHotkeyChat_mod()}"]).execCommand("set-current");
+            $(#hk_chat).$(option[value="{view.getHotkeyChat()}"]).execCommand("set-current");
+
+            $(#hk_change_color_mod).$(option[value="{view.getHotkeyChangeColor_mod()}"]).execCommand("set-current");
+            $(#hk_change_color).$(option[value="{view.getHotkeyChangeColor()}"]).execCommand("set-current");
+
+            $(#hk_change_enemy_color_mod).$(option[value="{view.getHotkeyChangeEnemyColor_mod()}"]).execCommand("set-current");
+            $(#hk_change_enemy_color).$(option[value="{view.getHotkeyChangeEnemyColor()}"]).execCommand("set-current");
+
+            $(#hk_hold_position_mod).$(option[value="{view.getHotkeyHoldPosition_mod()}"]).execCommand("set-current");
+            $(#hk_hold_position).$(option[value="{view.getHotkeyHoldPosition()}"]).execCommand("set-current");
+
+            $(#hk_patrol_move_mod).$(option[value="{view.getHotkeyPatrolMove_mod()}"]).execCommand("set-current");
+            $(#hk_patrol_move).$(option[value="{view.getHotkeyPatrolMove()}"]).execCommand("set-current");
+
+            $(#hk_pause_mod).$(option[value="{view.getHotkeyPause_mod()}"]).execCommand("set-current");
+            $(#hk_pause).$(option[value="{view.getHotkeyPause()}"]).execCommand("set-current");
+
+            $(#hk_boss_mod).$(option[value="{view.getHotkeyBoss_mod()}"]).execCommand("set-current");
+            $(#hk_boss).$(option[value="{view.getHotkeyBoss()}"]).execCommand("set-current");
+
+            $(#hk_selectall_mod).$(option[value="{view.getHotkeySelectAll_mod()}"]).execCommand("set-current");
+            $(#hk_selectall).$(option[value="{view.getHotkeySelectAll()}"]).execCommand("set-current");
+
+            $(#hk_gotofort_mod).$(option[value="{view.getHotkeyGoToFort_mod()}"]).execCommand("set-current");
+            $(#hk_gotofort).$(option[value="{view.getHotkeyGoToFort()}"]).execCommand("set-current");
+
+            $(#hk_surrender_mod).$(option[value="{view.getHotkeySurrender_mod()}"]).execCommand("set-current");
+            $(#hk_surrender).$(option[value="{view.getHotkeySurrender()}"]).execCommand("set-current");
+
+            $(#hk_overlay_mod).$(option[value="{view.getHotkeyOverlay_mod()}"]).execCommand("set-current");
+            $(#hk_overlay).$(option[value="{view.getHotkeyOverlay()}"]).execCommand("set-current");
+
+            $(#hk_exit_mod).$(option[value="{view.getHotkeyExit_mod()}"]).execCommand("set-current");
+            $(#hk_exit).$(option[value="{view.getHotkeyExit()}"]).execCommand("set-current");
+
+            $(#hk_cancel_mod).$(option[value="{view.getHotkeyCancel_mod()}"]).execCommand("set-current");
+            $(#hk_cancel).$(option[value="{view.getHotkeyCancel()}"]).execCommand("set-current");
+
+            $(#grunt_mod).$(option[value="{view.getHotkeyUnit_mod(0)}"]).execCommand("set-current");
+            $(#grunt).$(option[value="{view.getHotkeyUnit(0)}"]).execCommand("set-current");
+
+            $(#psycho_mod).$(option[value="{view.getHotkeyUnit_mod(1)}"]).execCommand("set-current");
+            $(#psycho).$(option[value="{view.getHotkeyUnit(1)}"]).execCommand("set-current");
+
+            $(#tough_mod).$(option[value="{view.getHotkeyUnit_mod(2)}"]).execCommand("set-current");
+            $(#tough).$(option[value="{view.getHotkeyUnit(2)}"]).execCommand("set-current");
+
+            $(#sniper_mod).$(option[value="{view.getHotkeyUnit_mod(3)}"]).execCommand("set-current");
+            $(#sniper).$(option[value="{view.getHotkeyUnit(3)}"]).execCommand("set-current");
+
+            $(#pyro_mod).$(option[value="{view.getHotkeyUnit_mod(4)}"]).execCommand("set-current");
+            $(#pyro).$(option[value="{view.getHotkeyUnit(4)}"]).execCommand("set-current");
+
+            $(#laser_mod).$(option[value="{view.getHotkeyUnit_mod(5)}"]).execCommand("set-current");
+            $(#laser).$(option[value="{view.getHotkeyUnit(5)}"]).execCommand("set-current");
+
+            $(#jeep_mod).$(option[value="{view.getHotkeyUnit_mod(6)}"]).execCommand("set-current");
+            $(#jeep).$(option[value="{view.getHotkeyUnit(6)}"]).execCommand("set-current");
+
+            $(#light_mod).$(option[value="{view.getHotkeyUnit_mod(7)}"]).execCommand("set-current");
+            $(#light).$(option[value="{view.getHotkeyUnit(7)}"]).execCommand("set-current");
+
+            $(#medium_mod).$(option[value="{view.getHotkeyUnit_mod(8)}"]).execCommand("set-current");
+            $(#medium).$(option[value="{view.getHotkeyUnit(8)}"]).execCommand("set-current");
+
+            $(#heavy_mod).$(option[value="{view.getHotkeyUnit_mod(9)}"]).execCommand("set-current");
+            $(#heavy).$(option[value="{view.getHotkeyUnit(9)}"]).execCommand("set-current");
+
+            $(#mo_rocket_mod).$(option[value="{view.getHotkeyUnit_mod(10)}"]).execCommand("set-current");
+            $(#mo_rocket).$(option[value="{view.getHotkeyUnit(10)}"]).execCommand("set-current");
+
+            $(#apc_mod).$(option[value="{view.getHotkeyUnit_mod(11)}"]).execCommand("set-current");
+            $(#apc).$(option[value="{view.getHotkeyUnit(11)}"]).execCommand("set-current");
+
+            $(#crane_mod).$(option[value="{view.getHotkeyUnit_mod(12)}"]).execCommand("set-current");
+            $(#crane).$(option[value="{view.getHotkeyUnit(12)}"]).execCommand("set-current");
+
+            $(#gatling_mod).$(option[value="{view.getHotkeyUnit_mod(13)}"]).execCommand("set-current");
+            $(#gatling).$(option[value="{view.getHotkeyUnit(13)}"]).execCommand("set-current");
+
+            $(#gun_mod).$(option[value="{view.getHotkeyUnit_mod(14)}"]).execCommand("set-current");
+            $(#gun).$(option[value="{view.getHotkeyUnit(14)}"]).execCommand("set-current");
+
+            $(#howitzer_mod).$(option[value="{view.getHotkeyUnit_mod(15)}"]).execCommand("set-current");
+            $(#howitzer).$(option[value="{view.getHotkeyUnit(15)}"]).execCommand("set-current");
+
+            $(#rocket_mod).$(option[value="{view.getHotkeyUnit_mod(16)}"]).execCommand("set-current");
+            $(#rocket).$(option[value="{view.getHotkeyUnit(16)}"]).execCommand("set-current");
+        }
+    }
+
+    event click $(button#back_create_game)
+    {
+        if (view.getGameStateQuickStart())
+            loadFrame("main");
+        else if (online == 1)
+        {
+            loadFrame("online");
+            view.setGameStateOnline(true);
+            $(#bar).state.busy = true;
+            view.searchForGames(1);
+        }
+        else
+        {
+            loadFrame("lan");
+            view.networkDiscovery(1);
+        }
+    }
+
+    event click $(#zod_mode)
+    {
+        view.zod_mode();
+    }
+
+    event click $(#record)
+    {
+        if ($(#record).state.checked)
+        {
+            $(#replay-browse).state.disabled = false;
+            $(#video-filename).state.disabled = false;
+            $(#video-filename).value = rand(10000) + "" + rand(10000) + ".mp4";
+        }
+        else
+        {
+            $(#replay-browse).state.disabled  = true;
+            $(#video-filename).state.disabled = true;
+        }
+    }
+
+    event click $(#replay-browse)
+    {
+        var filename = view.chooseVideoFile();
+        $(#video-filename).value = filename;
+    }
+
+    event click $(button#online)
+    {
+        loadFrame("online");
+        online = 1;
+        view.setGameStateOnline(true);
+        view.setGameStateLAN(false);
+        view.setGameStateQuickStart(false);
+
+        $(#bar).state.busy = true;
+        view.searchForGames(1);
+        view.networkDiscovery(0);
+    }
+
+    event click $(button#lan)
+    {
+        loadFrame("lan");
+        online = 0;
+        view.setGameStateOnline(false);
+        view.setGameStateLAN(true);
+        view.setGameStateQuickStart(false);
+        view.searchForGames(0);
+        view.networkDiscovery(1);
+    }
+
+    event click $(#switch_account)
+    {
+        loadFrame("accounts");
+        view.writeAccountList();
+        view.writeGatewayList();
+
+        var username = view.getUsername();
+        var gate     = view.getGateway();
+
+        $(#accounts).$(option[value="{username}"]).execCommand("set-current");
+        $(#gateway).$(option[value="{gate}"]).execCommand("set-current");
+    }
+
+    event click $(#login)
+    {
+        var username = $(#accounts).value;
+        var gate     = $(#gateway).value;
+
+        view.setUsername(username);
+        view.setGateway(gate);
+
+        view.registerAccount();
+
+        loadFrame("main");
+    }
+
+    event click $(#account_created)
+    {
+        var username = $(#username).value;
+
+        if (username)
+        {
+            if (view.createAccount(username))
+            {
+                view.setUsername(username);
+                view.registerAccount();
+            }
+
+            loadFrame("main");
+        }
+    }
+
+    event click $(#create_account)
+    {
+        loadFrame("login");
+    }
+
+    event click $(#serverlist)
+    {
+        this.value;
+    }
+
+    event click $(button#create_game)
+    {
+        loadFrame("create_game");
+        view.writeMapList();
+        view.searchForGames(0);
+        view.networkDiscovery(0);
+    }
+
+    event click $(button#permissions_ready)
+    {
+        if ($(#permissions_ready).state.checked)
+            view.sendPlayerReady(1);
+        else
+            view.sendPlayerReady(0);
+    }
+
+    event click $(button#permissions_addbot)
+    {
+        view.sendAddBot();
+    }
+
+    event click $(button#permissions_kick)
+    {
+        view.sendKick($(select).value);
+    }
+
+    event click $(button#permissions_start)
+    {
+        view.sendStart();
+    }
+
+    event click $(button#join_game)
+    {
+        if ($(select).value)
+        {
+            if (view.joinGame( $(select).value ))
+            {
+                loadFrame("lobby");
+                view.setGameStateClient(1);
+                view.searchForGames(0);
+            }
+        }
+    }
+
+    event dblclick $(#serverlist)
+    {
+        if ($(select).value)
+        {
+            if (view.joinGame( $(select).value ))
+            {
+                loadFrame("lobby");
+                view.setGameStateClient(1);
+                view.searchForGames(0);
+            }
+        }
+    }
+
+    event change $(select#gamemode)
+    {
+        view.changeGameMode( $(#gamemode).value );
+    }
+
+    event change $(select#maplist)
+    {
+        view.changeMap( $(#maplist).value );
+    }
+
+    event change $(#controls)
+    {
+        if ($(#controls).value != 3)
+            $(#configure_custom).state.disabled = true;
+        else
+            $(#configure_custom).state.disabled = false;
+    }
+
+    event click $(button#quickstart)
+    {
+        view.setGameStateOnline(false);
+        view.setGameStateLAN(false);
+        view.setGameStateQuickStart(true);
+        loadFrame("create_game");
+
+        $(#div_name).style#visibility = "none";
+        view.writeMapList();
+    }
+
+    event click $(button#replays)
+    {
+        view.setGameStateOnline(false);
+        view.setGameStateLAN(false);
+        view.setGameStateQuickStart(false);
+        loadFrame("replays");
+
+        view.writeReplayList();
+    }
+
+    function create_final()
+    {
+        if ($(select).value)
+        {
+            var type = online;
+            if (view.getGameStateQuickStart())
+                type = 2;
+
+            if (view.createGame( $(select).value , $(#name).value, type, $(#gamemode).value, $(#desired-team).value, $(#game-speed).value-3 ))
+            {
+                if (type != 2)
+                {
+                    loadFrame("lobby");
+                    $(#serverpanel).style#visibility = "visible";
+                    view.searchForGames(0);
+                }
+
+                if (view.isServer() && view.isOnline())
+                {
+                    if (view.getUPNPState() == 0)
+                        $(#upnp-ok).style#visibility = "visible";
+                    if (view.getUPNPState() == -1)
+                        $(#upnp-error).style#visibility = "visible";
+                    if (view.getUPNPState() == -2)
+                        $(#upnp-unknown).style#visibility = "visible";
+
+                    $(#firewall-unknown).style#visibility = "visible";
+                    view.checkConnection(1);
+                }
+            }
+        }
+    }
+
+    function watch_replay()
+    {
+        if ($(select).value)
+        {
+            if ($(#record).state.checked)
+                view.startVideoRecording( $(#video-filename).value );
+            view.watchReplay( $(select).value );
+        }
+    }
+
+    event change $(#game-speed)
+    {
+        if ($(#game-speed).value == 0)
+            $(#game-speed-buddy).value = "Slowest";
+        else if ($(#game-speed).value == 1)
+            $(#game-speed-buddy).value = "Slower";
+        else if ($(#game-speed).value == 2)
+            $(#game-speed-buddy).value = "Slow";
+        else if ($(#game-speed).value == 3)
+            $(#game-speed-buddy).value = "Normal";
+        else if ($(#game-speed).value == 4)
+            $(#game-speed-buddy).value = "Fast";
+        else if ($(#game-speed).value == 5)
+            $(#game-speed-buddy).value = "Faster";
+        else if ($(#game-speed).value == 6)
+            $(#game-speed-buddy).value = "Fastest";
+    }
+
+    event change $(#renderer)
+    {
+        if ($(#renderer).value != 1)
+        {
+            $(#zoom).state.disabled = true;
+            $(#zoom-control).state.disabled = true;
+        }
+        else
+        {
+            $(#zoom).state.disabled = false;
+            $(#zoom-control).state.disabled = false;
+        }
+    }
+
+    event click $(#upload_map)
+    {
+        if ($(#map_list).value)
+        {
+            if (view.uploadMap( $(#map_list).value ))
+            {
+            }
+        }
+    }
+
+    event click $(#download_map)
+    {
+        if ($(#server_map_list).value)
+        {
+            if (view.downloadMap( $(#server_map_list).value ))
+            {
+            }
+        }
+    }
+
+    event dblclick $(#map_list)
+    {
+        create_final();
+    }
+
+    event dblclick $(#lobby)
+    {
+        view.switchTeam( $(#lobby).value );
+    }
+
+    event click $(button#create_final)
+    {
+        create_final();
+    }
+
+    event click $(button#open_replay)
+    {
+        watch_replay();
+    }
+
+    event dblclick $(#replay_list)
+    {
+        watch_replay();
+    }
+
+    event click $(button#cancel_lobby)
+    {
+        view.closeServer();
+        if (online == 1)
+        {
+            loadFrame("online");
+            $(#bar).state.busy = true;
+            view.searchForGames(1);
+        }
+        else
+        {
+            loadFrame("lan");
+            view.networkDiscovery(1);
+        }
+    }
+
+    event click $(button#direct_connection)
+    {
+        loadFrame("direct_connection");
+        view.searchForGames(0);
+    }
+
+    event click $(button#perform_direct_connect)
+    {
+        if (view.connectTo($(#ip).value, $(#port).value))
+        {
+            loadFrame("lobby");
+            view.setGameStateClient(1);
+        }
+    }
+
+    event click $(button#editor)
+    {
+    }
+
+    event keypress (evt)
+    {
+        var s = evt.keyCode;
+        if ($(#chat-message))
+        {
+            if ($(#chat-message).value && s == 13)
+            {
+                view.sendChatMessage($(#chat-message).value);
+                $(#chat-message).value = "";
+                $(#chat).appendText(" ");
+            }
+        }
+        else if ($(#gateway-chat-message))
+        {
+            if ($(#gateway-chat-message).value && s == 13)
+            {
+                view.gateway_sendChatMessage($(#gateway-chat-message).value);
+                $(#gateway-chat-message).value = "";
+                $(#gateway-chat).appendText(" ");
+            }
+        }
+    }
+
+    event click $(#map_list)
+    {
+        if ($(#map_list).value)
+        {
+            var crc = view.getCRCOfMap($(#map_list).value);
+            $(#div_thumbnail).html = "<img src=\"../thumbnails/" + crc + ".png\" width=240px />";
+        }
+    }
+
+    event click $(#replay_list)
+    {
+        if ($(#replay_list).value)
+        {
+            var crc = view.getMapCRCFromReplay($(#replay_list).value);
+            $(#div_thumbnail).html = "<img src=\"../thumbnails/" + crc + ".png\" width=240px />";
+
+            $(#filename).value = view.getShortFilenameFromReplay($(#replay_list).value);
+            $(#length).value   = view.getLengthFromReplay($(#replay_list).value);
+            $(#version).value  = view.getVersionPlayedOnFromReplay($(#replay_list).value);
+        }
+    }
+
+    event click $(button#transfer_maps)
+    {
+        loadFrame("transfer_maps");
+        view.writeMapList();
+        view.searchForGames(0);
+        view.writeRemoteMapList();
+    }
+
+    event mousemove $(#start_level_1)
+    {
+        var crc = view.getCRCOfMap(1);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=\"250px\" />";
+    }
+
+    event mousemove $(#start_level_2)
+    {
+        var crc = view.getCRCOfMap(2);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+    }
+
+    event mousemove $(#start_level_3)
+    {
+        var crc = view.getCRCOfMap(3);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+    }
+
+    event mousemove $(#start_level_4)
+    {
+        var crc = view.getCRCOfMap(4);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+    }
+
+    event mousemove $(#start_level_5)
+    {
+        var crc = view.getCRCOfMap(5);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=200px />";
+    }
+
+    event mousemove $(#start_level_6)
+    {
+        var crc = view.getCRCOfMap(6);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=240px />";
+    }
+
+    event mousemove $(#start_level_7)
+    {
+        var crc = view.getCRCOfMap(7);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+    }
+
+    event mousemove $(#start_level_8)
+    {
+        var crc = view.getCRCOfMap(8);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+    }
+
+    event mousemove $(#start_level_9)
+    {
+        var crc = view.getCRCOfMap(9);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=290px />";
+    }
+
+    event mousemove $(#start_level_10)
+    {
+        var crc = view.getCRCOfMap(10);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_11)
+    {
+        var crc = view.getCRCOfMap(11);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=265px />";
+    }
+
+    event mousemove $(#start_level_12)
+    {
+        var crc = view.getCRCOfMap(12);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=260px />";
+    }
+
+    event mousemove $(#start_level_13)
+    {
+        var crc = view.getCRCOfMap(13);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+    }
+
+    event mousemove $(#start_level_14)
+    {
+        var crc = view.getCRCOfMap(14);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+    }
+
+    event mousemove $(#start_level_15)
+    {
+        var crc = view.getCRCOfMap(15);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=310px />";
+    }
+
+    event mousemove $(#start_level_16)
+    {
+        var crc = view.getCRCOfMap(16);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_17)
+    {
+        var crc = view.getCRCOfMap(17);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_18)
+    {
+        var crc = view.getCRCOfMap(18);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+    }
+
+    event mousemove $(#start_level_19)
+    {
+        var crc = view.getCRCOfMap(19);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+    }
+
+    event mousemove $(#start_level_20)
+    {
+        var crc = view.getCRCOfMap(20);
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+    }
+
+    event mousemove $(#start_level_21)
+    {
+        var crc = view.getCRCOfMap(21);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_22)
+    {
+        var crc = view.getCRCOfMap(22);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_23)
+    {
+        var crc = view.getCRCOfMap(23);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_24)
+    {
+        var crc = view.getCRCOfMap(24);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_25)
+    {
+        var crc = view.getCRCOfMap(25);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_26)
+    {
+        var crc = view.getCRCOfMap(26);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_27)
+    {
+        var crc = view.getCRCOfMap(27);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_28)
+    {
+        var crc = view.getCRCOfMap(28);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_29)
+    {
+        var crc = view.getCRCOfMap(29);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_30)
+    {
+        var crc = view.getCRCOfMap(30);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_31)
+    {
+        var crc = view.getCRCOfMap(31);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+    }
+
+    event mousemove $(#start_level_32)
+    {
+        var crc = view.getCRCOfMap(32);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_33)
+    {
+        var crc = view.getCRCOfMap(33);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=320px />";
+    }
+
+    event mousemove $(#start_level_34)
+    {
+        var crc = view.getCRCOfMap(34);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_35)
+    {
+        var crc = view.getCRCOfMap(35);
+        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_36)
+    {
+        var crc = view.getCRCOfMap(36);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+    }
+
+    event mousemove $(#start_level_37)
+    {
+        var crc = view.getCRCOfMap(37);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+    }
+
+    event mousemove $(#start_level_38)
+    {
+        var crc = view.getCRCOfMap(38);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+    }
+
+    event mousemove $(#start_level_39)
+    {
+        var crc = view.getCRCOfMap(39);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+    }
+
+    event mousemove $(#start_level_40)
+    {
+        var crc = view.getCRCOfMap(40);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=200px />";
+    }
+
+    event mousemove $(#start_level_41)
+    {
+        var crc = view.getCRCOfMap(41);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=240px />";
+    }
+
+    event mousemove $(#start_level_42)
+    {
+        var crc = view.getCRCOfMap(42);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+    }
+
+    event mousemove $(#start_level_43)
+    {
+        var crc = view.getCRCOfMap(43);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+    }
+
+    event mousemove $(#start_level_44)
+    {
+        var crc = view.getCRCOfMap(44);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=290px />";
+    }
+
+    event mousemove $(#start_level_45)
+    {
+        var crc = view.getCRCOfMap(45);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_46)
+    {
+        var crc = view.getCRCOfMap(46);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=265px />";
+    }
+
+    event mousemove $(#start_level_47)
+    {
+        var crc = view.getCRCOfMap(47);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=260px />";
+    }
+
+    event mousemove $(#start_level_48)
+    {
+        var crc = view.getCRCOfMap(48);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+    }
+
+    event mousemove $(#start_level_49)
+    {
+        var crc = view.getCRCOfMap(49);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+    }
+
+    event mousemove $(#start_level_50)
+    {
+        var crc = view.getCRCOfMap(50);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=310px />";
+    }
+
+    event mousemove $(#start_level_51)
+    {
+        var crc = view.getCRCOfMap(51);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_52)
+    {
+        var crc = view.getCRCOfMap(52);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+    }
+
+    event mousemove $(#start_level_53)
+    {
+        var crc = view.getCRCOfMap(53);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+    }
+
+    event mousemove $(#start_level_54)
+    {
+        var crc = view.getCRCOfMap(54);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+    }
+
+    event mousemove $(#start_level_55)
+    {
+        var crc = view.getCRCOfMap(55);
+        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+    }
+
+    function highscore(level)
+    {
+        view.writeHighscore(level);
+        $(#panel_stats_times).style#visibility = "none";
+        $(#panel_highscore).style#visibility   = "visible";
+    }
+
+</script>
+
+
+</head>
+<body>
+	<section>
+		<header></header>
+		<nav></nav>
+		<aside>
+		</aside>
+		<footer>
+			<a class="button">
+				<b>ZED Online</b><br>
+				Version <span class="version"></span><br>
+				<br>
+				Powered by ZOD Engine (2017-11-19)<br>
+				Ported to SDL2<br>
+				<br>
+				This application uses Sciter Engine<br>
+				Copyright Terra Informatica Software,&nbsp;Inc.
+			</a>
+		</footer>
+		<main>
+			<section #mainmenu>
+				<include src="main.html"/>
+			</section>
+			<div style="margin-top: 1*;">
+				A remake of the 1996 classic
+			</div>
+		</main>
+	</section>
+</body>
+</html>

@@ -1,0 +1,730 @@
+<html>
+<head>
+<style>
+
+html
+{
+	background: linear-gradient(to bottom, #fff, darkgreen);
+    flow: horizontal;
+    padding: 0em;
+    border-spacing: 0em;
+    margin: 0;
+    cursor: url(win_cursor.png) 0 0;
+}
+
+
+a
+{
+	display: inline-block;
+	margin: 20px auto;
+	width: 260px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 20px 30px;
+	margin: 0px 0px 0px 0px;
+}
+
+a.button
+{
+	color: rgba(30, 22, 54, 0.6);
+	box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button:hover
+{
+	color: rgba(200, 0, 0, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 5px inset;
+}
+
+
+
+.bigbutton
+{
+    width: 150px;
+    height: 25px;
+    margin: 0px 90px 0px 0px;
+    padding: 5px 0px 5px 0px;
+    color: rgb(0, 0, 0);
+}
+
+.bigbutton:hover
+{
+    color: rgb(128, 0, 0);
+}
+
+.bigbuttonNoMargin
+{
+    width: 150px;
+    height: 25px;
+    margin: 0px 0px 5px 0px;
+    padding: 5px 0px 5px 0px;
+    color: rgb(0, 0, 0);
+}
+
+.bigbuttonNoMargin:hover
+{
+    color: rgb(128, 0, 0);
+}
+
+progress#bar
+{
+	height: 20dip;
+	width: 300dip;
+}
+
+
+section
+{
+	size:*; 
+	flow:grid(1 1 1,
+              2 5 3,
+              2 5 4);
+    border-spacing:0dip; /* defines spacing between cells */
+}
+      
+
+      
+section > header { height: 1.3em; /*background:red;*/ }
+section > nav    { width: *; height: 1em; /*background:orange;*/ }
+section > aside  { width: 1em; height: 1em; /*background:gold;*/ }
+section > main   { width: 18em; height: 25em; /*background:yellow;*/ }
+section > footer { width: 1em; height: *; /*background:green;*/ }
+
+
+
+@import url(std-menu.css);
+    
+    ul#menu-bar 
+    {
+      margin:0;
+      border-bottom:1px solid threedface;
+      border-left:1px solid transparent;
+    }
+    
+    ul#menu-bar:focus 
+    {
+      border-left:1px solid highlight;
+    }
+    
+    //ul#menu-bar menu menu { background:yellow; }
+    
+
+    ul#menu-bar > li 
+    {
+      margin:0 8px;
+      background-color:threedface;
+    }
+     
+    menu.table 
+    {
+      border-spacing:1px;
+    }
+    menu.table td[role="menu-item"]
+    { 
+      border:1px solid threedface; 
+    }
+    menu.table td[role="menu-item"]:current
+    { 
+      background-color:highlight; color:highlighttext; 
+    }
+    menu.table caption
+    {
+      padding:2px;
+      font-size:8.5pt;
+      background-color: threedlightshadow;
+      color: threedshadow;
+    }
+    
+    //If you need popup menus to outstand from the bar uncomment this.
+    //ul#menu-bar menu { margin-top:10px; hit-margin:10px 0 0 0; }
+    //ul#menu-bar menu menu{ margin:0; hit-margin:0; }
+    
+    select {
+      vertical-align:middle;
+    }
+
+
+
+</style>
+
+
+<script type="text/tiscript">
+
+    function self.ready()
+    {
+        view.registerUpdateUI(updateUI);
+        updateTileDropdown();
+        updateUI();
+    }
+
+    function updateUI()
+    {
+        if (view.leveleditor_getObjectType() == 5)
+            $(#robot-oid).$(option[value="{view.leveleditor_getObjectID()}"]).execCommand("set-current");
+        if (view.leveleditor_getObjectType() == 4)
+            $(#vehicle-oid).$(option[value="{view.leveleditor_getObjectID()}"]).execCommand("set-current");
+        if (view.leveleditor_getObjectType() == 3)
+            $(#gun-oid).$(option[value="{view.leveleditor_getObjectID()}"]).execCommand("set-current");
+        if (view.leveleditor_getObjectType() == 2)
+        {
+            $(#building-oid).$(option[value="{view.leveleditor_getObjectID()}"]).execCommand("set-current");
+
+            if ((view.leveleditor_getObjectID() == 6) || (view.leveleditor_getObjectID() == 7))
+            {
+                $(#div_bridge_length).style#visibility = "visible";
+                $(#bridge-length).value = view.leveleditor_getBridgeLength();
+            }
+            else
+                $(#div_bridge_length).style#visibility = "none";
+        }
+        if (view.leveleditor_getObjectType() == 7)
+            $(#mapitem-oid).$(option[value="{view.leveleditor_getObjectID()}"]).execCommand("set-current");
+
+        $(#owner).$(option[value="{view.leveleditor_getOwner()}"]).execCommand("set-current");
+
+        if (view.leveleditor_getTile() >= 0)
+            $(#tiles).$(option[value="{view.leveleditor_getTile()}"]).execCommand("set-current");
+
+        if (view.leveleditor_getPlanetType() == 0)
+            $(#planet-desert).state.checked = true;
+        else
+            $(#planet-desert).state.checked = false;
+
+        if (view.leveleditor_getPlanetType() == 1)
+            $(#planet-volcanic).state.checked = true;
+        else
+            $(#planet-volcanic).state.checked = false;
+
+        if (view.leveleditor_getPlanetType() == 2)
+            $(#planet-arctic).state.checked = true;
+        else
+            $(#planet-arctic).state.checked = false;
+
+        if (view.leveleditor_getPlanetType() == 3)
+            $(#planet-jungle).state.checked = true;
+        else
+            $(#planet-jungle).state.checked = false;
+
+        if (view.leveleditor_getPlanetType() == 4)
+            $(#planet-city).state.checked = true;
+        else
+            $(#planet-city).state.checked = false;
+
+        if (view.leveleditor_getTool() == 0)
+        {
+            $(#tools-select).checked = true;
+            $(#tools-fix).state.disabled = false;
+        }
+        else
+        {
+            $(#tools-select).checked = false;
+            $(#tools-fix).state.disabled = true;
+        }
+
+        if (view.leveleditor_getTool() == 1)
+        {
+            $(#tools-rect).checked = true;
+            $(#tools-fill).state.disabled = false;
+        }
+        else
+        {
+            $(#tools-rect).checked = false;
+            $(#tools-fill).state.disabled = true;
+        }
+
+        if (view.leveleditor_getTool() == 2)
+            $(#tools-paint).checked = true;
+        else
+            $(#tools-paint).checked = false;
+
+        if (view.leveleditor_getTool() == 3)
+            $(#tools-fill).checked = true;
+        else
+            $(#tools-fill).checked = false;
+
+        if (view.leveleditor_getTool() == 4)
+            $(#tools-fix).checked = true;
+        else
+            $(#tools-fix).checked = false;
+
+        var zone_count = view.leveleditor_getNumberOfSelectedZones();
+
+        if (zone_count == 1)
+        {
+            $(#zone-split-horizontal).state.disabled = false;
+            $(#zone-split-vertical).state.disabled   = false;
+
+            $(#zone-width).value = view.leveleditor_getSelectedZoneWidth();
+            $(#zone-height).value = view.leveleditor_getSelectedZoneHeight();
+        }
+        else
+        {
+            $(#zone-split-horizontal).state.disabled = true;
+            $(#zone-split-vertical).state.disabled   = true;
+        }
+
+        if (zone_count == 2)
+            $(#zone-merge).state.disabled = false;
+        else
+            $(#zone-merge).state.disabled = true;
+
+        $(#flags-repair).value = view.leveleditor_getFlagAutoRepair();
+        $(#flags-heal).value = view.leveleditor_getFlagAutoHeal();
+        $(#level).value = view.leveleditor_getBuildingLevel();
+    }
+
+    function updateTileDropdown()
+    {
+        var planet = view.leveleditor_getPlanetType();
+
+        $(#tiles).options.html = "";
+        for (var tile=0; tile <= 479; tile++)
+            $(#tiles).options.$append(<option value="{tile}"><img src="../cache/tile{planet}_{tile}.bmp" width="32px" height="32px"/>Tile {tile}</option>);
+    }
+
+
+
+    self.on("click", "menu > li ", function()
+    {
+        stdout.println("menu item click on ", this.value);
+    });
+
+    self.on("click", "button[name=just-a-button]", function()
+    {
+         view.msgbox("Hi, there :-)");
+    });
+
+
+    event click $(#load)
+    {
+        view.leveleditor_load();
+        updateTileDropdown();
+        updateUI();
+    }
+
+    event click $(#new)
+    {
+        view.leveleditor_new();
+    }
+
+    event click $(#save)
+    {
+        view.leveleditor_save();
+    }
+
+    event click $(#export-bitmap)
+    {
+        view.leveleditor_exportBitmap();
+    }
+
+    event click $(#exit_editor)
+    {
+        view.leveleditor_close();
+    }
+
+    event change $(#tiles)
+    {
+        view.leveleditor_updateTile( $(#tiles).value );
+    }
+
+    event change $(#robot-oid)
+    {
+        view.leveleditor_updateObject( 5, $(#robot-oid).value );
+    }
+
+    event change $(#vehicle-oid)
+    {
+        view.leveleditor_updateObject( 4, $(#vehicle-oid).value );
+    }
+
+    event change $(#gun-oid)
+    {
+        view.leveleditor_updateObject( 3, $(#gun-oid).value );
+    }
+
+    event change $(#building-oid)
+    {
+        view.leveleditor_updateObject( 2, $(#building-oid).value );
+    }
+
+    event change $(#level)
+    {
+        view.leveleditor_updateBuildingLevel( $(#level).value );
+    }
+
+    event change $(#bridge-length)
+    {
+        view.leveleditor_updateBridgeLength( $(#bridge-length).value );
+    }
+
+    event change $(#mapitem-oid)
+    {
+        view.leveleditor_updateObject( 7, $(#mapitem-oid).value );
+    }
+
+    event click $(#tools-fill)
+    {
+        view.leveleditor_setTool(3);
+        updateUI();
+    }
+
+    event click $(#add-object)
+    {
+        view.leveleditor_addObject( 4, 1 );
+        updateUI();
+    }
+
+    event click $(#delete-object)
+    {
+        view.leveleditor_deleteObject();
+        updateUI();
+    }
+
+    event change $(#owner)
+    {
+        view.leveleditor_updateOwner( $(#owner).value );
+    }
+
+    event click $(#planet-desert)
+    {
+        view.leveleditor_updateTileset(0);
+        updateTileDropdown();
+    }
+
+    event click $(#planet-volcanic)
+    {
+        view.leveleditor_updateTileset(1);
+        updateTileDropdown();
+    }
+
+    event click $(#planet-arctic)
+    {
+        view.leveleditor_updateTileset(2);
+        updateTileDropdown();
+    }
+
+    event click $(#planet-jungle)
+    {
+        view.leveleditor_updateTileset(3);
+        updateTileDropdown();
+    }
+
+    event click $(#planet-city)
+    {
+        view.leveleditor_updateTileset(4);
+        updateTileDropdown();
+    }
+
+    event click $(#zone-split-horizontal)
+    {
+        view.leveleditor_splitZoneHorizontal();
+    }
+
+    event click $(#zone-split-vertical)
+    {
+        view.leveleditor_splitZoneVertical();
+    }
+
+    event click $(#zone-merge)
+    {
+        view.leveleditor_mergeZones();
+    }
+
+    event change $(#zone-width)
+    {
+        view.leveleditor_setSelectedZoneWidth( $(#zone-width).value );
+    }
+
+    event change $(#zone-height)
+    {
+        view.leveleditor_setSelectedZoneHeight( $(#zone-height).value );
+    }
+
+    event click $(#zone-move-left)
+    {
+        view.leveleditor_moveZone(-1, 0);
+    }
+
+    event click $(#zone-move-right)
+    {
+        view.leveleditor_moveZone(1, 0);
+    }
+
+    event click $(#zone-move-up)
+    {
+        view.leveleditor_moveZone(0, -1);
+    }
+
+    event click $(#zone-move-down)
+    {
+        view.leveleditor_moveZone(0, 1);
+    }
+
+    event change $(#flags-repair)
+    {
+        view.leveleditor_setFlagAutoRepair($(#flags-repair).value);
+    }
+
+    event change $(#flags-heal)
+    {
+        view.leveleditor_setFlagAutoHeal($(#flags-heal).value);
+    }
+
+    event click $(#lua_compile)
+    {
+        view.leveleditor_CompileLuaCode($(#lua).text);
+    }
+
+</script>
+
+
+</head>
+<body>
+	<section>
+        <header>
+
+            <ul id="menu-bar">
+                <li>
+                    File
+                    <menu class="cool">
+                        <li title="Create a new random map" id="new">New map</li>
+                        <li title="Load map" id="load">Load</li>
+                        <li title="Save map" id="save">Save as</li>
+                        <li title="Export map" id="export-bitmap">Export as bitmap</li>
+                        <li title="Change the tileset">
+                            Planet type
+                            <menu>
+                                <li type="radio" id="planet-desert">Desert</li>
+                                <li type="radio" id="planet-volcanic">Volcanic</li>
+                                <li type="radio" id="planet-arctic">Arctic</li>
+                                <li type="radio" id="planet-jungle">Jungle</li>
+                                <li type="radio" id="planet-city">City</li>
+                            </menu>
+                        </li>
+                        <li title="Exit map editor" id="exit_editor">Exit</li>
+                    </menu>
+                </li>
+
+                <li>
+                    Mode
+                    <menu class="cool">
+                        <li title="Edit the tiles of the map" type="radio" id="mode-tiles">Edit tiles</li>
+                        <li title="Create and edit zones" type="radio" id="mode-zones">Edit zones</li>
+                        <li title="Create and edit units and buildings" type="radio" id="mode-objects" selected>Edit objects</li>
+                    </menu>
+                </li>
+
+                <li>
+                    Selection
+                    <menu class="cool">
+                        <li title="Select a single item" type="radio" id="tools-select">Single selection</li>
+                        <li title="Select an area" type="radio" id="tools-rect">Rectangle selection</li>
+                    </menu>
+                </li>
+
+
+                <li>
+                    Tools
+                    <menu class="cool">
+                        <li title="Pencil like drawing of tiles" type="check" id="tools-paint">Paint</li>
+                        <li title="Copy tile data from another area" type="check" id="tools-fix">Fix tool</li>
+                        <li title="Move an object" type="check" id="tools-move">Move</li>
+                        <li title="Pencil like drawing of rocks" type="check" id="tools-paint-rocks" disabled>Paint rocks</li>
+                        <li title="Eraser for rocks" type="check" id="tools-erase-rocks" disabled>Erase rocks</li>
+                    </menu>
+                </li>
+
+                <li>
+                    Edit
+                    <menu class="cool">
+                        <li title="Make a copy of a selection" id="tools-fill">Duplicate</li>
+                        <li title="Add a new object to the middle of the screen" id="add-object">New object</li>
+                        <li title="Delete selected object" id="delete-object">Delete object</li>
+                        <li disabled>Undo</li>
+                        <li disabled>Redo</li>
+                    </menu>
+                </li>
+
+                <li>
+                    View
+                    <menu class="cool">
+                        <li accesskey="^5" title="Render the tiles in grid mode, perfect for editing the ground" type="check" id="view-grid" checked>Show grid<span class="accesskey"><font color="red">5</font></span></li>
+                        <li accesskey="^0" title="Render tile information as overlay" type="check" id="view-tileinfo">Show tile info<span class="accesskey"><font color="red">0</font></span></li>
+                        <li accesskey="^6" title="Render the zones" type="check" id="view-zones" checked>Show zones<span class="accesskey"><font color="red">6</font></span></li>
+                        <li accesskey="^7" title="Render map items likes rocks and grenade boxes" type="check" id="view-map-items" checked>Show map items<span class="accesskey"><font color="red">7</font></span></li>
+                        <li accesskey="^8" title="Render units and buildings" type="check" id="view-objects" checked>Show objects<span class="accesskey"><font color="red">8</font></span></li>
+                        <li accesskey="^9" title="Switch to Lua code" type="check" id="view-lua">Show Lua code<span class="accesskey"><font color="red">9</font></span></li>
+                        <li disabled>Zoom <input type="hslider" name="zoom" min="10" max="200" value="100" step="25" buddy="zoom-buddy" /> <b id="zoom-buddy">x</b>%</li>
+                    </menu>
+                </li>
+
+
+
+            </ul>
+        </header>
+        <nav>
+            <div style="margin-top:20px; margin-left:10px; height: 50em; width: 42em;">
+                <!--Welcome to an early preview of the map editor!<br />-->
+
+                <span>Name of the map:</span>
+                <input type="text" value="" #name />
+                <br/>
+
+                <span>CRC32 of the map: </span><span #crc></span>
+
+                <textarea style="context-menu:none; visibility: none; margin-top: 3em" cols="60" rows="30" spellcheck="no" #lua></textarea>
+                <button class="bigbuttonNoMargin" style="visibility: none;" title="Conmpile Lua code to check for syntax errors" #lua_compile>Test compilation</button>
+            </div>
+        </nav>
+        <aside>
+        </aside>
+		<footer>
+		</footer>
+		<main>
+            <section #mainmenu>
+                <div style="margin-left: 50px; margin-bottom: 50px;">
+                    <h1>Map Editor</h1>
+
+                    <br />
+
+                    <div style="height: 5em; width: 10em;" #level_editor_info>
+                        Welcome to an early preview of the map editor!
+                    </div>
+
+
+                    <div style="margin-top: 13em;" #div_tiles>
+                        <select style="width: 15em;" size="6" #tiles></select>
+                    </div>
+
+                    <div style="margin-top: 13em; visibility: none;" #div_object>
+                        <select style="width: 15em;" #robot-oid>
+                            <option value="0">Grunt</option>
+                            <option value="1">Psycho</option>
+                            <option value="3">Tough</option>
+                            <option value="2">Sniper</option>
+                            <option value="4">Pyro</option>
+                            <option value="5">Laser</option>
+                        </select>
+
+                        <select style="width: 15em;" #vehicle-oid>
+                            <option value="0">Jeep</option>
+                            <option value="1">Light</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Heavy</option>
+                            <option value="4">APC</option>
+                            <option value="5">Mobile Rocket</option>
+                            <option value="6">Crane</option>
+                        </select>
+
+                        <select style="width: 15em;" #gun-oid>
+                            <option value="0">Gatling</option>
+                            <option value="1">Gun</option>
+                            <option value="2">Howitzer</option>
+                            <option value="3">Missile Cannon</option>
+                        </select>
+
+                        <select style="width: 15em;" #building-oid>
+                            <option value="0">Fort (Front)</option>
+                            <option value="1">Fort (Back)</option>
+                            <option value="2">Radar station</option>
+                            <option value="3">Repair facility</option>
+                            <option value="4">Robot factory</option>
+                            <option value="5">Vehicle factory</option>
+                            <option value="6">Bridge (Horizontal)</option>
+                            <option value="7">Bridge (Vertical)</option>
+                        </select>
+
+                        Building level:
+                        <input type="hslider" min="1" max="6" value="1" step="1" buddy="level-buddy" #level /><b id="level-buddy">x</b> Star(s)
+
+                        <div style="visibility: none;" #div_bridge_length>
+                            Bridge length:
+                            <input type="hslider" min="5" max="50" value="1" step="1" buddy="bridge-length-buddy" #bridge-length /><b id="bridge-length-buddy">x</b> Length
+                        </div>
+
+                        <select style="width: 15em;" #mapitem-oid>
+                            <option value="0">Flag</option>
+                            <option value="1">Rock</option>
+                            <option value="2">Grenades</option>
+                            <option value="3">Rockets</option>
+                            <option value="4">Hut</option>
+                            <option value="5">Ice block 1</option>
+                            <option value="6">Ice block 2</option>
+                            <option value="7">Tree 1</option>
+                            <option value="8">Tree 2</option>
+                            <option value="9">Big snow</option>
+                            <option value="10">Small snow</option>
+                            <option value="11">Big cactus</option>
+                            <option value="12">Small cactus</option>
+                            <option value="13">Tiny cactus</option>
+                            <option value="14">Rock 1</option>
+                            <option value="15">Mini cactus</option>
+                            <option value="16">Rock 2</option>
+                            <option value="17">Rock 3</option>
+                            <option value="18">Wall</option>
+                            <option value="19">Rock 4</option>
+                            <option value="20">Rock 5</option>
+                            <option value="21">Rock 6</option>
+                            <option value="22">Rock 7</option>
+                            <option value="23">Rock 8</option>
+                            <option value="24">Green tree</option>
+                            <option value="25">Round tree</option>
+                            <option value="26">Ball</option>
+                            <option value="27">Small Vulcan</option>
+                            <option value="28">Big Vulcan</option>
+                            <option value="29">Huge Vulcan</option>
+                            <option value="30">Larva</option>
+                        </select>
+
+                        <select style="width: 15em;" #owner>
+                            <option value="0">Neutral</option>
+                            <option value="1">Red</option>
+                            <option value="2">Blue</option>
+                            <option value="3">Green</option>
+                            <option value="4">Yellow</option>
+                            <option value="5">Purple</option>
+                            <option value="6">Cyan</option>
+                            <option value="7">Pink</option>
+                            <option value="8">Brown</option>
+                        </select>
+
+                        <input type="checkbox" value="1" title="Object will automatically be revived after some time" #flags-repair />Auto repair<br>
+                        <input type="checkbox" value="1" title="Object slowly gains health over time" #flags-heal />Auto heal<br>
+                    </div>
+
+
+
+                    <div style="margin-top: 10em; visibility: none;" #div_zone>
+                        <button #zone-move-left>Move left</button>
+                        <button #zone-move-right>Move right</button>
+                        <br />
+                        <button #zone-move-up>Move up</button>
+                        <button #zone-move-down>Move down</button>
+                        <br />
+
+                        Zone size:<br />
+
+                        Width: <b id="zone-width-buddy">x</b><br />
+                        <input type="hslider" min="1" max="100" value="1" step="1" buddy="zone-width-buddy" #zone-width /><br />
+                        Height: <b id="zone-height-buddy">x</b><br />
+                        <input type="hslider" min="1" max="100" value="1" step="1" buddy="zone-height-buddy" #zone-height /><br />
+
+                        Zone operations:<br />
+                        <button #zone-split-horizontal>Split horizontal</button>
+                        <button #zone-split-vertical>Split vertically</button>
+                        <br />
+                        <button #zone-merge>Merge zones</button>
+                    </div>
+                </div>
+
+                <br />
+
+
+            </section>
+			<div style="margin-top: 1*;">
+				A remake of the 1996 classic
+			</div>
+		</main>
+	</section>
+</body>
+</html>
