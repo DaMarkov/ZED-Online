@@ -284,7 +284,7 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
 
 
 
-    self.on("click", "menu > li ", function()
+    /*self.on("click", "menu > li ", function()
     {
         stdout.println("menu item click on ", this.value);
     });
@@ -292,6 +292,63 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
     self.on("click", "button[name=just-a-button]", function()
     {
          view.msgbox("Hi, there :-)");
+    });*/
+
+
+    self.on("keydown", function(evt)
+    {
+        stdout.println("keyCode: " + evt.keyCode);
+
+        //if (evt.keyCode == Event.VK_DELETE)
+            //view.leveleditor_deleteObject();
+
+        if (evt.keyCode == Event.VK_G)
+            view.leveleditor_updateObject(5, 0);
+        if (evt.keyCode == Event.VK_P)
+            view.leveleditor_updateObject(5, 1);
+        if (evt.keyCode == Event.VK_T)
+            view.leveleditor_updateObject(5, 3);
+        if (evt.keyCode == Event.VK_S)
+            view.leveleditor_updateObject(5, 2);
+        if (evt.keyCode == Event.VK_Y)
+            view.leveleditor_updateObject(5, 4);
+        if (evt.keyCode == Event.VK_E)
+            view.leveleditor_updateObject(5, 5);
+
+        if (evt.keyCode == Event.VK_J)
+            view.leveleditor_updateObject(4, 0);
+        if (evt.keyCode == Event.VK_L)
+            view.leveleditor_updateObject(4, 1);
+        if (evt.keyCode == Event.VK_M)
+            view.leveleditor_updateObject(4, 2);
+        if (evt.keyCode == Event.VK_H)
+            view.leveleditor_updateObject(4, 3);
+        if (evt.keyCode == Event.VK_B)
+            view.leveleditor_updateObject(4, 4);
+        if (evt.keyCode == Event.VK_A)
+            view.leveleditor_updateObject(4, 5);
+        if (evt.keyCode == Event.VK_R)
+            view.leveleditor_updateObject(4, 6);
+
+        if (evt.keyCode == Event.VK_T)
+            view.leveleditor_updateObject(3, 0);
+        if (evt.keyCode == Event.VK_U)
+            view.leveleditor_updateObject(3, 1);
+        if (evt.keyCode == Event.VK_W)
+            view.leveleditor_updateObject(3, 2);
+        if (evt.keyCode == Event.VK_O)
+            view.leveleditor_updateObject(3, 3);
+
+        if (evt.keyCode == Event.VK_Z)
+            view.leveleditor_updateObject(2, 0);
+        if (evt.keyCode == Event.VK_X)
+            view.leveleditor_updateObject(2, 1);
+        if (evt.keyCode == Event.VK_C)
+            view.leveleditor_updateObject(2, 4);
+        if (evt.keyCode == Event.VK_V)
+            view.leveleditor_updateObject(2, 5);
+
+        updateUI();
     });
 
 
@@ -362,12 +419,64 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
         view.leveleditor_updateObject( 7, $(#mapitem-oid).value );
     }
 
+
+    //Tools
+    event click $(#tools-select)
+    {
+        view.leveleditor_setTool(0);
+        updateUI();
+    }
+
+    event click $(#tools-rect)
+    {
+        view.leveleditor_setTool(1);
+        updateUI();
+    }
+
+    event click $(#tools-paint)
+    {
+        view.leveleditor_setTool(2);
+        updateUI();
+    }
+
     event click $(#tools-fill)
     {
         view.leveleditor_setTool(3);
         updateUI();
     }
 
+    event click $(#tools-fix)
+    {
+        view.leveleditor_setTool(4);
+        updateUI();
+    }
+
+    event click $(#tools-move)
+    {
+        view.leveleditor_setTool(5);
+        updateUI();
+    }
+
+    event click $(#tools-paint-rocks)
+    {
+        view.leveleditor_setTool(6);
+        updateUI();
+    }
+
+    event click $(#tools-erase-rocks)
+    {
+        view.leveleditor_setTool(7);
+        updateUI();
+    }
+
+    event click $(#tools-beautify)
+    {
+        view.leveleditor_setTool(8);
+        updateUI();
+    }
+
+
+    //Edit
     event click $(#add-object)
     {
         view.leveleditor_addObject( 4, 1 );
@@ -384,6 +493,51 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
     {
         view.leveleditor_updateOwner( $(#owner).value );
     }
+
+    
+    //Change map size
+    event click $(#size-width-increase)
+    {
+        view.leveleditor_widthIncrease();
+    }
+
+    event click $(#size-width-decrease)
+    {
+        view.leveleditor_widthDecrease();
+    }
+
+    event click $(#size-height-increase)
+    {
+        view.leveleditor_heightIncrease();
+    }
+
+    event click $(#size-height-decrease)
+    {
+        view.leveleditor_heightDecrease();
+    }
+
+
+    //Rotate map
+    event click $(#rotate-right)
+    {
+        view.leveleditor_rotateRight();
+    }
+
+    event click $(#rotate-left)
+    {
+        view.leveleditor_rotateLeft();
+    }
+
+    event click $(#rotate-up)
+    {
+        view.leveleditor_rotateUp();
+    }
+
+    event click $(#rotate-down)
+    {
+        view.leveleditor_rotateDown();
+    }
+
 
     event click $(#planet-desert)
     {
@@ -414,6 +568,80 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
         view.leveleditor_updateTileset(4);
         updateTileDropdown();
     }
+
+
+    //Modes
+    event click $(#mode-tiles)
+    {
+        view.leveleditor_modeTiles();
+        $(#mode).value = "Tiles";
+    }
+
+    event click $(#mode-zones)
+    {
+        view.leveleditor_modeZones();
+        $(#mode).value = "Zones";
+    }
+
+    event click $(#mode-objects)
+    {
+        view.leveleditor_modeObjects();
+        $(#mode).value = "Objects";
+    }
+
+
+    //Views
+    event click $(#view-grid)
+    {
+        view.leveleditor_viewGrid();
+    }
+
+    event click $(#view-tileinfo)
+    {
+        view.leveleditor_viewTileinfo();
+    }
+
+    event click $(#view-map-items)
+    {
+        view.leveleditor_viewMapItems();
+    }
+
+    event click $(#view-zones)
+    {
+        view.leveleditor_viewZones();
+    }
+
+    event click $(#view-objects)
+    {
+        view.leveleditor_viewObjects();
+    }
+
+
+    //Select generic tile
+    event click $(#select-land-tile)
+    {
+        view.leveleditor_updateTile(122);
+        view.leveleditor_setTool(2);
+    }
+
+    event click $(#select-water-tile)
+    {
+        view.leveleditor_updateTile(200);
+        view.leveleditor_setTool(2);
+    }
+
+    event click $(#select-road-tile)
+    {
+        view.leveleditor_updateTile(75);
+        view.leveleditor_setTool(2);
+    }
+
+    event click $(#select-impassable-tile)
+    {
+        view.leveleditor_updateTile(376);
+        view.leveleditor_setTool(2);
+    }
+
 
     event click $(#zone-split-horizontal)
     {
@@ -491,6 +719,25 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
                         <li title="Load map" id="load">Load</li>
                         <li title="Save map" id="save">Save as</li>
                         <li title="Export map" id="export-bitmap">Export as bitmap</li>
+                        <hr/>
+                        <li title="Change the size of the map">
+                            Map size
+                            <menu>
+                                <li accesskey="^RIGHT" id="size-width-increase">Increase width<span class="accesskey"><font color="red">Ctrl+Right</font></span></li>
+                                <li accesskey="^LEFT"  id="size-width-decrease">Decrease width<span class="accesskey"><font color="red">Ctrl+Left</font></span></li>
+                                <li accesskey="^DOWN"  id="size-height-increase">Increase height<span class="accesskey"><font color="red">Ctrl+Down</font></span></li>
+                                <li accesskey="^UP"    id="size-height-decrease">Decrease height<span class="accesskey"><font color="red">Ctrl+Up</font></span></li>
+                            </menu>
+                        </li>
+                        <li title="Shift the map tiles">
+                            Rotate Map tiles
+                            <menu>
+                                <li accesskey="RIGHT" id="rotate-right">Move right<span class="accesskey"><font color="red">Alt+Right</font></span></li>
+                                <li accesskey="LEFT"  id="rotate-left">Move left<span class="accesskey"><font color="red">Alt+Left</font></span></li>
+                                <li accesskey="DOWN"  id="rotate-up">Move up<span class="accesskey"><font color="red">Alt+Down</font></span></li>
+                                <li accesskey="UP"    id="rotate-down">Move down<span class="accesskey"><font color="red">Alt+Up</font></span></li>
+                            </menu>
+                        </li>
                         <li title="Change the tileset">
                             Planet type
                             <menu>
@@ -501,6 +748,7 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
                                 <li type="radio" id="planet-city">City</li>
                             </menu>
                         </li>
+                        <hr/>
                         <li title="Exit map editor" id="exit_editor">Exit</li>
                     </menu>
                 </li>
@@ -508,9 +756,9 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
                 <li>
                     Mode
                     <menu class="cool">
-                        <li title="Edit the tiles of the map" type="radio" id="mode-tiles">Edit tiles</li>
-                        <li title="Create and edit zones" type="radio" id="mode-zones">Edit zones</li>
-                        <li title="Create and edit units and buildings" type="radio" id="mode-objects" selected>Edit objects</li>
+                        <li accesskey="!1" title="Edit the tiles of the map" type="radio" id="mode-tiles">Edit tiles<span class="accesskey"><font color="red">1</font></span></li>
+                        <li accesskey="!2" title="Create and edit zones" type="radio" id="mode-zones">Edit zones<span class="accesskey"><font color="red">2</font></span></li>
+                        <li accesskey="!3" title="Create and edit units and buildings" type="radio" id="mode-objects" selected>Edit objects<span class="accesskey"><font color="red">3</font></span></li>
                     </menu>
                 </li>
 
@@ -526,20 +774,23 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
                 <li>
                     Tools
                     <menu class="cool">
-                        <li title="Pencil like drawing of tiles" type="check" id="tools-paint">Paint</li>
-                        <li title="Copy tile data from another area" type="check" id="tools-fix">Fix tool</li>
-                        <li title="Move an object" type="check" id="tools-move">Move</li>
-                        <li title="Pencil like drawing of rocks" type="check" id="tools-paint-rocks" disabled>Paint rocks</li>
-                        <li title="Eraser for rocks" type="check" id="tools-erase-rocks" disabled>Erase rocks</li>
+                        <li title="Pencil like drawing of tiles" type="radio" id="tools-paint">Paint</li>
+                        <li title="Copy tile data from another area" type="radio" id="tools-fix">Fix tool</li>
+                        <li title="Move an object" type="radio" id="tools-move">Move</li>
+                        <hr/>
+                        <li title="Pencil like drawing of rocks" type="radio" id="tools-paint-rocks">Paint rocks</li>
+                        <li title="Eraser for rocks" type="radio" id="tools-erase-rocks">Erase rocks</li>
+                        <hr/>
+                        <li title="Changes tile based on surrounding tiles" type="radio" id="tools-beautify">Beautify</li>
                     </menu>
                 </li>
 
                 <li>
                     Edit
                     <menu class="cool">
-                        <li title="Make a copy of a selection" id="tools-fill">Duplicate</li>
-                        <li title="Add a new object to the middle of the screen" id="add-object">New object</li>
-                        <li title="Delete selected object" id="delete-object">Delete object</li>
+                        <li accesskey="^D" title="Make a copy of a selection" id="tools-fill">Duplicate<span class="accesskey"><font color="red">Ctrl+D</font></span></li>
+                        <li accesskey="^C" title="Add a new object to the middle of the screen" id="add-object">New object<span class="accesskey"><font color="red">Ctrl+C</font></span></li>
+                        <li accesskey="!DELETE" title="Delete selected object" id="delete-object">Delete object<span class="accesskey"><font color="red">Delete</font></span></li>
                         <li disabled>Undo</li>
                         <li disabled>Redo</li>
                     </menu>
@@ -548,12 +799,12 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
                 <li>
                     View
                     <menu class="cool">
-                        <li accesskey="^5" title="Render the tiles in grid mode, perfect for editing the ground" type="check" id="view-grid" checked>Show grid<span class="accesskey"><font color="red">5</font></span></li>
-                        <li accesskey="^0" title="Render tile information as overlay" type="check" id="view-tileinfo">Show tile info<span class="accesskey"><font color="red">0</font></span></li>
-                        <li accesskey="^6" title="Render the zones" type="check" id="view-zones" checked>Show zones<span class="accesskey"><font color="red">6</font></span></li>
-                        <li accesskey="^7" title="Render map items likes rocks and grenade boxes" type="check" id="view-map-items" checked>Show map items<span class="accesskey"><font color="red">7</font></span></li>
-                        <li accesskey="^8" title="Render units and buildings" type="check" id="view-objects" checked>Show objects<span class="accesskey"><font color="red">8</font></span></li>
-                        <li accesskey="^9" title="Switch to Lua code" type="check" id="view-lua">Show Lua code<span class="accesskey"><font color="red">9</font></span></li>
+                        <li accesskey="!F5"  title="Render the tiles in grid mode, perfect for editing the ground" type="check" id="view-grid" checked>Show grid<span class="accesskey"><font color="red">F5</font></span></li>
+                        <li accesskey="!F9"  title="Render tile information as overlay" type="check" id="view-tileinfo">Show tile info<span class="accesskey"><font color="red">F10</font></span></li>
+                        <li accesskey="!F6"  title="Render the zones" type="check" id="view-zones" checked>Show zones<span class="accesskey"><font color="red">F6</font></span></li>
+                        <li accesskey="!F7"  title="Render map items likes rocks and grenade boxes" type="check" id="view-map-items" checked>Show map items<span class="accesskey"><font color="red">F7</font></span></li>
+                        <li accesskey="!F8"  title="Render units and buildings" type="check" id="view-objects" checked>Show objects<span class="accesskey"><font color="red">F8</font></span></li>
+                        <li accesskey="!F10" title="Switch to Lua code" type="check" id="view-lua">Show Lua code<span class="accesskey"><font color="red">F9</font></span></li>
                         <li disabled>Zoom <input type="hslider" name="zoom" min="10" max="200" value="100" step="25" buddy="zoom-buddy" /> <b id="zoom-buddy">x</b>%</li>
                     </menu>
                 </li>
@@ -564,13 +815,15 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
         </header>
         <nav>
             <div style="margin-top:20px; margin-left:10px; height: 50em; width: 42em;">
-                <!--Welcome to an early preview of the map editor!<br />-->
 
                 <span>Name of the map:</span>
                 <input type="text" value="" #name />
                 <br/>
 
                 <span>CRC32 of the map: </span><span #crc></span>
+                <br/>
+
+                <span>Mode:&nbsp;</span><b><span #mode>Objects</span></b>
 
                 <textarea style="context-menu:none; visibility: none; margin-top: 3em" cols="60" rows="30" spellcheck="no" #lua></textarea>
                 <button class="bigbuttonNoMargin" style="visibility: none;" title="Conmpile Lua code to check for syntax errors" #lua_compile>Test compilation</button>
@@ -593,6 +846,11 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
 
 
                     <div style="margin-top: 13em;" #div_tiles>
+                        <button #select-land-tile>Land tile</button>
+                        <button #select-water-tile>Water tile</button>
+                        <br />
+                        <button #select-road-tile>Street tile</button>
+                        <button #select-impassable-tile>Impassable tile</button>
                         <select style="width: 15em;" size="6" #tiles></select>
                     </div>
 

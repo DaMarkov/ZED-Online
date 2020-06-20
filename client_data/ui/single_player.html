@@ -1,15 +1,17 @@
 <h1>Single Player</h1>
 
-<div style="width: 52em; height: 5em;">
+
+
+<table><tr></tr><td colspan="2">
+<div style="width: 55em; height: 5em;">
     <button class="bigbutton" style="margin-bottom:0px; visibility: none;" #campaign>Original campaign</button>
     <button class="bigbutton" style="margin-bottom:0px; visibility: none;" #expansion>Expansion</button>
     <button class="bigbuttonNoMargin" style="margin-bottom:0px; visibility: none;" #beta>Beta campaign</button>
 </div>
 
-<br /><br /><br />
+</td></tr><tr><td>
 
-<div style="width: 20em;" #panel_campaign>
-    <div style="width: 3em; float: right; margin-top: 1em; margin-right: 7em;" #div_mapimage></div>
+<div style="width: 40em; height: *;" #panel_campaign>
     <br />
     <button class="bigbutton" #start_level_1>Level 1</button>
     <button class="bigbuttonNoMargin" disabled #start_level_11>Level 11</button><br />
@@ -34,8 +36,7 @@
 </div>
 
 
-<div style="width: 10em; visibility: none;" #panel_expansion>
-    <div style="width: 3em; float: right; margin-left: 1em;" #div_mapimage2></div>
+<div style="width: 50em; height: 31em; visibility: none;" #panel_expansion>
     <br />
     <button class="bigbutton" disabled #start_level_21>Level 21</button>
     <button class="bigbutton" disabled #start_level_26>Level 26</button>
@@ -54,8 +55,7 @@
     <button class="bigbuttonNoMargin" disabled #start_level_35>Level 35</button><br />
 </div>
 
-<div style="width: 20em; visibility: none;" #panel_beta>
-    <div style="width: 3em; float: right; margin-top: 1em; margin-right: 7em;" #div_mapimage3></div>
+<div style="width: 40em; height: *; visibility: none;" #panel_beta>
     <br />
     <button class="bigbutton" disabled #start_level_36>Level 1</button>
     <button class="bigbuttonNoMargin" disabled #start_level_46>Level 11</button><br />
@@ -80,3 +80,9 @@
 </div>
 
 <button class="bigbutton" style="margin-bottom:0px; margin-top: 2em; margin-left: 10.3em;" #main>Back</button>
+
+</td><td>
+
+<div style="width: 3em; margin-top: 1em; margin-right: 7em;" #div_mapimage></div>
+
+</td></tr></table>

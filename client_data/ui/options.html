@@ -1,45 +1,142 @@
-<style>
-    ul {
-        list-style-type: none;
-        padding-left: 0px;
-    }
+<h1>Options</h1>
 
-        ul li {
-            margin-bottom: 8px;
-        }
 
-            ul li span {
-                text-align: right;
-                float: left;
-                width: 150px;
-            }
 
-    select {
-        width: 70px;
-    }
+<table><tr><td colspan="2">
+<div style="width: 62em; height: 5em;">
+    <button class="bigbutton" style="margin-bottom:0px;" #op_general>General</button>
+    <button class="bigbutton" style="margin-bottom:0px;" #op_controls>Controls</button>
+    <button class="bigbutton" style="margin-bottom:0px;" #hotkeys>Configure hotkeys</button>
+    <button class="bigbuttonNoMargin" style="margin-bottom:0px;" #op_default>Set default units</button>
+</div>
 
-        select > popup {
-            height: 400px;
-        }
-</style>
+</td></tr><tr><td style="width: 18em;">
 
-<div style="width: 40em;" #options_panel>
+    <div style="width: 20em; height: *;" #general_panel_1>
 
-    <h1>Options</h1>
+        <u>Language</u>
+        <br />
+        <div style="padding-left: 20px; margin-top:10px;">
+            <select style="width: 130px;" #language>
+                <option value="0"><img src="en.png" /> English</option>
+                <option value="1"><img src="de.png" /> German</option>
+                <option value="2"><img src="fr.png" /> France</option>
+                <option value="3"><img src="es.png" /> Spanish</option>
+                <option value="4"><img src="it.png" /> Italian</option>
+                <option value="5"><img src="ru.png" /> Russian</option>
+                <option value="6"><img src="en.png" /> English (Rude)</option>
+            </select>
+        </div>
 
-    <div style="width: 18em; margin-left: 3em; float:right;">
+        <br />
 
-        <div style="width: 70%; padding-left: 20px;">
-            <u>Control style</u>
-            <div style="padding-left: 20px; margin-top:10px; margin-bottom:10px;">
-                <select #controls>
-                    <option value="0">Classic</option>
-                    <option value="1">ZOD</option>
-                    <option value="2">Starcraft</option>
-                    <option value="3">Custom</option>
+    
+
+    <br />
+
+        <u>Screen settings</u>
+        <div style="padding-left: 20px; margin-top:10px;">
+            <input type="checkbox" value="1" #fullscreen>Start in fullscreen
+            <br>
+            Scaling
+            <select style="width: 8em;" #screenmode>
+                <option value="0">Fit to screen</option>
+                <option value="1">Stretch</option>
+                <option value="2">Widescreen</option>
+                <option value="3">No scaling</option>
+                <option value="4">Auto</option>
+            </select>
+        </div>
+
+    <br />
+
+    <br />
+
+    
+        <u>Renderer</u>
+        <br />
+            <select style="width: 10em;" #renderer>
+                <option value="0">Software (SDL2)</option>
+                <option value="1">OpenGL</option>
+            </select>
+
+            <div style="margin-top:5px;">
+                Resolution
+                <br />
+                <select style="width: 10em;" #resolution>
+                    <option value="640 480">640x480</option>
+                    <option value="800 600">800x600</option>
+                    <option value="1024 768">1024x768</option>
+                    <option value="1440 1080">1440x1080</option>
                 </select>
-                <button class="bigbuttonNoMargin" style="width: 75px; height: 15px;" #configure_custom>Configure</button>
             </div>
+
+            <div style="margin-top:5px;">
+                UI Scaling
+                <br />
+                <input type="hslider" min="100" max="250" value="100" step="10" buddy="uiscaling_buddy" #uiscaling />
+                <b id="uiscaling_buddy"></b>
+                <b>%</b>
+                <br />
+            </div>
+
+            <div style="margin-top:25px;">
+                HD mode (Beta)
+                <br />
+                <select style="width: 13em;" #definiton>
+                    <option value="0">Standard Definition (SD)</option>
+                    <option value="1">High Definition (HD)</option>
+                </select>
+            </div>
+
+            <div style="margin-top:5px;">
+                <button|checkbox title="Makes the image less pixilated but also less sharp" #bilinear>Use Bilinear Texture Filtering</button>
+            </div>
+
+            <div style="margin-top:5px;">
+                Post-Processing
+                <br />
+                <select style="width: 10em;" #post_processing>
+                    <option value="0">None</option>
+                    <option value="1">HQ2x</option>
+                    <option value="2">HQ3x</option>
+                    <option value="3">HQ4x</option>
+                </select>
+            </div>
+
+            <button|checkbox title="Makes the enemy's color more visible" #team_colors>Recolor enemy units</button>
+
+            <div style="margin-top:25px; height: 10em;">
+                OpenGL zoom
+                <br />
+                <input type="hslider" min="40" max="300" value="100" step="5" buddy="zoom-buddy" #zoom />
+                <b id="zoom-buddy"></b>
+                <b>%</b>
+                <br />
+
+                Zoom controls
+                <select style="width: 12em;" #zoom-control>
+                    <option value="1">Mousewheel</option>
+                    <option value="2">Mousewheel (inverted)</option>
+                    <option value="0">Disabled</option>
+                </select>
+
+                <button|checkbox #zoom_clamp>Restrict Zoom to map</button>
+            </div>
+    </div>
+
+
+
+    <div style="width: 25em; height: *; visibility: none;" #controls_panel_1>
+        <u>Control style</u>
+                <div style="padding-left: 20px; margin-top:1px; margin-bottom:10px;">
+                    <select #controls>
+                        <option value="0">Classic</option>
+                        <option value="1">ZOD</option>
+                        <option value="2">Starcraft</option>
+                        <option value="3">Custom</option>
+                    </select>
+                </div>
 
             Key scroll speed
             <input type="hslider" max="1000" value="500" step="50" buddy="keyscroll-buddy" #keyscroll />
@@ -63,349 +160,192 @@
             <b>%</b>
             <br />
 
-            <br />
-            <u>Cutscenes</u>
-            <br />
-            <select type="select" style="width:10em;" multiple="checkmarks" size=5 #cutscenes>
-                <option value="1">Intro</option>
-                <option value="2">Match won</option>
-                <option value="4">Match lost</option>
-                <option value="8">Planet transition</option>
-                <option value="16">Credits</option>
-            </select>
-
-            <button style="margin-top:20px;" class="bigbuttonNoMargin" #hotkeys>Configure hotkeys</button>
-            <button style="margin-top:20px;" class="bigbuttonNoMargin" #default>Set default units</button>
-        </div>
-
-    </div>
-
-    <div style="width: 40%;padding-left: 20px;">
-        <u>Language</u>
+            <div style="margin-top:15px; width: 30em; height: 4em;">
+        Save to group
         <br />
-        <div style="padding-left: 20px; margin-top:10px;">
-            <select style="width: 130px;" #language>
-                <option value="0"><img src="en.png" /> English</option>
-                <option value="1"><img src="de.png" /> German</option>
-                <option value="2"><img src="fr.png" /> France</option>
-                <option value="3"><img src="es.png" /> Spanish</option>
-                <option value="4"><img src="it.png" /> Italian</option>
-                <option value="5"><img src="ru.png" /> Russian</option>
-                <option value="6"><img src="en.png" /> English (Rude)</option>
-            </select>
-        </div>
+        <select style="width: 10em;" #save_group>
+            <option value="0">&lt;None&gt;</option>
+            <option value="1">Ctrl</option>
+            <option value="2">Alt</option>
+            <option value="4">Shift</option>
+            <option value="3">Ctrl+Alt</option>
+            <option value="5">Ctrl+Shift</option>
+            <option value="6">Alt+Shift</option>
+            <option value="7">Ctrl+Alt+Shift</option>
+        </select>
+        + 0-9
     </div>
 
-    <br />
-
-    <div style="width: 45%;padding-left: 20px;">
-        <u>Audio settings</u>
-        <div style="padding-left: 20px; margin-top:10px;">
-            <input type="checkbox" value="1" #music-ingame>Music during match
-            <br>
-            <input type="checkbox" value="1" #music-menu>Music in menu
-            <br>
-            <input type="checkbox" value="1" #sounds>Sounds
-            <br>
-
-            Music volume
-            <br />
-            <input type="hslider" max="100" value="75" step="5" buddy="musicvolume-buddy" #musicvolume />
-            <b id="musicvolume-buddy"></b>
-            <b>%</b>
-            <br />
-
-            Sound volume
-            <br />
-            <input type="hslider" max="100" value="75" step="5" buddy="soundvolume-buddy" #soundvolume />
-            <b id="soundvolume-buddy"></b>
-            <b>%</b>
-        </div>
-    </div>
-
-    <br />
-
-    <div style="width: 60%;padding-left: 20px;">
-        <u>Screen settings</u>
-        <div style="padding-left: 20px; margin-top:10px;">
-            <input type="checkbox" value="1" #fullscreen>Start in fullscreen
-            <br>
-            Scaling
-            <select style="width: 8em;" #screenmode>
-                <option value="0">Fit to screen</option>
-                <option value="1">Stretch</option>
-                <option value="2">Widescreen</option>
-                <option value="3">No scaling</option>
-                <option value="4">Auto</option>
-            </select>
-        </div>
-    </div>
-
-    <br />
-
-    <br />
-
-    <div style="width: 40%;padding-left: 20px; margin-bottom: 30px;">
-        <u>Renderer</u>
+    <div style="margin-top:5px; width: 30em; height: 5em;">
+        Load group
         <br />
-        <div style="padding-left: 20px; margin-top:10px;">
-            <select style="width: 10em;" #renderer>
-                <option value="0">Software (SDL2)</option>
-                <option value="1">OpenGL</option>
-            </select>
-
-            <div style="margin-top:5px;">
-                Resolution
-                <br />
-                <select style="width: 10em;" #resolution>
-                    <option value="640 480">640x480</option>
-                    <option value="800 600">800x600</option>
-                    <option value="1024 768">1024x768</option>
-                    <option value="1440 1080">1440x1080</option>
-                </select>
-            </div>
-
-            <div style="margin-top:5px;">
-                OpenGL zoom
-                <br />
-                <input type="hslider" min="40" max="300" value="100" step="5" buddy="zoom-buddy" #zoom />
-                <b id="zoom-buddy"></b>
-                <b>%</b>
-                <br />
-
-                Zoom controls
-                <select style="width: 12em;" #zoom-control>
-                    <option value="1">Mousewheel</option>
-                    <option value="2">Mousewheel (inverted)</option>
-                    <option value="0">Disabled</option>
-                </select>
-            </div>
-
-        </div>
+        <select style="width: 10em;" #load_group>
+            <option value="0">&lt;None&gt;</option>
+            <option value="1">Ctrl</option>
+            <option value="2">Alt</option>
+            <option value="4">Shift</option>
+            <option value="3">Ctrl+Alt</option>
+            <option value="5">Ctrl+Shift</option>
+            <option value="6">Alt+Shift</option>
+            <option value="7">Ctrl+Alt+Shift</option>
+        </select>
+        + 0-9
     </div>
 
-    <br>
 
-    <button class="bigbutton" #save_options>Save settings</button>
-    <button class="bigbuttonNoMargin" #cancel_options>Cancel</button>
-
-</div>
-
-
-<div style="width: 48em; visibility: none;" #hotkeys_panel>
-    <h1>Configure Hotkeys</h1>
-
-    <div style="width: 48em;">
-        <div style="float:right; padding-left: 0px; width: 50%;">
-            <ul>
-                <li>
-                    <span>Cancel production:&nbsp;</span>
-                    <select #hk_cancel_mod /> +
-                    <select #hk_cancel />
-                </li>
-                <li>
-                    <span>Grunt:&nbsp;</span>
-                    <select #grunt_mod /> +
-                    <select #grunt />
-                </li>
-                <li>
-                    <span>Psycho:&nbsp;</span>
-                    <select #psycho_mod /> +
-                    <select #psycho />
-                </li>
-                <li>
-                    <span>Tough:&nbsp;</span>
-                    <select #tough_mod /> +
-                    <select #tough />
-                </li>
-                <li>
-                    <span>Sniper:&nbsp;</span>
-                    <select #sniper_mod /> +
-                    <select #sniper />
-                </li>
-                <li>
-                    <span>Pyro:&nbsp;</span>
-                    <select #pyro_mod /> +
-                    <select #pyro />
-                </li>
-                <li>
-                    <span>Laser:&nbsp;</span>
-                    <select #laser_mod /> +
-                    <select #laser />
-                </li>
-                <li>
-                    <span>Jeep:&nbsp;</span>
-                    <select #jeep_mod /> +
-                    <select #jeep />
-                </li>
-                <li>
-                    <span>Light:&nbsp;</span>
-                    <select #light_mod /> +
-                    <select #light />
-                </li>
-                <li>
-                    <span>Medium:&nbsp;</span>
-                    <select #medium_mod /> +
-                    <select #medium />
-                </li>
-                <li>
-                    <span>Heavy:&nbsp;</span>
-                    <select #heavy_mod /> +
-                    <select #heavy />
-                </li>
-                <li>
-                    <span>Mobile rocket:&nbsp;</span>
-                    <select #mo_rocket_mod /> +
-                    <select #mo_rocket />
-                </li>
-                <li>
-                    <span>APC:&nbsp;</span>
-                    <select #apc_mod /> +
-                    <select #apc />
-                </li>
-                <li>
-                    <span>Crane:&nbsp;</span>
-                    <select #crane_mod /> +
-                    <select #crane />
-                </li>
-                <li>
-                    <span>Gatling:&nbsp;</span>
-                    <select #gatling_mod /> +
-                    <select #gatling />
-                </li>
-                <li>
-                    <span>Gun:&nbsp;</span>
-                    <select #gun_mod /> +
-                    <select #gun />
-                </li>
-                <li>
-                    <span>Howitzer:&nbsp;</span>
-                    <select #howitzer_mod /> +
-                    <select #howitzer />
-                </li>
-                <li>
-                    <span>Rocket:&nbsp;</span>
-                    <select #rocket_mod /> +
-                    <select #rocket />
-                </li>
-            </ul>
-        </div>
+        <div style="margin-top:0px; width: 24em; height: 20em; padding-left: 0px; padding-top: 1px;">
+                
+                        <div style="width: 9em; height: 14em; float: left;">
+                            <div style="margin-bottom: 16px;">
+                                <span>Hold position:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Patrol move:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Select all units:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Go to fort:&nbsp;</span>
+                            </div>
+                        </div>
+                        <div style="width: 12em; height: 14em; float: left;">
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_hold_position_mod /> + <select #hk_hold_position />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_patrol_move_mod /> + <select #hk_patrol_move />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_selectall_mod /> + <select #hk_selectall />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_gotofort_mod /> + <select #hk_gotofort />
+                            </div>
+                        </div>
 
 
 
-        <div style="width: 50%; padding-left: 0px; padding-top: 1px;">
-            <div>
-                <ul>
-                    <li>
-                        <span>Toggle fullscreen:&nbsp;</span>
-                        <select #hk_fullscreen_mod /> +
+                
+            </div>
+    </div>
+
+
+
+    <div style="width: 32em; height: *; visibility: none;" #hotkeys_panel_1>
+
+
+            <div style="width: 12em; height: 43em; float: left;">
+                            <div style="margin-bottom: 16px;">
+                                <span>Toggle fullscreen:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Toggle renderer:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Toggle scaling:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Toggle FPS:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Take screenshot:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Show overlay:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Chat message:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Team chat message:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Change color:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Change enemy color:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Pause:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Boss key:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Reset / Surrender:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Exit game:&nbsp;</span>
+                            </div>
+                        </div>
+
+
+                        <div style="width: 12em; height: 43em; float: left;">
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_fullscreen_mod /> +
                         <select #hk_fullscreen />
-                    </li>
-                    <li>
-                        <span>Toggle renderer:&nbsp;</span>
-                        <select #hk_renderer_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_renderer_mod /> +
                         <select #hk_renderer />
-                    </li>
-                    <li>
-                        <span>Toggle scaling:&nbsp;</span>
-                        <select #hk_scaling_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_scaling_mod /> +
                         <select #hk_scaling />
-                    </li>
-                    <li>
-                        <span>Toggle FPS:&nbsp;</span>
-                        <select #hk_fps_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_fps_mod /> +
                         <select #hk_fps />
-                    </li>
-                    <li>
-                        <span>Take screenshot:&nbsp;</span>
-                        <select #hk_screenshot_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_screenshot_mod /> +
                         <select #hk_screenshot />
-                    </li>
-                    <li>
-                        <span>Show overlay:&nbsp;</span>
-                        <select #hk_overlay_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_overlay_mod /> +
                         <select #hk_overlay />
-                    </li>
-                    <li>
-                        <span>Chat message:&nbsp;</span>
-                        <select #hk_chat_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_chat_mod /> +
                         <select #hk_chat />
-                    </li>
-                    <li>
-                        <span>Change color:&nbsp;</span>
-                        <select #hk_change_color_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_team_chat_mod /> +
+                        <select #hk_team_chat />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_change_color_mod /> +
                         <select #hk_change_color />
-                    </li>
-                    <li>
-                        <span>Change enemy color:&nbsp;</span>
-                        <select #hk_change_enemy_color_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_change_enemy_color_mod /> +
                         <select #hk_change_enemy_color />
-                    </li>
-                    <li>
-                        <span>Hold position:&nbsp;</span>
-                        <select #hk_hold_position_mod /> +
-                        <select #hk_hold_position />
-                    </li>
-                    <li>
-                        <span>Patrol move:&nbsp;</span>
-                        <select #hk_patrol_move_mod /> +
-                        <select #hk_patrol_move />
-                    </li>
-                    <li>
-                        <span>Pause:&nbsp;</span>
-                        <select #hk_pause_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_pause_mod /> +
                         <select #hk_pause />
-                    </li>
-                    <li>
-                        <span>Boss key:&nbsp;</span>
-                        <select #hk_boss_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_boss_mod /> +
                         <select #hk_boss />
-                    </li>
-                    <li>
-                        <span>Select all units:&nbsp;</span>
-                        <select #hk_selectall_mod /> +
-                        <select #hk_selectall />
-                    </li>
-                    <li>
-                        <span>Go to fort:&nbsp;</span>
-                        <select #hk_gotofort_mod /> +
-                        <select #hk_gotofort />
-                    </li>
-                    <li>
-                        <span>Reset / Surrender:&nbsp;</span>
-                        <select #hk_surrender_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_surrender_mod /> +
                         <select #hk_surrender />
-                    </li>
-                    <li>
-                        <span>Exit game:&nbsp;</span>
-                        <select #hk_exit_mod /> +
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_exit_mod /> +
                         <select #hk_exit />
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <br>
-
-        <div style="margin-top:5px; padding-left: 130px;">
-            <button class="bigbuttonNoMargin" #save_hotkeys>Save hotkeys</button>
-            <br />
-            <br />
-            <button class="bigbuttonNoMargin" #reset_hotkeys>Reset to default</button>
-            <br />
-            <br />
-            <button class="bigbuttonNoMargin" #back_to_options>Cancel</button>
-        </div>
+                            </div>
+                        </div>
 
     </div>
-</div>
 
 
-<div style="width: 58em; visibility: none;" #default_panel>
-    <h1>Configure default units</h1>
 
-    <div style="width: 24em; height: 18em; float:right;">
+    <div style="width: 24em; height: *; visibility: none;" #default_panel_1>
+        <div style="width: 24em; height: 19em;">
         <ul>
             <li>
                 <span style="width:13em;">Level 1 Vehicle factory:&nbsp;</span>
@@ -433,7 +373,7 @@
             </li>
         </ul>
     </div>
-    <div style="width: 18em; height: 18em; float:right;">
+    <div style="width: 18em; height: 20em;">
         <ul>
             <li>
                 <span style="width:12em;">Level 1 Robot factory:&nbsp;</span>
@@ -461,143 +401,68 @@
             </li>
         </ul>
     </div>
-    <div style="width: 16em; height: 18em; float: left;">
-        <ul>
-            <li>
-                <span style="width:10em;">Level 1 Fort:&nbsp;</span>
-                <select #default_fort_1 />
-            </li>
-            <li>
-                <span style="width:10em;">Level 2 Fort:&nbsp;</span>
-                <select #default_fort_2 />
-            </li>
-            <li>
-                <span style="width:10em;">Level 3 Fort:&nbsp;</span>
-                <select #default_fort_3 />
-            </li>
-            <li>
-                <span style="width:10em;">Level 4 Fort:&nbsp;</span>
-                <select #default_fort_4 />
-            </li>
-            <li>
-                <span style="width:10em;">Level 5 Fort:&nbsp;</span>
-                <select #default_fort_5 />
-            </li>
-        </ul>
+    
     </div>
 
-    <button class="bigbuttonNoMargin" #save_default>Save</button>
-    <br />
-    <br />
-    <button class="bigbuttonNoMargin" #back_to_options>Cancel</button>
-</div>
 
 
-<div style="width: 58em; visibility: none;" #configure_custom_panel>
+</td><td>
 
-    <div style="margin-top:5px; width: 30em; height: 3em; float:right;">
-        <button|checkbox #custom_focus_camera>Focus camera when selecting units</button>
+
+
+    <div style="width: 20em; height: *;" #general_panel_2>
+                
+
+        <u>Audio settings</u>
+        <div style="padding-left: 20px; margin-top:10px;">
+            <button|checkbox value="1" #music-ingame>Music during match</button>
+            <br>
+            <button|checkbox value="1" #music-menu>Music in menu</button>
+            <br>
+            <button|checkbox value="1" #sounds>Sounds</button>
+            <br>
+
+            Music volume
+            <br />
+            <input type="hslider" max="100" value="75" step="5" buddy="musicvolume-buddy" #musicvolume />
+            <b id="musicvolume-buddy"></b>
+            <b>%</b>
+            <br />
+
+            Sound volume
+            <br />
+            <input type="hslider" max="100" value="75" step="5" buddy="soundvolume-buddy" #soundvolume />
+            <b id="soundvolume-buddy"></b>
+            <b>%</b>
+        </div>
+
+            <br />
+            <u>Cutscenes</u>
+            <br />
+            <select type="select" style="width:10em;" multiple="checkmarks" size=5 #cutscenes>
+                <option value="1">Intro</option>
+                <option value="2">Match won</option>
+                <option value="4">Match lost</option>
+                <option value="8">Planet transition</option>
+                <option value="16">Credits</option>
+            </select>
+
+            
     </div>
 
-    <div style="margin-top:5px; width: 30em; height: 3em; float:right;">
+
+
+    <div style="width: 28em; height: *; visibility: none;" #controls_panel_2>
+        <div style="margin-top:5px; width: 30em; height: 3em;">
+            <button|checkbox #custom_focus_camera>Focus camera when selecting units</button>
+        </div>
+
+    <div style="margin-top:5px; width: 30em; height: 3em;">
         <button|checkbox #exclude_cranes>Exclude cranes in box selection</button>
     </div>
 
-    <div style="margin-top:5px; width: 30em; height: 3em; float:right;">
+    <div style="margin-top:5px; width: 30em; height: 3em;">
         <button|checkbox #custom_clear_after_goto_event>Clear selection when pressing go to last event hotkey</button>
-    </div>
-
-    <div style="margin-top:5px; width: 30em; height: 4em; float:right;">
-        Save to group
-        <br />
-        <select style="width: 10em;" #save_group>
-            <option value="0">&lt;None&gt;</option>
-            <option value="1">Ctrl</option>
-            <option value="2">Alt</option>
-            <option value="4">Shift</option>
-            <option value="3">Ctrl+Alt</option>
-            <option value="5">Ctrl+Shift</option>
-            <option value="6">Alt+Shift</option>
-            <option value="7">Ctrl+Alt+Shift</option>
-        </select>
-        + 0-9
-    </div>
-
-    <div style="margin-top:5px; width: 30em; height: 5em; float:right;">
-        Load group
-        <br />
-        <select style="width: 10em;" #load_group>
-            <option value="0">&lt;None&gt;</option>
-            <option value="1">Ctrl</option>
-            <option value="2">Alt</option>
-            <option value="4">Shift</option>
-            <option value="3">Ctrl+Alt</option>
-            <option value="5">Ctrl+Shift</option>
-            <option value="6">Alt+Shift</option>
-            <option value="7">Ctrl+Alt+Shift</option>
-        </select>
-        + 0-9
-    </div>
-
-    <div style="margin-top:5px; width: 30em; height: 5em; float:right;">
-        Hold position
-        <br />
-        <select style="width: 10em;" #hold_position_mod>
-            <option value="0">&lt;None&gt;</option>
-            <option value="1">Ctrl</option>
-            <option value="2">Alt</option>
-            <option value="4">Shift</option>
-            <option value="3">Ctrl+Alt</option>
-            <option value="5">Ctrl+Shift</option>
-            <option value="6">Alt+Shift</option>
-            <option value="7">Ctrl+Alt+Shift</option>
-        </select>
-        +
-        <select style="width: 10em;" #hold_position>
-            <option value="13">Return</option>
-            <option value="32">Space</option>
-            <option value="9">Tab</option>
-            <option value="27">Escape</option>
-            <option value="36">Home</option>
-            <option value="112">F1</option>
-            <option value="113">F2</option>
-            <option value="114">F3</option>
-            <option value="115">F4</option>
-            <option value="116">F5</option>
-            <option value="117">F6</option>
-            <option value="118">F7</option>
-            <option value="119">F8</option>
-            <option value="120">F9</option>
-            <option value="121">F10</option>
-            <option value="122">F11</option>
-            <option value="123">F12</option>
-            <option value="65">A</option>
-            <option value="66">B</option>
-            <option value="67">C</option>
-            <option value="68">D</option>
-            <option value="69">E</option>
-            <option value="70">F</option>
-            <option value="71">G</option>
-            <option value="72">H</option>
-            <option value="73">I</option>
-            <option value="74">J</option>
-            <option value="75">K</option>
-            <option value="76">L</option>
-            <option value="77">M</option>
-            <option value="78">N</option>
-            <option value="79">O</option>
-            <option value="80">P</option>
-            <option value="81">Q</option>
-            <option value="82">R</option>
-            <option value="83">S</option>
-            <option value="84">T</option>
-            <option value="85">U</option>
-            <option value="86">V</option>
-            <option value="87">W</option>
-            <option value="88">X</option>
-            <option value="89">Y</option>
-            <option value="90">Z</option>
-        </select>
     </div>
 
 
@@ -718,10 +583,182 @@
             <option value="7">Ctrl+Alt+Shift</option>
         </select>
     </div>
+    </div>
 
 
-    <button class="bigbuttonNoMargin" #save_custom>Save</button>
-    <br />
-    <br />
-    <button class="bigbuttonNoMargin" #back_to_options>Cancel</button>
-</div>
+
+    <div style="width: 25em; height: *; visibility: none;" #hotkeys_panel_2>
+
+
+        <div style="width: 10em; height: 43em; float: left;">
+                            <div style="margin-bottom: 16px;">
+                                <span>Cancel production:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Grunt:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Psycho:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Tough:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Sniper:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Pyro:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Laser:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Jeep:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Light:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Medium:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Heavy:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Mobile rocket:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>APC:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Crane:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Gatling:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Gun:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Howitzer:&nbsp;</span>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <span>Rocket:&nbsp;</span>
+                            </div>
+                        </div>
+
+
+                        <div style="width: 12em; height: 43em; float: left;">
+                            <div style="margin-bottom: 10px;">
+                                <select #hk_cancel_mod /> +
+                    <select #hk_cancel />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #grunt_mod /> +
+                    <select #grunt />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #psycho_mod /> +
+                    <select #psycho />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #tough_mod /> +
+                    <select #tough />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #sniper_mod /> +
+                    <select #sniper />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #pyro_mod /> +
+                    <select #pyro />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #laser_mod /> +
+                    <select #laser />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #jeep_mod /> +
+                    <select #jeep />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #light_mod /> +
+                    <select #light />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #medium_mod /> +
+                    <select #medium />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #heavy_mod /> +
+                    <select #heavy />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #mo_rocket_mod /> +
+                    <select #mo_rocket />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #apc_mod /> +
+                    <select #apc />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #crane_mod /> +
+                    <select #crane />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #gatling_mod /> +
+                    <select #gatling />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #gun_mod /> +
+                    <select #gun />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #howitzer_mod /> +
+                    <select #howitzer />
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <select #rocket_mod /> +
+                    <select #rocket />
+                            </div>
+                        </div>
+
+    </div>
+
+
+
+    <div style="width: 20em; height: *; visibility: none;" #default_panel_2>
+        <div style="width: 16em; height: 18em;">
+        <ul>
+            <li>
+                <span style="width:10em;">Level 1 Fort:&nbsp;</span>
+                <select #default_fort_1 />
+            </li>
+            <li>
+                <span style="width:10em;">Level 2 Fort:&nbsp;</span>
+                <select #default_fort_2 />
+            </li>
+            <li>
+                <span style="width:10em;">Level 3 Fort:&nbsp;</span>
+                <select #default_fort_3 />
+            </li>
+            <li>
+                <span style="width:10em;">Level 4 Fort:&nbsp;</span>
+                <select #default_fort_4 />
+            </li>
+            <li>
+                <span style="width:10em;">Level 5 Fort:&nbsp;</span>
+                <select #default_fort_5 />
+            </li>
+        </ul>
+        </div>
+    </div>
+
+
+</td></tr>
+
+
+<tr><td colspan="2">
+<button class="bigbutton" #save_options>Save settings</button>
+<button class="bigbutton" #main>Back</button>
+</td></tr></table>

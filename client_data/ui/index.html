@@ -1,16 +1,20 @@
-﻿<html>
+<html>
 <head>
 <title>ZED Online</title>
 <style>
 
-html
+body
 {
-	background: linear-gradient(to bottom, #fff, gold);
+	background: url(zod_render_Ss.jpg) #000;
+    background-repeat: no-repeat;
+    background-size: cover;
     flow: horizontal;
     padding: 0em;
     border-spacing: 0em;
     margin: 0;
     cursor: url(win_cursor.png) 0 0;
+    color: red;
+    font-size: 11pt;
 }
 
 input
@@ -33,14 +37,19 @@ a.button
     padding: 20px 30px;
     margin: 0px 0px 0px 0px;
     cursor: url(win_cursor.png) 0 0;
-    color: rgba(30, 22, 54, 0.6);
-    box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+    //color: rgba(30, 22, 54, 0.6);
+    color: red;
+    font-size: 11pt;
+    box-shadow: rgba(30, 22, 54, 0.6) 0 0px 0px 2px inset;
+    text-shadow: 0px 0px 1px #000;
 }
 
 a.button:hover
 {
-	color: rgba(200, 0, 0, 0.85);
-	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 5px inset;
+	//color: rgba(200, 0, 0, 0.85);
+    color: red;
+	box-shadow: rgba(30, 22, 54, 0.8) 0 0px 0px 5px inset;
+    font-size: 11.1pt;
 }
 
 
@@ -82,11 +91,36 @@ progress#bar
 }
 
 
+    ul {
+        list-style-type: none;
+        padding-left: 0px;
+    }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+            ul li span {
+                text-align: right;
+                //float: left;
+                width: 150px;
+            }
+
+    select {
+        width: 70px;
+    }
+
+        select > popup {
+            height: 400px;
+        }
+
+
 section
 {
 	size:*; 
 	flow:grid(1 1 1,
               2 5 3,
+              2 5 6,
               2 5 4);
     border-spacing:0dip; /* defines spacing between cells */
 }
@@ -95,9 +129,10 @@ section > * {   }
       
 section > header  { height: 0.1em; }
 section > nav  {  width:0.5em; }
-section > aside  { width:25em; }
-section > main  {  width: *; height: 20em }
-section > footer  { width: 25em; height: 15em; }
+section > aside  { width:22em; height: 45em }
+section > main  {  width: *; height: * }
+section > footer  { width: 22em; height: 15em; }
+section > afill  { width: 22em; height: *; }
 
 
 
@@ -219,7 +254,11 @@ button[type=checkbox]:hover
                 $(#lan).state.disabled = true;
                 $(#editor).state.disabled = true;
             }
+
+            $(#body_id).attributes["style"] = "background-image-transformation: opacity(1.0);";
         }
+        else
+            $(#body_id).attributes["style"] = "background-image-transformation: opacity(0.5);";
     }
 
     function pointsToString(points)
@@ -263,8 +302,9 @@ button[type=checkbox]:hover
 
         for (var i = 1; i <= level; i++)
         {
-            $(#start_level_{i}).value = $(#start_level_{i}).html + " ✔";
-            $(#start_level_{i+1}).state.disabled = false;
+            $(#start_level_{i}).html = $(#start_level_{i}).html + " &#10004;";
+            if (i < 55)
+                $(#start_level_{i+1}).state.disabled = false;
         }
     }
 
@@ -287,9 +327,13 @@ button[type=checkbox]:hover
         var musicvolume = view.getMusicVolume();
         var soundvolume = view.getSoundVolume();
         var resolution  = view.getResolution();
+        var definition  = view.getDefinition();
+        var filtering   = view.getBilinearFiltering();
         var resolutionWidth  = view.getResolutionWidth();
         var resolutionHeight = view.getResolutionHeight();
         var cutscenes   = view.getCutscenes();
+        var post_processing   = view.getPostProcessing();
+        var zoom_clamp   = view.getZoomClamp();
 
         $(#language).$(option[value="{lang}"]).execCommand("set-current");
         $(#music-ingame).checked = musicIngame;
@@ -304,6 +348,14 @@ button[type=checkbox]:hover
             $(#resolution).options.$append(<option value="{resolution}">{resolutionWidth}x{resolutionHeight}</option>);
 
         $(#resolution).$(option[value="{resolution}"]).execCommand("set-current");
+        $(#definiton).$(option[value="{definition}"]).execCommand("set-current");
+
+        $(#uiscaling).value = view.getUIScaling();
+
+        $(#bilinear).checked = filtering;
+        $(#post_processing).$(option[value="{post_processing}"]).execCommand("set-current");
+        $(#zoom_clamp).checked = zoom_clamp;
+        $(#team_colors).checked = view.getTeamColors();
 
         var cuts = [];
         if (cutscenes%2 == 1)
@@ -350,6 +402,7 @@ button[type=checkbox]:hover
         addHotkeyOptions($(#hk_scaling),    $(#hk_scaling_mod));
         addHotkeyOptions($(#hk_fps),        $(#hk_fps_mod));
         addHotkeyOptions($(#hk_chat),       $(#hk_chat_mod));
+        addHotkeyOptions($(#hk_team_chat),          $(#hk_team_chat_mod));
         addHotkeyOptions($(#hk_change_color),       $(#hk_change_color_mod));
         addHotkeyOptions($(#hk_change_enemy_color), $(#hk_change_enemy_color_mod));
         addHotkeyOptions($(#hk_hold_position), $(#hk_hold_position_mod));
@@ -401,6 +454,114 @@ button[type=checkbox]:hover
         addDefaultOptions($(#default_vehicle_5), 2, 4);
         addDefaultOptions($(#default_vehicle_6), 2, 5);
 
+        $(#hk_fullscreen_mod).$(option[value="{view.getHotkeyFullscreen_mod()}"]).execCommand("set-current");
+        $(#hk_fullscreen).$(option[value="{view.getHotkeyFullscreen()}"]).execCommand("set-current");
+
+        $(#hk_screenshot_mod).$(option[value="{view.getHotkeyScreenshot_mod()}"]).execCommand("set-current");
+        $(#hk_screenshot).$(option[value="{view.getHotkeyScreenshot()}"]).execCommand("set-current");
+
+        $(#hk_renderer_mod).$(option[value="{view.getHotkeyRenderer_mod()}"]).execCommand("set-current");
+        $(#hk_renderer).$(option[value="{view.getHotkeyRenderer()}"]).execCommand("set-current");
+
+        $(#hk_scaling_mod).$(option[value="{view.getHotkeyScaling_mod()}"]).execCommand("set-current");
+        $(#hk_scaling).$(option[value="{view.getHotkeyScaling()}"]).execCommand("set-current");
+
+        $(#hk_fps_mod).$(option[value="{view.getHotkeyFPS_mod()}"]).execCommand("set-current");
+        $(#hk_fps).$(option[value="{view.getHotkeyFPS()}"]).execCommand("set-current");
+
+        $(#hk_chat_mod).$(option[value="{view.getHotkeyChat_mod()}"]).execCommand("set-current");
+        $(#hk_chat).$(option[value="{view.getHotkeyChat()}"]).execCommand("set-current");
+
+        $(#hk_team_chat_mod).$(option[value="{view.getHotkeyTeamChat_mod()}"]).execCommand("set-current");
+        $(#hk_team_chat).$(option[value="{view.getHotkeyTeamChat()}"]).execCommand("set-current");
+
+        $(#hk_change_color_mod).$(option[value="{view.getHotkeyChangeColor_mod()}"]).execCommand("set-current");
+        $(#hk_change_color).$(option[value="{view.getHotkeyChangeColor()}"]).execCommand("set-current");
+
+        $(#hk_change_enemy_color_mod).$(option[value="{view.getHotkeyChangeEnemyColor_mod()}"]).execCommand("set-current");
+        $(#hk_change_enemy_color).$(option[value="{view.getHotkeyChangeEnemyColor()}"]).execCommand("set-current");
+
+        $(#hk_pause_mod).$(option[value="{view.getHotkeyPause_mod()}"]).execCommand("set-current");
+        $(#hk_pause).$(option[value="{view.getHotkeyPause()}"]).execCommand("set-current");
+
+        $(#hk_boss_mod).$(option[value="{view.getHotkeyBoss_mod()}"]).execCommand("set-current");
+        $(#hk_boss).$(option[value="{view.getHotkeyBoss()}"]).execCommand("set-current");
+
+        $(#hk_hold_position_mod).$(option[value="{view.getHotkeyHoldPosition_mod()}"]).execCommand("set-current");
+        $(#hk_hold_position).$(option[value="{view.getHotkeyHoldPosition()}"]).execCommand("set-current");
+
+        $(#hk_patrol_move_mod).$(option[value="{view.getHotkeyPatrolMove_mod()}"]).execCommand("set-current");
+        $(#hk_patrol_move).$(option[value="{view.getHotkeyPatrolMove()}"]).execCommand("set-current");
+        
+        $(#hk_selectall_mod).$(option[value="{view.getHotkeySelectAll_mod()}"]).execCommand("set-current");
+        $(#hk_selectall).$(option[value="{view.getHotkeySelectAll()}"]).execCommand("set-current");
+
+        $(#hk_gotofort_mod).$(option[value="{view.getHotkeyGoToFort_mod()}"]).execCommand("set-current");
+        $(#hk_gotofort).$(option[value="{view.getHotkeyGoToFort()}"]).execCommand("set-current");
+
+        $(#hk_surrender_mod).$(option[value="{view.getHotkeySurrender_mod()}"]).execCommand("set-current");
+        $(#hk_surrender).$(option[value="{view.getHotkeySurrender()}"]).execCommand("set-current");
+
+        $(#hk_overlay_mod).$(option[value="{view.getHotkeyOverlay_mod()}"]).execCommand("set-current");
+        $(#hk_overlay).$(option[value="{view.getHotkeyOverlay()}"]).execCommand("set-current");
+
+        $(#hk_exit_mod).$(option[value="{view.getHotkeyExit_mod()}"]).execCommand("set-current");
+        $(#hk_exit).$(option[value="{view.getHotkeyExit()}"]).execCommand("set-current");
+
+        $(#hk_cancel_mod).$(option[value="{view.getHotkeyCancel_mod()}"]).execCommand("set-current");
+        $(#hk_cancel).$(option[value="{view.getHotkeyCancel()}"]).execCommand("set-current");
+
+        $(#grunt_mod).$(option[value="{view.getHotkeyUnit_mod(0)}"]).execCommand("set-current");
+        $(#grunt).$(option[value="{view.getHotkeyUnit(0)}"]).execCommand("set-current");
+
+        $(#psycho_mod).$(option[value="{view.getHotkeyUnit_mod(1)}"]).execCommand("set-current");
+        $(#psycho).$(option[value="{view.getHotkeyUnit(1)}"]).execCommand("set-current");
+
+        $(#tough_mod).$(option[value="{view.getHotkeyUnit_mod(2)}"]).execCommand("set-current");
+        $(#tough).$(option[value="{view.getHotkeyUnit(2)}"]).execCommand("set-current");
+
+        $(#sniper_mod).$(option[value="{view.getHotkeyUnit_mod(3)}"]).execCommand("set-current");
+        $(#sniper).$(option[value="{view.getHotkeyUnit(3)}"]).execCommand("set-current");
+
+        $(#pyro_mod).$(option[value="{view.getHotkeyUnit_mod(4)}"]).execCommand("set-current");
+        $(#pyro).$(option[value="{view.getHotkeyUnit(4)}"]).execCommand("set-current");
+
+        $(#laser_mod).$(option[value="{view.getHotkeyUnit_mod(5)}"]).execCommand("set-current");
+        $(#laser).$(option[value="{view.getHotkeyUnit(5)}"]).execCommand("set-current");
+
+        $(#jeep_mod).$(option[value="{view.getHotkeyUnit_mod(6)}"]).execCommand("set-current");
+        $(#jeep).$(option[value="{view.getHotkeyUnit(6)}"]).execCommand("set-current");
+
+        $(#light_mod).$(option[value="{view.getHotkeyUnit_mod(7)}"]).execCommand("set-current");
+        $(#light).$(option[value="{view.getHotkeyUnit(7)}"]).execCommand("set-current");
+
+        $(#medium_mod).$(option[value="{view.getHotkeyUnit_mod(8)}"]).execCommand("set-current");
+        $(#medium).$(option[value="{view.getHotkeyUnit(8)}"]).execCommand("set-current");
+
+        $(#heavy_mod).$(option[value="{view.getHotkeyUnit_mod(9)}"]).execCommand("set-current");
+        $(#heavy).$(option[value="{view.getHotkeyUnit(9)}"]).execCommand("set-current");
+
+        $(#mo_rocket_mod).$(option[value="{view.getHotkeyUnit_mod(10)}"]).execCommand("set-current");
+        $(#mo_rocket).$(option[value="{view.getHotkeyUnit(10)}"]).execCommand("set-current");
+
+        $(#apc_mod).$(option[value="{view.getHotkeyUnit_mod(11)}"]).execCommand("set-current");
+        $(#apc).$(option[value="{view.getHotkeyUnit(11)}"]).execCommand("set-current");
+
+        $(#crane_mod).$(option[value="{view.getHotkeyUnit_mod(12)}"]).execCommand("set-current");
+        $(#crane).$(option[value="{view.getHotkeyUnit(12)}"]).execCommand("set-current");
+
+        $(#gatling_mod).$(option[value="{view.getHotkeyUnit_mod(13)}"]).execCommand("set-current");
+        $(#gatling).$(option[value="{view.getHotkeyUnit(13)}"]).execCommand("set-current");
+
+        $(#gun_mod).$(option[value="{view.getHotkeyUnit_mod(14)}"]).execCommand("set-current");
+        $(#gun).$(option[value="{view.getHotkeyUnit(14)}"]).execCommand("set-current");
+
+        $(#howitzer_mod).$(option[value="{view.getHotkeyUnit_mod(15)}"]).execCommand("set-current");
+        $(#howitzer).$(option[value="{view.getHotkeyUnit(15)}"]).execCommand("set-current");
+
+        $(#rocket_mod).$(option[value="{view.getHotkeyUnit_mod(16)}"]).execCommand("set-current");
+        $(#rocket).$(option[value="{view.getHotkeyUnit(16)}"]).execCommand("set-current");
+
         $(#select_units).$(option[value="{view.getCustomControlsSelectUnits()}"]).execCommand("set-current");
         $(#issue_comands).$(option[value="{view.getCustomControlsIssueCommand()}"]).execCommand("set-current");
 
@@ -422,20 +583,17 @@ button[type=checkbox]:hover
         $(#save_group).$(option[value="{view.getCustomControlsSaveGroup()}"]).execCommand("set-current");
         $(#load_group).$(option[value="{view.getCustomControlsLoadGroup()}"]).execCommand("set-current");
 
-        $(#hold_position_mod).$(option[value="{view.getCustomControlsHoldPosition_mod()}"]).execCommand("set-current");
-        $(#hold_position).$(option[value="{view.getCustomControlsHoldPosition()}"]).execCommand("set-current");
-
-        if ($(#controls).value != 3)
+        /*if ($(#controls).value != 3)
             $(#configure_custom).state.disabled = true;
         else
-            $(#configure_custom).state.disabled = false;
+            $(#configure_custom).state.disabled = false;*/
     }
 
     event click $(button#stats)
     {
         loadFrame("stats");
 
-        $(#username).value        = view.getUsername();
+        $(#stats_username).value  = view.getUsername();
         $(#time).value            = view.getStatsTimePlayed();
         $(#games).value           = view.getStatsNumGames();
         $(#conquered).value       = view.getStatsConquered();
@@ -450,18 +608,18 @@ button[type=checkbox]:hover
         $(#flags_conquered).value = view.getStatsFlagsConquered();
         $(#units).value           = view.getStatsUnitsSelected();
         $(#commands).value        = view.getStatsCommandsIssued();
-        $(#rank).value            = view.getStatsRank();
+        $(#stats_rank).value      = view.getStatsRank();
 
         var points = view.getStatsPoints();
         points %= 25;
         if (points <= 5)
-            $(#rank).attributes["title"] = "Congratulations on your new rank";
+            $(#stats_rank).attributes["title"] = "Congratulations on your new rank";
         else if (points < 20)
-            $(#rank).attributes["title"] = "Keep playing to earn the next rank";
+            $(#stats_rank).attributes["title"] = "Keep playing to earn the next rank";
         else if (20 <= points && points <= 23)
-            $(#rank).attributes["title"] = "Your are close to the next rank!";
+            $(#stats_rank).attributes["title"] = "Your are close to the next rank!";
         else if (points == 24)
-            $(#rank).attributes["title"] = "Your are very close to the next rank!!";
+            $(#stats_rank).attributes["title"] = "Your are very close to the next rank!!";
 
 
         $(#time).attributes["title"]   = pointsToString(view.getStatsPointsFrom(0));
@@ -608,6 +766,15 @@ button[type=checkbox]:hover
         view.setControls($(#controls).value);
 
         view.setResolution($(#resolution).value);
+        view.setDefinition($(#definiton).value);
+
+        view.setUIScaling($(#uiscaling).value);
+
+        view.setPostProcessing($(#post_processing).value);
+        view.setBilinearFiltering($(#bilinear).state.checked);
+        view.setZoomClamp($(#zoom_clamp).state.checked);
+
+        view.setTeamColors($(#team_colors).state.checked);
 
         view.setKeyScrollSpeed($(#keyscroll).value);
         view.setMouseScrollSpeed($(#mousescroll).value);
@@ -631,13 +798,6 @@ button[type=checkbox]:hover
         view.setZoom($(#zoom).value);
         view.setZoomControls($(#zoom-control).value);
 
-        view.saveOptions();
-
-        loadFrame("main");
-    }
-
-    event click $(button#save_custom)
-    {
         view.setCustomControlsFocusCamera($(#custom_focus_camera).state.checked);
         view.setCustomControlsNoBoxSelectForCrane($(#exclude_cranes).state.checked);
         view.setCustomControlsClearSelectionIfNoLastEvent($(#custom_clear_after_goto_event).state.checked);
@@ -654,8 +814,73 @@ button[type=checkbox]:hover
 
         view.setCustomControlsSaveGroup($(#save_group).value);
         view.setCustomControlsLoadGroup($(#load_group).value);
-        view.setCustomControlsHoldPosition($(#hold_position_mod).value, $(#hold_position).value);
+        //view.setCustomControlsHoldPosition($(#hold_position_mod).value, $(#hold_position).value);
 
+        view.setHotkeyCancel(    $(#hk_cancel_mod).value,     $(#hk_cancel).value);
+        view.setHotkeyFullscreen($(#hk_fullscreen_mod).value, $(#hk_fullscreen).value);
+        view.setHotkeyScreenshot($(#hk_screenshot_mod).value, $(#hk_screenshot).value);
+        view.setHotkeyRenderer(  $(#hk_renderer_mod).value,   $(#hk_renderer).value);
+        view.setHotkeyScaling(   $(#hk_scaling_mod).value,    $(#hk_scaling).value);
+        view.setHotkeyFPS(       $(#hk_fps_mod).value,        $(#hk_fps).value);
+        view.setHotkeyChat(      $(#hk_chat_mod).value,       $(#hk_chat).value);
+        view.setHotkeyTeamChat(  $(#hk_team_chat_mod).value,       $(#hk_team_chat).value);
+        view.setHotkeyChangeColor(      $(#hk_change_color_mod).value,       $(#hk_change_color).value);
+        view.setHotkeyChangeEnemyColor( $(#hk_change_enemy_color_mod).value, $(#hk_change_enemy_color).value);
+        view.setHotkeyHoldPosition( $(#hk_hold_position_mod).value, $(#hk_hold_position).value);
+        view.setHotkeyPatrolMove(   $(#hk_patrol_move_mod).value,   $(#hk_patrol_move).value);
+        view.setHotkeyPause(     $(#hk_pause_mod).value,      $(#hk_pause).value);
+        view.setHotkeyBoss(      $(#hk_boss_mod).value,       $(#hk_boss).value);
+        view.setHotkeySelectAll( $(#hk_selectall_mod).value,  $(#hk_selectall).value);
+        view.setHotkeyGoToFort(  $(#hk_gotofort_mod).value,   $(#hk_gotofort).value);
+        view.setHotkeySurrender( $(#hk_surrender_mod).value,  $(#hk_surrender).value);
+        view.setHotkeyOverlay(   $(#hk_overlay_mod).value,    $(#hk_overlay).value);
+        view.setHotkeyExit(      $(#hk_exit_mod).value,       $(#hk_exit).value);
+
+        view.setHotkeyUnit( 0, $(#grunt_mod).value,     $(#grunt).value);
+        view.setHotkeyUnit( 1, $(#psycho_mod).value,    $(#psycho).value);
+        view.setHotkeyUnit( 2, $(#tough_mod).value,     $(#tough).value);
+        view.setHotkeyUnit( 3, $(#sniper_mod).value,    $(#sniper).value);
+        view.setHotkeyUnit( 4, $(#pyro_mod).value,      $(#pyro).value);
+        view.setHotkeyUnit( 5, $(#laser_mod).value,     $(#laser).value);
+        view.setHotkeyUnit( 6, $(#jeep_mod).value,      $(#jeep).value);
+        view.setHotkeyUnit( 7, $(#light_mod).value,     $(#light).value);
+        view.setHotkeyUnit( 8, $(#medium_mod).value,    $(#medium).value);
+        view.setHotkeyUnit( 9, $(#heavy_mod).value,     $(#heavy).value);
+        view.setHotkeyUnit(10, $(#mo_rocket_mod).value, $(#mo_rocket).value);
+        view.setHotkeyUnit(11, $(#apc_mod).value,       $(#apc).value);
+        view.setHotkeyUnit(12, $(#crane_mod).value,     $(#crane).value);
+        view.setHotkeyUnit(13, $(#gatling_mod).value,   $(#gatling).value);
+        view.setHotkeyUnit(14, $(#gun_mod).value,       $(#gun).value);
+        view.setHotkeyUnit(15, $(#howitzer_mod).value,  $(#howitzer).value);
+        view.setHotkeyUnit(16, $(#rocket_mod).value,    $(#rocket).value);
+
+        view.setDefaultUnit(0, 0, $(#default_fort_1).value);
+        view.setDefaultUnit(0, 1, $(#default_fort_2).value);
+        view.setDefaultUnit(0, 2, $(#default_fort_3).value);
+        view.setDefaultUnit(0, 3, $(#default_fort_4).value);
+        view.setDefaultUnit(0, 4, $(#default_fort_5).value);
+
+        view.setDefaultUnit(1, 0, $(#default_robot_1).value);
+        view.setDefaultUnit(1, 1, $(#default_robot_2).value);
+        view.setDefaultUnit(1, 2, $(#default_robot_3).value);
+        view.setDefaultUnit(1, 3, $(#default_robot_4).value);
+        view.setDefaultUnit(1, 4, $(#default_robot_5).value);
+        view.setDefaultUnit(1, 5, $(#default_robot_6).value);
+
+        view.setDefaultUnit(2, 0, $(#default_vehicle_1).value);
+        view.setDefaultUnit(2, 1, $(#default_vehicle_2).value);
+        view.setDefaultUnit(2, 2, $(#default_vehicle_3).value);
+        view.setDefaultUnit(2, 3, $(#default_vehicle_4).value);
+        view.setDefaultUnit(2, 4, $(#default_vehicle_5).value);
+        view.setDefaultUnit(2, 5, $(#default_vehicle_6).value);
+        
+        view.saveOptions();
+
+        loadFrame("main");
+    }
+
+    event click $(button#save_custom)
+    {
         $(#options_panel).style#visibility = "visible";
         $(#configure_custom_panel).style#visibility = "none";
     }
@@ -791,128 +1016,50 @@ button[type=checkbox]:hover
 
     event click $(button#hotkeys)
     {
-        $(#options_panel).style#visibility = "none";
-        $(#hotkeys_panel).style#visibility = "visible";
-        $(#default_panel).style#visibility = "none";
-
-
-        $(#hk_fullscreen_mod).$(option[value="{view.getHotkeyFullscreen_mod()}"]).execCommand("set-current");
-        $(#hk_fullscreen).$(option[value="{view.getHotkeyFullscreen()}"]).execCommand("set-current");
-
-        $(#hk_screenshot_mod).$(option[value="{view.getHotkeyScreenshot_mod()}"]).execCommand("set-current");
-        $(#hk_screenshot).$(option[value="{view.getHotkeyScreenshot()}"]).execCommand("set-current");
-
-        $(#hk_renderer_mod).$(option[value="{view.getHotkeyRenderer_mod()}"]).execCommand("set-current");
-        $(#hk_renderer).$(option[value="{view.getHotkeyRenderer()}"]).execCommand("set-current");
-
-        $(#hk_scaling_mod).$(option[value="{view.getHotkeyScaling_mod()}"]).execCommand("set-current");
-        $(#hk_scaling).$(option[value="{view.getHotkeyScaling()}"]).execCommand("set-current");
-
-        $(#hk_fps_mod).$(option[value="{view.getHotkeyFPS_mod()}"]).execCommand("set-current");
-        $(#hk_fps).$(option[value="{view.getHotkeyFPS()}"]).execCommand("set-current");
-
-        $(#hk_chat_mod).$(option[value="{view.getHotkeyChat_mod()}"]).execCommand("set-current");
-        $(#hk_chat).$(option[value="{view.getHotkeyChat()}"]).execCommand("set-current");
-
-        $(#hk_change_color_mod).$(option[value="{view.getHotkeyChangeColor_mod()}"]).execCommand("set-current");
-        $(#hk_change_color).$(option[value="{view.getHotkeyChangeColor()}"]).execCommand("set-current");
-
-        $(#hk_change_enemy_color_mod).$(option[value="{view.getHotkeyChangeEnemyColor_mod()}"]).execCommand("set-current");
-        $(#hk_change_enemy_color).$(option[value="{view.getHotkeyChangeEnemyColor()}"]).execCommand("set-current");
-
-        $(#hk_hold_position_mod).$(option[value="{view.getHotkeyHoldPosition_mod()}"]).execCommand("set-current");
-        $(#hk_hold_position).$(option[value="{view.getHotkeyHoldPosition()}"]).execCommand("set-current");
-
-        $(#hk_patrol_move_mod).$(option[value="{view.getHotkeyPatrolMove_mod()}"]).execCommand("set-current");
-        $(#hk_patrol_move).$(option[value="{view.getHotkeyPatrolMove()}"]).execCommand("set-current");
-
-        $(#hk_pause_mod).$(option[value="{view.getHotkeyPause_mod()}"]).execCommand("set-current");
-        $(#hk_pause).$(option[value="{view.getHotkeyPause()}"]).execCommand("set-current");
-
-        $(#hk_boss_mod).$(option[value="{view.getHotkeyBoss_mod()}"]).execCommand("set-current");
-        $(#hk_boss).$(option[value="{view.getHotkeyBoss()}"]).execCommand("set-current");
-
-        $(#hk_selectall_mod).$(option[value="{view.getHotkeySelectAll_mod()}"]).execCommand("set-current");
-        $(#hk_selectall).$(option[value="{view.getHotkeySelectAll()}"]).execCommand("set-current");
-
-        $(#hk_gotofort_mod).$(option[value="{view.getHotkeyGoToFort_mod()}"]).execCommand("set-current");
-        $(#hk_gotofort).$(option[value="{view.getHotkeyGoToFort()}"]).execCommand("set-current");
-
-        $(#hk_surrender_mod).$(option[value="{view.getHotkeySurrender_mod()}"]).execCommand("set-current");
-        $(#hk_surrender).$(option[value="{view.getHotkeySurrender()}"]).execCommand("set-current");
-
-        $(#hk_overlay_mod).$(option[value="{view.getHotkeyOverlay_mod()}"]).execCommand("set-current");
-        $(#hk_overlay).$(option[value="{view.getHotkeyOverlay()}"]).execCommand("set-current");
-
-        $(#hk_exit_mod).$(option[value="{view.getHotkeyExit_mod()}"]).execCommand("set-current");
-        $(#hk_exit).$(option[value="{view.getHotkeyExit()}"]).execCommand("set-current");
-
-        $(#hk_cancel_mod).$(option[value="{view.getHotkeyCancel_mod()}"]).execCommand("set-current");
-        $(#hk_cancel).$(option[value="{view.getHotkeyCancel()}"]).execCommand("set-current");
-
-        $(#grunt_mod).$(option[value="{view.getHotkeyUnit_mod(0)}"]).execCommand("set-current");
-        $(#grunt).$(option[value="{view.getHotkeyUnit(0)}"]).execCommand("set-current");
-
-        $(#psycho_mod).$(option[value="{view.getHotkeyUnit_mod(1)}"]).execCommand("set-current");
-        $(#psycho).$(option[value="{view.getHotkeyUnit(1)}"]).execCommand("set-current");
-
-        $(#tough_mod).$(option[value="{view.getHotkeyUnit_mod(2)}"]).execCommand("set-current");
-        $(#tough).$(option[value="{view.getHotkeyUnit(2)}"]).execCommand("set-current");
-
-        $(#sniper_mod).$(option[value="{view.getHotkeyUnit_mod(3)}"]).execCommand("set-current");
-        $(#sniper).$(option[value="{view.getHotkeyUnit(3)}"]).execCommand("set-current");
-
-        $(#pyro_mod).$(option[value="{view.getHotkeyUnit_mod(4)}"]).execCommand("set-current");
-        $(#pyro).$(option[value="{view.getHotkeyUnit(4)}"]).execCommand("set-current");
-
-        $(#laser_mod).$(option[value="{view.getHotkeyUnit_mod(5)}"]).execCommand("set-current");
-        $(#laser).$(option[value="{view.getHotkeyUnit(5)}"]).execCommand("set-current");
-
-        $(#jeep_mod).$(option[value="{view.getHotkeyUnit_mod(6)}"]).execCommand("set-current");
-        $(#jeep).$(option[value="{view.getHotkeyUnit(6)}"]).execCommand("set-current");
-
-        $(#light_mod).$(option[value="{view.getHotkeyUnit_mod(7)}"]).execCommand("set-current");
-        $(#light).$(option[value="{view.getHotkeyUnit(7)}"]).execCommand("set-current");
-
-        $(#medium_mod).$(option[value="{view.getHotkeyUnit_mod(8)}"]).execCommand("set-current");
-        $(#medium).$(option[value="{view.getHotkeyUnit(8)}"]).execCommand("set-current");
-
-        $(#heavy_mod).$(option[value="{view.getHotkeyUnit_mod(9)}"]).execCommand("set-current");
-        $(#heavy).$(option[value="{view.getHotkeyUnit(9)}"]).execCommand("set-current");
-
-        $(#mo_rocket_mod).$(option[value="{view.getHotkeyUnit_mod(10)}"]).execCommand("set-current");
-        $(#mo_rocket).$(option[value="{view.getHotkeyUnit(10)}"]).execCommand("set-current");
-
-        $(#apc_mod).$(option[value="{view.getHotkeyUnit_mod(11)}"]).execCommand("set-current");
-        $(#apc).$(option[value="{view.getHotkeyUnit(11)}"]).execCommand("set-current");
-
-        $(#crane_mod).$(option[value="{view.getHotkeyUnit_mod(12)}"]).execCommand("set-current");
-        $(#crane).$(option[value="{view.getHotkeyUnit(12)}"]).execCommand("set-current");
-
-        $(#gatling_mod).$(option[value="{view.getHotkeyUnit_mod(13)}"]).execCommand("set-current");
-        $(#gatling).$(option[value="{view.getHotkeyUnit(13)}"]).execCommand("set-current");
-
-        $(#gun_mod).$(option[value="{view.getHotkeyUnit_mod(14)}"]).execCommand("set-current");
-        $(#gun).$(option[value="{view.getHotkeyUnit(14)}"]).execCommand("set-current");
-
-        $(#howitzer_mod).$(option[value="{view.getHotkeyUnit_mod(9)}"]).execCommand("set-current");
-        $(#howitzer).$(option[value="{view.getHotkeyUnit(9)}"]).execCommand("set-current");
-
-        $(#rocket_mod).$(option[value="{view.getHotkeyUnit_mod(15)}"]).execCommand("set-current");
-        $(#rocket).$(option[value="{view.getHotkeyUnit(15)}"]).execCommand("set-current");
+        $(#general_panel_1).style#visibility = "none";
+        $(#general_panel_2).style#visibility = "none";
+        $(#controls_panel_1).style#visibility = "none";
+        $(#controls_panel_2).style#visibility = "none";
+        $(#hotkeys_panel_1).style#visibility = "visible";
+        $(#hotkeys_panel_2).style#visibility = "visible";
+        $(#default_panel_1).style#visibility = "none";
+        $(#default_panel_2).style#visibility = "none";    
     }
 
-    event click $(button#default)
+    event click $(button#op_default)
     {
-        $(#options_panel).style#visibility = "none";
-        $(#hotkeys_panel).style#visibility = "none";
-        $(#default_panel).style#visibility = "visible";
+        $(#general_panel_1).style#visibility = "none";
+        $(#general_panel_2).style#visibility = "none";
+        $(#controls_panel_1).style#visibility = "none";
+        $(#controls_panel_2).style#visibility = "none";
+        $(#hotkeys_panel_1).style#visibility = "none";
+        $(#hotkeys_panel_2).style#visibility = "none";
+        $(#default_panel_1).style#visibility = "visible";
+        $(#default_panel_2).style#visibility = "visible";
     }
 
-    event click $(button#configure_custom)
+    event click $(button#op_general)
     {
-        $(#options_panel).style#visibility = "none";
-        $(#configure_custom_panel).style#visibility = "visible";
+        $(#general_panel_1).style#visibility = "visible";
+        $(#general_panel_2).style#visibility = "visible";
+        $(#controls_panel_1).style#visibility = "none";
+        $(#controls_panel_2).style#visibility = "none";        
+        $(#hotkeys_panel_1).style#visibility = "none";
+        $(#hotkeys_panel_2).style#visibility = "none";
+        $(#default_panel_1).style#visibility = "none";
+        $(#default_panel_2).style#visibility = "none";
+    }
+
+    event click $(button#op_controls)
+    {
+        $(#general_panel_1).style#visibility = "none";
+        $(#general_panel_2).style#visibility = "none";
+        $(#controls_panel_1).style#visibility = "visible";
+        $(#controls_panel_2).style#visibility = "visible";        
+        $(#hotkeys_panel_1).style#visibility = "none";
+        $(#hotkeys_panel_2).style#visibility = "none";
+        $(#default_panel_1).style#visibility = "none";
+        $(#default_panel_2).style#visibility = "none";
     }
 
     event click $(button#back_to_options)
@@ -970,73 +1117,8 @@ button[type=checkbox]:hover
 
     event click $(button#save_hotkeys)
     {
-        view.setHotkeyCancel(    $(#hk_cancel_mod).value,     $(#hk_cancel).value);
-        view.setHotkeyFullscreen($(#hk_fullscreen_mod).value, $(#hk_fullscreen).value);
-        view.setHotkeyScreenshot($(#hk_screenshot_mod).value, $(#hk_screenshot).value);
-        view.setHotkeyRenderer(  $(#hk_renderer_mod).value,   $(#hk_renderer).value);
-        view.setHotkeyScaling(   $(#hk_scaling_mod).value,    $(#hk_scaling).value);
-        view.setHotkeyFPS(       $(#hk_fps_mod).value,        $(#hk_fps).value);
-        view.setHotkeyChat(      $(#hk_chat_mod).value,       $(#hk_chat).value);
-        view.setHotkeyChangeColor(      $(#hk_change_color_mod).value,       $(#hk_change_color).value);
-        view.setHotkeyChangeEnemyColor( $(#hk_change_enemy_color_mod).value, $(#hk_change_enemy_color).value);
-        view.setHotkeyHoldPosition( $(#hk_hold_position_mod).value, $(#hk_hold_position).value);
-        view.setHotkeyPatrolMove(   $(#hk_patrol_move_mod).value,   $(#hk_patrol_move).value);
-        view.setHotkeyPause(     $(#hk_pause_mod).value,      $(#hk_pause).value);
-        view.setHotkeyBoss(      $(#hk_boss_mod).value,       $(#hk_boss).value);
-        view.setHotkeySelectAll( $(#hk_selectall_mod).value,  $(#hk_selectall).value);
-        view.setHotkeyGoToFort(  $(#hk_gotofort_mod).value,   $(#hk_gotofort).value);
-        view.setHotkeySurrender( $(#hk_surrender_mod).value,  $(#hk_surrender).value);
-        view.setHotkeyOverlay(   $(#hk_overlay_mod).value,    $(#hk_overlay).value);
-        view.setHotkeyExit(      $(#hk_exit_mod).value,       $(#hk_exit).value);
-
-        view.setHotkeyUnit( 0, $(#grunt_mod).value,     $(#grunt).value);
-        view.setHotkeyUnit( 1, $(#psycho_mod).value,    $(#psycho).value);
-        view.setHotkeyUnit( 2, $(#tough_mod).value,     $(#tough).value);
-        view.setHotkeyUnit( 3, $(#sniper_mod).value,    $(#sniper).value);
-        view.setHotkeyUnit( 4, $(#pyro_mod).value,      $(#pyro).value);
-        view.setHotkeyUnit( 5, $(#laser_mod).value,     $(#laser).value);
-        view.setHotkeyUnit( 6, $(#jeep_mod).value,      $(#jeep).value);
-        view.setHotkeyUnit( 7, $(#light_mod).value,     $(#light).value);
-        view.setHotkeyUnit( 8, $(#medium_mod).value,    $(#medium).value);
-        view.setHotkeyUnit( 9, $(#heavy_mod).value,     $(#heavy).value);
-        view.setHotkeyUnit(10, $(#mo_rocket_mod).value, $(#mo_rocket).value);
-        view.setHotkeyUnit(11, $(#apc_mod).value,       $(#apc).value);
-        view.setHotkeyUnit(12, $(#crane_mod).value,     $(#crane).value);
-        view.setHotkeyUnit(13, $(#gatling_mod).value,   $(#gatling).value);
-        view.setHotkeyUnit(14, $(#gun_mod).value,       $(#gun).value);
-        view.setHotkeyUnit(15, $(#howitzer_mod).value,  $(#howitzer).value);
-        view.setHotkeyUnit(16, $(#rocket_mod).value,    $(#rocket).value);
-
         $(#options_panel).style#visibility = "visible";
         $(#hotkeys_panel).style#visibility = "none";
-
-        view.saveOptions();
-    }
-
-    event click $(button#save_default)
-    {
-        view.setDefaultUnit(0, 0, $(#default_fort_1).value);
-        view.setDefaultUnit(0, 1, $(#default_fort_2).value);
-        view.setDefaultUnit(0, 2, $(#default_fort_3).value);
-        view.setDefaultUnit(0, 3, $(#default_fort_4).value);
-        view.setDefaultUnit(0, 4, $(#default_fort_5).value);
-
-        view.setDefaultUnit(1, 0, $(#default_robot_1).value);
-        view.setDefaultUnit(1, 1, $(#default_robot_2).value);
-        view.setDefaultUnit(1, 2, $(#default_robot_3).value);
-        view.setDefaultUnit(1, 3, $(#default_robot_4).value);
-        view.setDefaultUnit(1, 4, $(#default_robot_5).value);
-        view.setDefaultUnit(1, 5, $(#default_robot_6).value);
-
-        view.setDefaultUnit(2, 0, $(#default_vehicle_1).value);
-        view.setDefaultUnit(2, 1, $(#default_vehicle_2).value);
-        view.setDefaultUnit(2, 2, $(#default_vehicle_3).value);
-        view.setDefaultUnit(2, 3, $(#default_vehicle_4).value);
-        view.setDefaultUnit(2, 4, $(#default_vehicle_5).value);
-        view.setDefaultUnit(2, 5, $(#default_vehicle_6).value);
-
-        $(#options_panel).style#visibility = "visible";
-        $(#default_panel).style#visibility = "none";
 
         view.saveOptions();
     }
@@ -1062,6 +1144,9 @@ button[type=checkbox]:hover
 
             $(#hk_chat_mod).$(option[value="{view.getHotkeyChat_mod()}"]).execCommand("set-current");
             $(#hk_chat).$(option[value="{view.getHotkeyChat()}"]).execCommand("set-current");
+
+            $(#hk_team_chat_mod).$(option[value="{view.getHotkeyTeamChat_mod()}"]).execCommand("set-current");
+            $(#hk_team_chat).$(option[value="{view.getHotkeyTeamChat()}"]).execCommand("set-current");
 
             $(#hk_change_color_mod).$(option[value="{view.getHotkeyChangeColor_mod()}"]).execCommand("set-current");
             $(#hk_change_color).$(option[value="{view.getHotkeyChangeColor()}"]).execCommand("set-current");
@@ -1523,6 +1608,11 @@ button[type=checkbox]:hover
     {
     }
 
+    event click $(#switch_to_map)
+    {
+        view.sendChatMessage("/switch");
+    }
+
     event keypress (evt)
     {
         var s = evt.keyCode;
@@ -1699,211 +1789,211 @@ button[type=checkbox]:hover
     event mousemove $(#start_level_21)
     {
         var crc = view.getCRCOfMap(21);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_22)
     {
         var crc = view.getCRCOfMap(22);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_23)
     {
         var crc = view.getCRCOfMap(23);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_24)
     {
         var crc = view.getCRCOfMap(24);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_25)
     {
         var crc = view.getCRCOfMap(25);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_26)
     {
         var crc = view.getCRCOfMap(26);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_27)
     {
         var crc = view.getCRCOfMap(27);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_28)
     {
         var crc = view.getCRCOfMap(28);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_29)
     {
         var crc = view.getCRCOfMap(29);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_30)
     {
         var crc = view.getCRCOfMap(30);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_31)
     {
         var crc = view.getCRCOfMap(31);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
     }
 
     event mousemove $(#start_level_32)
     {
         var crc = view.getCRCOfMap(32);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_33)
     {
         var crc = view.getCRCOfMap(33);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=320px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=320px />";
     }
 
     event mousemove $(#start_level_34)
     {
         var crc = view.getCRCOfMap(34);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_35)
     {
         var crc = view.getCRCOfMap(35);
-        $(#div_mapimage2).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_36)
     {
         var crc = view.getCRCOfMap(36);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
     }
 
     event mousemove $(#start_level_37)
     {
         var crc = view.getCRCOfMap(37);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
     }
 
     event mousemove $(#start_level_38)
     {
         var crc = view.getCRCOfMap(38);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
     }
 
     event mousemove $(#start_level_39)
     {
         var crc = view.getCRCOfMap(39);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=250px />";
     }
 
     event mousemove $(#start_level_40)
     {
         var crc = view.getCRCOfMap(40);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=200px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=200px />";
     }
 
     event mousemove $(#start_level_41)
     {
         var crc = view.getCRCOfMap(41);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=240px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=240px />";
     }
 
     event mousemove $(#start_level_42)
     {
         var crc = view.getCRCOfMap(42);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
     }
 
     event mousemove $(#start_level_43)
     {
         var crc = view.getCRCOfMap(43);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=255px />";
     }
 
     event mousemove $(#start_level_44)
     {
         var crc = view.getCRCOfMap(44);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=290px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=290px />";
     }
 
     event mousemove $(#start_level_45)
     {
         var crc = view.getCRCOfMap(45);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_46)
     {
         var crc = view.getCRCOfMap(46);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=265px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=265px />";
     }
 
     event mousemove $(#start_level_47)
     {
         var crc = view.getCRCOfMap(47);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=260px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=260px />";
     }
 
     event mousemove $(#start_level_48)
     {
         var crc = view.getCRCOfMap(48);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
     }
 
     event mousemove $(#start_level_49)
     {
         var crc = view.getCRCOfMap(49);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=270px />";
     }
 
     event mousemove $(#start_level_50)
     {
         var crc = view.getCRCOfMap(50);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=310px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=310px />";
     }
 
     event mousemove $(#start_level_51)
     {
         var crc = view.getCRCOfMap(51);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_52)
     {
         var crc = view.getCRCOfMap(52);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=280px />";
     }
 
     event mousemove $(#start_level_53)
     {
         var crc = view.getCRCOfMap(53);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
     }
 
     event mousemove $(#start_level_54)
     {
         var crc = view.getCRCOfMap(54);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
     }
 
     event mousemove $(#start_level_55)
     {
         var crc = view.getCRCOfMap(55);
-        $(#div_mapimage3).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
+        $(#div_mapimage).html = "<img src=\"../thumbnails/" + crc + ".png\" width=300px />";
     }
 
     function highscore(level)
@@ -1917,11 +2007,38 @@ button[type=checkbox]:hover
 
 
 </head>
-<body>
+<body #body_id>
 	<section>
 		<header></header>
 		<nav></nav>
 		<aside>
+            <section #aside>
+                <table><tr><td>
+
+                    <a style="width: 9em; padding: 10px 15px; margin-left: 5em; margin-top: 5em; color: blue;" class="button" #switch_account>
+                        Logged in as:<br />
+                        <br />
+                        <span #username></span><br />
+                        <span #rank></span><br />
+                        <br />
+                        Gateway:<br />
+                        <span #gateway></span>
+                    </a>
+
+                </td></tr><tr><td>
+
+        
+                    <a style="width: 10.8em; padding: 10px 15px; margin-left: 5em; margin-top: 5em; color: blue;" class="button" href="https://zedonline.sourceforge.io/highscore.php">
+                        Open World Ranking
+                    </a>
+
+                </td></tr><tr><td>
+
+                    <a style="width:10.8em; padding: 10px 15px; margin-left: 5em; margin-top: 3em; color: blue;" class="button" href="#" #zod_mode>
+                        Start Zod Compatibility Mode (Beta)
+                    </a>
+                </td></table>
+            </section>
 		</aside>
 		<footer>
 			<a class="button">
