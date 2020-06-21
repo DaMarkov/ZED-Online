@@ -62,7 +62,7 @@ ZED Online Server
 cc029992
 ZED Online Server.exe
 2533888
-4d62d2ea
+ddb45127
 ZED Online Updater
 6328
 b321ac7
@@ -71,7 +71,7 @@ ZED Online Updater.exe
 941795ef
 ZED Online.exe
 6341632
-2c83628b
+f7f0ef99
 zlib1.dll
 128000
 2522ada
@@ -9717,42 +9717,6 @@ assets_hd\hud\backdrop_vehicle.png
 assets_hd\hud\backdrop_volcanic.png
 28557
 21b9612f
-assets_hd\hud\backup\unit_label_grunt_red.png
-8004
-7b0be590
-assets_hd\hud\backup\unit_label_laser_blue.png
-7912
-93d6be28
-assets_hd\hud\backup\unit_label_laser_null.png
-9066
-3a80dfb0
-assets_hd\hud\backup\unit_label_laser_red.png
-7390
-ff4df857
-assets_hd\hud\backup\unit_label_psycho_null.png
-11389
-9436049c
-assets_hd\hud\backup\unit_label_psycho_red.png
-9018
-67a46fc
-assets_hd\hud\backup\unit_label_pyro_null.png
-9317
-bceb672a
-assets_hd\hud\backup\unit_label_pyro_red.png
-7645
-d00cce1
-assets_hd\hud\backup\unit_label_sniper_null.png
-10081
-326b34a2
-assets_hd\hud\backup\unit_label_sniper_red.png
-8058
-65844421
-assets_hd\hud\backup\unit_label_tough_null.png
-8856
-f140ac3
-assets_hd\hud\backup\unit_label_tough_red.png
-7304
-d502e8e7
 assets_hd\hud\bottom_filler.png
 4951
 d54a9e7d
@@ -12158,5 +12122,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-d6bce3c21c3ac1c59c756fd18cd9e5f1c51fecde9696560f94dd6ec4251daad3ca182199182efc131f96da94d9683a1f7bee458fa4753ef7fd7688a9ccb86be1
-po2+1Qy9dDGE39ki+m2Jl0XqjMt96+VdZpDVVqngXLrIS2qSWw1GLSmNUB2DWccS6D5I8irz/95gTXT+u0nXBw==
+1f1b15826fbe94e38978edb97940d84b1226ba93ccb75a97e89ea3c9019c8941e4f87fb82bd8f83e3db56cfd0b68045f0ec8db13bc1621d447b8aa0264df031c
+lCV6ctk70D4L4K3o0RjHrixCLbRHOQpC1YkVtP+mhy72t6g4Ka0JD1bf+7C1e7mcSOL+qbb6m9lJzCC7mnxAAQ==
