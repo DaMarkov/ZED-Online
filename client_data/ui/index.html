@@ -1461,7 +1461,7 @@ button[type=checkbox]:hover
             if (view.getGameStateQuickStart())
                 type = 2;
 
-            if (view.createGame( $(select).value , $(#name).value, type, $(#gamemode).value, $(#desired-team).value, $(#game-speed).value-3 ))
+            if (view.createGame( $(select).value , $(#name).value, type, $(#gamemode).value, $(#desired-team).value, $(#allow_surrender).state.checked, $(#game-speed).value-3 ))
             {
                 if (type != 2)
                 {

@@ -137,6 +137,9 @@ option:current > code { border-color:transparent; }
         <option value="0" selected>Deathmatch</option>
         <option value="1">Team Deathmatch</option>
         <option value="2">Cooperative</option>
+        <option value="3">King of the hill</option>
+        <option value="4">Capture the flag</option>
+        <option value="5">Rush</option>
     </select><br />
 
     Desired team<br />
@@ -147,6 +150,8 @@ option:current > code { border-color:transparent; }
         <option value="3">Green</option>
         <option value="4">Yellow</option>
     </select><br />
+
+    <input type="checkbox" value="1" checked #allow_surrender>Allow surrender<br/>
 
     Game speed<br />
     <input type="hslider" min="0" max="6" value="3" step="1" #game-speed />
