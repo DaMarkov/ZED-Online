@@ -1333,7 +1333,7 @@ button[type=checkbox]:hover
 
     event click $(#account_created)
     {
-        var username = $(#username).value;
+        var username = $(#new_username).value;
 
         if (username)
         {
@@ -1611,6 +1611,11 @@ button[type=checkbox]:hover
     event click $(#switch_to_map)
     {
         view.sendChatMessage("/switch");
+    }
+
+    event click $(#invitation_link)
+    {
+        view.copyInvitationLinkToClipboard();
     }
 
     event keypress (evt)
@@ -2015,7 +2020,7 @@ button[type=checkbox]:hover
             <section #aside>
                 <table><tr><td>
 
-                    <a style="width: 9em; padding: 10px 15px; margin-left: 5em; margin-top: 5em; color: blue;" class="button" #switch_account>
+                    <a style="width: 9em; padding: 10px 15px; margin-left: 5em; margin-top: 5em; color: red;" class="button" #switch_account>
                         Logged in as:<br />
                         <br />
                         <span #username></span><br />
@@ -2028,13 +2033,13 @@ button[type=checkbox]:hover
                 </td></tr><tr><td>
 
         
-                    <a style="width: 10.8em; padding: 10px 15px; margin-left: 5em; margin-top: 5em; color: blue;" class="button" href="https://zedonline.sourceforge.io/highscore.php">
+                    <a style="width: 10.8em; padding: 10px 15px; margin-left: 5em; margin-top: 5em; color: red;" class="button" href="https://zedonline.sourceforge.io/highscore.php">
                         Open World Ranking
                     </a>
 
                 </td></tr><tr><td>
 
-                    <a style="width:10.8em; padding: 10px 15px; margin-left: 5em; margin-top: 3em; color: blue;" class="button" href="#" #zod_mode>
+                    <a style="width:10.8em; padding: 10px 15px; margin-left: 5em; margin-top: 3em; color: red;" class="button" href="#" #zod_mode>
                         Start Zod Compatibility Mode (Beta)
                     </a>
                 </td></table>

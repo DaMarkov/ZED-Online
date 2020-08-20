@@ -61,17 +61,17 @@ ZED Online Server
 2807248
 3f2e7f79
 ZED Online Server.exe
-2822656
-fc3bcfde
+2825216
+dd5e2e52
 ZED Online Updater
 6328
 b321ac7
 ZED Online Updater.exe
 98816
-530fe408
+8fb7cc36
 ZED Online.exe
-6495744
-9290dd99
+6510592
+af781ff1
 zlib1.dll
 128000
 2522ada
@@ -3364,8 +3364,8 @@ ui\fr.png
 100
 dcee0a0
 ui\index.html
-82041
-1e2b2472
+82142
+1e8429fd
 ui\it.png
 100
 17370996
@@ -3379,11 +3379,11 @@ ui\loading.html
 508
 c49f7c77
 ui\lobby.html
-3431
-908f7865
+3616
+3b4ca383
 ui\login.html
-673
-f3b85ac9
+677
+62de863b
 ui\main.html
 2156
 44c44130
@@ -12140,5 +12140,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-ea44ad9c62e8cb5c1b8334008b2c07a768d26a9ec2ea0850f91edd2e0c2ee024ebbca4abf7a639e87d1664479909d57c764cfa8a5ba03849e73cc9a530f2d3e8
-LripQzR/ZJD6xZmSHq8XJZJy9p+8peE+ZZkCTxEX3L7l85zQBcGTOgzxzmKGj/qvq1jFokAQNt0iTYJ7HLO2Cw==
+25d38382f8b10ffa3d8667cbcca3f9f65edf8045418055a10eeb22ff38f8eb0c1b678e888a85012352e3fd0b22a6327d1c6840a7cba6dcf12288dbca454d82bb
+0kcQQ+w6PEuHpKubGP9ZA9jwVxftnzdl8pz0Du9G0qiN0jPLazIHxn6J7B85ZNHYuI61Kl9vIP1G7RaXpYyUDg==
