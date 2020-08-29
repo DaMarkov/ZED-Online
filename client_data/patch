@@ -55,23 +55,23 @@ swscale-5.dll
 516608
 ea90f5e9
 ZED Online
-5173848
-63b112e
+5485048
+b84656a1
 ZED Online Server
-2807248
-3f2e7f79
+3142928
+8b475214
 ZED Online Server.exe
-2533888
-ddb45127
+2800640
+bc2e455e
 ZED Online Updater
 6328
-b321ac7
+523a247d
 ZED Online Updater.exe
-98304
-941795ef
+98816
+f0787291
 ZED Online.exe
-6341632
-f7f0ef99
+6449152
+b346dd6b
 zlib1.dll
 128000
 2522ada
@@ -3307,8 +3307,8 @@ ui\accounts.html
 612
 2091914d
 ui\create_game.html
-5159
-b8d9cbfa
+5392
+aed1bf1c
 ui\de.png
 102
 5d8a79da
@@ -3364,8 +3364,8 @@ ui\fr.png
 100
 dcee0a0
 ui\index.html
-82006
-5c166d9
+82222
+d95a56cd
 ui\it.png
 100
 17370996
@@ -3379,11 +3379,11 @@ ui\loading.html
 508
 c49f7c77
 ui\lobby.html
-3272
-57b5260f
+3616
+3b4ca383
 ui\login.html
-673
-f3b85ac9
+677
+62de863b
 ui\main.html
 2156
 44c44130
@@ -11920,17 +11920,35 @@ assets_hd\menus\warning_menu.png
 53591
 a15b8e5c
 assets_hd\planets.zgfx
-13245226
-b7177fd9
-assets_hd\units.zgfx
-155828059
-a5ed03ba
-assets_hd\hut_animals.zgfx
-3049786
-6a16e837
+12507726
+e3a50801
 assets_hd\buildings.zgfx
 42193468
 98f72888
+assets_hd\robots.zgfx
+11733665
+4b8d7eaf
+assets_hd\vehicles.zgfx
+68253016
+709e05f4
+assets_hd\cannons.zgfx
+8101670
+fb84dbf8
+assets_hd\jeep.zgfx
+11294209
+c5d3397a
+assets_hd\light.zgfx
+15907033
+cc997de4
+assets_hd\medium.zgfx
+14200968
+d40f1cba
+assets_hd\heavy.zgfx
+26337498
+dde2fbee
+assets_hd\hut_animals.zgfx
+3049786
+6a16e837
 [PACK:16]
 assets_hd\cinemas\alost1.h264
 884105
@@ -12122,5 +12140,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-d1f0d1b5dfa07bf5c71ea2061d9152f8fe2ae169a6463eb7dbeda5142059196ad58e7bf87d4bec3f4380ecbad528b45e2d9795ec1fc54f8b30c7093b1d8ba610
-8hc1b5OiDYEMg7Ogc88E7yPBJTMqRPDue3iTQ8TTqAF+1T53a3/5QT6usM++W0cLYA1Cm0blugKXOdYjE3/2CA==
+e751e7119b956d9ca6a0f97d0083649bbd4968fb94eb5a1bb7548769ac55308dd720f0d27390096213f9bf1ac73e2724073fb13c70154bdf39c9019dceb55aa9
+cx0wiQSw4UsIJEYMKPvbWelSzk8gGjL/1SuB+fHRXCHwAawRSWgsXci4fLCkuSCxuO4jMK8mb+kuTNV2ptv5Dw==
