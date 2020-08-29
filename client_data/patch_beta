@@ -55,17 +55,17 @@ swscale-5.dll
 516608
 ea90f5e9
 ZED Online
-5173848
-63b112e
+5485048
+b84656a1
 ZED Online Server
-2807248
-3f2e7f79
+3142928
+8b475214
 ZED Online Server.exe
 2830336
 cfedd87
 ZED Online Updater
 6328
-b321ac7
+523a247d
 ZED Online Updater.exe
 98816
 b5f36293
@@ -11920,32 +11920,32 @@ assets_hd\menus\warning_menu.png
 53591
 a15b8e5c
 assets_hd\planets.zgfx
-13245226
-b7177fd9
+12507726
+e3a50801
 assets_hd\buildings.zgfx
 42193468
 98f72888
 assets_hd\robots.zgfx
 11733665
-f639d63a
+4b8d7eaf
 assets_hd\vehicles.zgfx
 68253016
-6d4398da
+709e05f4
 assets_hd\cannons.zgfx
 8101670
-f2c9e541
+fb84dbf8
 assets_hd\jeep.zgfx
 11294209
-92ab3125
+c5d3397a
 assets_hd\light.zgfx
 15907033
-e8a546e5
+cc997de4
 assets_hd\medium.zgfx
 14200968
-8aff087b
+d40f1cba
 assets_hd\heavy.zgfx
 26337498
-13f2d15c
+dde2fbee
 assets_hd\hut_animals.zgfx
 3049786
 6a16e837
@@ -12140,5 +12140,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-01bbb23fbd1fd64d92886ecf84f8fda9cdb3d4f7aac158839f97fcb8524cea86aa8bbe3d2587965d3fd2f137f15973c9a109a6a443ce594b828e08e8c4588df2
-3eMLz7PegpBoGDxmddGlNzTN5cZVdCgxAkbXdBhxIdOvS9LS8oiJbpdNLsLunhZeWHkPE2vtr+uZdbO20BY0Bw==
+aeef283a2cacb04e24ecae78328d001dcc336d66ab5b32262e762e076ef2c05479425ce4abe9c9df150334115da56ae3b0d33f4cf876211e22bbc248eb29ff48
+6wO1up57NYyjVnWl6ZC8xrnWWjNdTAzEJKJ4gDcpX7clDS3aQ8P0wfjcLznqMHQT8CXRgZId5nJCqWR/SkaRBg==
