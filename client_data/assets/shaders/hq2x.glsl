@@ -1,6 +1,4 @@
-/* COMPATIBILITY 
-   - GLSL compilers
-*/
+#version 120
 
 
 /*
@@ -71,6 +69,7 @@ uniform sampler2D Texture;
 uniform sampler2D LUT;
 
 uniform vec2 TextureSize;
+uniform vec1 Alpha;
 
 varying vec4 vTexCoord[4];
 
@@ -133,7 +132,7 @@ void main()
 	vec3 res = pixels * (weights / sum);
 
 	//gl_FragColor.rgb = res;
-	gl_FragColor = vec4(res, p1_rgba.a);
+	gl_FragColor = vec4(res, p1_rgba.a*Alpha);
 	//gl_FragColor = vec4(p1, p1_rgba.a);
 }
 

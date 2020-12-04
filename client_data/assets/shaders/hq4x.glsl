@@ -1,6 +1,4 @@
-/* COMPATIBILITY 
-   - GLSL compilers
-*/
+#version 120
 
 
 /*
@@ -33,6 +31,7 @@ attribute vec3 VertexCoord;
 attribute vec4 TexCoord;
  
 uniform vec2 TextureSize;
+uniform vec1 Alpha;
 
 varying vec4 vTexCoord[4];
 
@@ -127,7 +126,7 @@ void main()
 	float sum = dot(weights, vec4(1));
 	vec3 res = pixels * (weights / sum);
 
-	gl_FragColor = vec4(res, p1_rgba.a);
+	gl_FragColor = vec4(res, p1_rgba.a*Alpha);
 }
 
 #endif

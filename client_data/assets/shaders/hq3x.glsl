@@ -1,7 +1,4 @@
-/* COMPATIBILITY 
-   - GLSL compilers
-*/
-
+#version 120
 
 /*
 * Copyright (C) 2003 Maxim Stepin ( maxst@hiend3d.com )
@@ -33,6 +30,7 @@ attribute vec3 VertexCoord;
 attribute vec2 TexCoord;
 
 uniform vec2 TextureSize;
+uniform vec1 Alpha;
 
 varying vec4 vTexCoord[4];
 
@@ -70,6 +68,7 @@ uniform sampler2D Texture;
 uniform sampler2D LUT;
 
 uniform vec2 TextureSize;
+uniform vec1 Alpha;
 
 varying vec4 vTexCoord[4];
 
@@ -131,7 +130,7 @@ void main()
 	vec3 res = pixels * (weights / sum);
 
 	//gl_FragColor.rgb = res;
-	gl_FragColor = vec4(res, p1_rgba.a);
+	gl_FragColor = vec4(res, p1_rgba.a*Alpha);
 }
 
 #endif
