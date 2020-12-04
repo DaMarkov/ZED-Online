@@ -30,7 +30,6 @@ attribute vec3 VertexCoord;
 attribute vec2 TexCoord;
 
 uniform vec2 TextureSize;
-uniform vec1 Alpha;
 
 varying vec4 vTexCoord[4];
 
@@ -68,7 +67,7 @@ uniform sampler2D Texture;
 uniform sampler2D LUT;
 
 uniform vec2 TextureSize;
-uniform vec1 Alpha;
+uniform float Alpha;
 
 varying vec4 vTexCoord[4];
 
