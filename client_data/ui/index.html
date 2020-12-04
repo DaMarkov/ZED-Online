@@ -235,8 +235,16 @@ button[type=checkbox]:hover
     {
         loadFrame("online");
 
+        online = 1;
+        view.setGameStateOnline(true);
+        view.setGameStateLAN(false);
+        view.setGameStateQuickStart(false);
+
         $(#bar).state.busy = true;
         view.searchForGames(1);
+        view.networkDiscovery(0);
+
+        $(#dashboard_link).attributes["href"] = "http://" + view.getGatewayURL();
     }
 
 
@@ -412,6 +420,8 @@ button[type=checkbox]:hover
         addHotkeyOptions($(#hk_pause),      $(#hk_pause_mod));
         addHotkeyOptions($(#hk_boss),       $(#hk_boss_mod));
         addHotkeyOptions($(#hk_selectall),  $(#hk_selectall_mod));
+        addHotkeyOptions($(#hk_selectallrobots),    $(#hk_selectallrobots_mod));
+        addHotkeyOptions($(#hk_selectallvehicles),  $(#hk_selectallvehicles_mod));
         addHotkeyOptions($(#hk_gotofort),   $(#hk_gotofort_mod));
         addHotkeyOptions($(#hk_surrender),  $(#hk_surrender_mod));
         addHotkeyOptions($(#hk_overlay),    $(#hk_overlay_mod));
@@ -497,6 +507,12 @@ button[type=checkbox]:hover
         
         $(#hk_selectall_mod).$(option[value="{view.getHotkeySelectAll_mod()}"]).execCommand("set-current");
         $(#hk_selectall).$(option[value="{view.getHotkeySelectAll()}"]).execCommand("set-current");
+
+        $(#hk_selectallrobots_mod).$(option[value="{view.getHotkeySelectAllRobots_mod()}"]).execCommand("set-current");
+        $(#hk_selectallrobots).$(option[value="{view.getHotkeySelectAllRobots()}"]).execCommand("set-current");
+
+        $(#hk_selectallvehicles_mod).$(option[value="{view.getHotkeySelectAllVehicles_mod()}"]).execCommand("set-current");
+        $(#hk_selectallvehicles).$(option[value="{view.getHotkeySelectAllVehicles()}"]).execCommand("set-current");
 
         $(#hk_gotofort_mod).$(option[value="{view.getHotkeyGoToFort_mod()}"]).execCommand("set-current");
         $(#hk_gotofort).$(option[value="{view.getHotkeyGoToFort()}"]).execCommand("set-current");
@@ -833,6 +849,8 @@ button[type=checkbox]:hover
         view.setHotkeyPause(     $(#hk_pause_mod).value,      $(#hk_pause).value);
         view.setHotkeyBoss(      $(#hk_boss_mod).value,       $(#hk_boss).value);
         view.setHotkeySelectAll( $(#hk_selectall_mod).value,  $(#hk_selectall).value);
+        view.setHotkeySelectAllRobots( $(#hk_selectallrobots_mod).value,  $(#hk_selectallrobots).value);
+        view.setHotkeySelectAllVehicles( $(#hk_selectallvehicles_mod).value,  $(#hk_selectallvehicles).value);
         view.setHotkeyGoToFort(  $(#hk_gotofort_mod).value,   $(#hk_gotofort).value);
         view.setHotkeySurrender( $(#hk_surrender_mod).value,  $(#hk_surrender).value);
         view.setHotkeyOverlay(   $(#hk_overlay_mod).value,    $(#hk_overlay).value);
@@ -1171,6 +1189,12 @@ button[type=checkbox]:hover
             $(#hk_selectall_mod).$(option[value="{view.getHotkeySelectAll_mod()}"]).execCommand("set-current");
             $(#hk_selectall).$(option[value="{view.getHotkeySelectAll()}"]).execCommand("set-current");
 
+            $(#hk_selectallrobots_mod).$(option[value="{view.getHotkeySelectAllRobots_mod()}"]).execCommand("set-current");
+            $(#hk_selectallrobots).$(option[value="{view.getHotkeySelectAllRobots()}"]).execCommand("set-current");
+
+            $(#hk_selectallvehicles_mod).$(option[value="{view.getHotkeySelectAllVehicles_mod()}"]).execCommand("set-current");
+            $(#hk_selectallvehicles).$(option[value="{view.getHotkeySelectAllVehicles()}"]).execCommand("set-current");
+
             $(#hk_gotofort_mod).$(option[value="{view.getHotkeyGoToFort_mod()}"]).execCommand("set-current");
             $(#hk_gotofort).$(option[value="{view.getHotkeyGoToFort()}"]).execCommand("set-current");
 
@@ -1285,7 +1309,8 @@ button[type=checkbox]:hover
 
     event click $(button#online)
     {
-        loadFrame("online");
+        goOnline();
+        /*loadFrame("online");
         online = 1;
         view.setGameStateOnline(true);
         view.setGameStateLAN(false);
@@ -1293,7 +1318,7 @@ button[type=checkbox]:hover
 
         $(#bar).state.busy = true;
         view.searchForGames(1);
-        view.networkDiscovery(0);
+        view.networkDiscovery(0);*/
     }
 
     event click $(button#lan)
