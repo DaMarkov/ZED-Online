@@ -366,6 +366,13 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
         updateUI();
     }
 
+    event click $(#export-zod)
+    {
+        view.leveleditor_saveZOD();
+        updateTileDropdown();
+        updateUI();
+    }
+
     event click $(#new)
     {
         view.leveleditor_new();
@@ -725,7 +732,9 @@ section > footer { width: 1em; height: *; /*background:green;*/ }
                         <li title="Create a new random map" id="new">New map</li>
                         <li title="Load map" id="load">Load</li>
                         <li title="Save map" id="save">Save as</li>
+                        <hr/>
                         <li title="Import map" id="import">Import ZDOS/Z95 map</li>
+                        <li title="Export map" id="export-zod">Export as ZOD map</li>
                         <li title="Export map" id="export-bitmap">Export as bitmap</li>
                         <hr/>
                         <li title="Change the size of the map">
