@@ -62,16 +62,16 @@ ZED Online Server
 2c775205
 ZED Online Server.exe
 2959872
-8a39d71
+4a726ee3
 ZED Online Updater
 6328
 523a247d
 ZED Online Updater.exe
 98816
-fcf3fee0
+929a826a
 ZED Online.exe
-6789120
-70767a4
+6807040
+e7c64929
 zlib1.dll
 128000
 2522ada
@@ -2697,6 +2697,9 @@ assets\units.zgfx
 assets\hut_animals.zgfx
 792736
 3a154ddd
+assets\portraits.zgfx
+855825
+9b0ca45f
 assets\buildings.zgfx
 10345819
 47d55344
@@ -10638,6 +10641,9 @@ cc997de4
 assets_hd\medium.zgfx
 14200968
 d40f1cba
+assets_hd\portraits.zgfx
+30589228
+9f5d7e8c
 assets_hd\heavy.zgfx
 26337498
 dde2fbee
@@ -10835,5 +10841,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-07f31e5789e182b81a1132286a42c614dbf0c3fe96ea6c632fe9b5d91ee75542df1aabc819a45ec4e69bd47fc4681a5260822293c2b7248726691fbbabcd2d53
-zPGekNSNVLPA6ecgSc2+NOQdE0W83YpsABhbwtiT/eA+8/C6PL3OyjWhWOg/yXzEmkhTrLgkhlI9j+bPEgbgBA==
+3cc8881fd26f1b15e4460108468b89429b86a27a72fb576af6831948491af4f2f2fc7be3e3992a9b7dd212f73f4987a4435c1ece0654923771e921f6f3cae7cd
+tz57+xZ14Av2xGxXeDOKKRtobs3Dz9tdzpLGj9D7ClimEUp1lQ4sIV2yVvS3uMonb0prvbWfHB03vUB89T+SCg==
