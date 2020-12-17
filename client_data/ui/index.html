@@ -1415,6 +1415,71 @@ button[type=checkbox]:hover
         view.sendStart();
     }
 
+    function update_unit_stat(value)
+    {
+        $(#group-amount).value    = view.getUnitStat_GroupAmount(value);
+        $(#move-speed).value      = view.getUnitStat_MoveSpeed(value);
+        $(#health).value          = view.getUnitStat_Health(value);
+        $(#attack-cooldown).value = view.getUnitStat_AttackCooldown(value);
+        $(#attack-range).value    = view.getUnitStat_AttackRange(value);
+        $(#attack-damage).value   = view.getUnitStat_AttackDamage(value);
+        $(#damage-radius).value   = view.getUnitStat_DamageRadius(value);
+        $(#damage-chance).value   = view.getUnitStat_DamageChance(value);
+        $(#snipe-chance).value    = view.getUnitStat_SnipeChance(value);
+        $(#missile-speed).value   = view.getUnitStat_MissileSpeed(value);
+        $(#run-time).value        = view.getUnitStat_RunTime(value);
+        $(#build-time).value      = view.getUnitStat_BuildTime(value);
+        $(#vision).value          = view.getUnitStat_VisionDiameter(value);
+
+        $(#fort-health).value     = view.getUnitStat_FortHealth();
+        $(#robot-health).value    = view.getUnitStat_RobotFactoryHealth();
+        $(#vehicle-health).value  = view.getUnitStat_VehicleFactoryHealth();
+        $(#repair-health).value   = view.getUnitStat_RepairHealth();
+        $(#radar-health).value    = view.getUnitStat_RadarHealth();
+        $(#bridge-health).value   = view.getUnitStat_BridgeHealth();
+    }
+
+    function save_unit_stat(value)
+    {
+        view.setUnitStat_GroupAmount(value, $(#group-amount).value);
+        view.setUnitStat_MoveSpeed(value, $(#move-speed).value);
+        view.setUnitStat_Health(value, $(#health).value);
+        view.setUnitStat_AttackCooldown(value, $(#attack-cooldown).value);
+        view.setUnitStat_AttackRange(value, $(#attack-range).value);
+        view.setUnitStat_AttackDamage(value, $(#attack-damage).value);
+        view.setUnitStat_DamageRadius(value, $(#damage-radius).value);
+        view.setUnitStat_DamageChance(value, $(#damage-chance).value);
+        view.setUnitStat_SnipeChance(value, $(#snipe-chance).value);
+        view.setUnitStat_MissileSpeed(value, $(#missile-speed).value);
+        view.setUnitStat_RunTime(value, $(#run-time).value);
+        view.setUnitStat_BuildTime(value, $(#build-time).value);
+        view.setUnitStat_VisionDiameter(value, $(#vision).value);
+
+        view.setUnitStat_FortHealth($(#fort-health).value);
+        view.setUnitStat_RobotFactoryHealth($(#robot-health).value);
+        view.setUnitStat_VehicleFactoryHealth($(#vehicle-health).value);
+        view.setUnitStat_RepairHealth($(#repair-health).value);
+        view.setUnitStat_RadarHealth($(#radar-health).value);
+        view.setUnitStat_BridgeHealth($(#bridge-health).value);
+    }
+
+    event click $(button#save_unit_stat)
+    {
+        save_unit_stat($(select#unit-stats).value);
+        view.setUnitStat_SubmitToServer();
+    }
+
+    event click $(button#permissions_unit_stats)
+    {
+        loadFrame("unit_stats");
+        update_unit_stat(0);
+    }
+
+    event change $(select#unit-stats)
+    {
+        update_unit_stat($(select#unit-stats).value);
+    }
+
     event click $(button#join_game)
     {
         if ($(select).value)

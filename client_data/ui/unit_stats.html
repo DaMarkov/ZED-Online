@@ -1,0 +1,153 @@
+<h1>Unit Stats</h1>
+
+
+
+<table><tr><td colspan="2">
+<div style="padding-left: 20px; margin-top:10px; margin-bottom:10px;">
+            <select style="width: 130px;" #unit-stats>
+                <option value="0"><img width="40%" src="grunt.png" /> Grunt</option>
+                <option value="1"><img width="40%" src="psycho.png" /> Psycho</option>
+                <option value="3"><img width="40%" src="tough.png" /> Tough</option>
+                <option value="2"><img width="40%" src="sniper.png" /> Sniper</option>
+                <option value="4"><img width="40%" src="pyro.png" /> Pyro</option>
+                <option value="5"><img width="40%" src="pyro.png" /> Laser</option>
+                <option value="6"><img width="50%" src="../assets/hud/icon_jeep_red.png" /> Jeep</option>
+                <option value="7"><img width="50%" src="../assets/hud/icon_light_red.png" /> Light</option>
+                <option value="8"><img width="50%" src="../assets/hud/icon_medium_red.png" /> Medium</option>
+                <option value="9"><img width="50%" src="../assets/hud/icon_heavy_red.png" /> Heavy</option>
+                <option value="11"><img width="50%" src="../assets/hud/icon_missile_launcher_red.png" /> Mo. Rocket</option>
+                <option value="12"><img width="50%" src="../assets/hud/icon_crane_red.png" /> Crane</option>
+                <option value="10"><img width="50%" src="../assets/hud/icon_apc_red.png" /> APC</option>
+                <option value="13"><img width="50%" src="../assets/hud/icon_gatling_red.png" /> Gatling</option>
+                <option value="14"><img width="50%" src="../assets/hud/icon_gun_red.png" /> Gun</option>
+                <option value="15"><img width="50%" src="../assets/hud/icon_howitzer_red.png" /> Howitzer</option>
+                <option value="16"><img width="50%" src="../assets/hud/icon_missile_cannon_red.png" /> Rocket</option>
+            </select>
+</div>
+
+</td></tr>
+<tr><td style="width: 28em;">
+
+    
+
+            <div style="width: 8em;"><span title="Size of the group when produced">Group amount</span></div>
+            <input type="hslider" min="1" max="10" value="5" step="1" buddy="group-amount-buddy" #group-amount />
+            <b id="group-amount-buddy"></b>
+            <br />
+
+            <div style="width: 8em;"><span title="Speed of the unit in pixels per second">Move speed</span></div>
+            <input type="hslider" min="0" max="25" value="5" step="1" buddy="move-speed-buddy" #move-speed />
+            <b id="move-speed-buddy"></b><b>pixels/s</b>
+            <br />
+
+            <div style="width: 8em;"><span title="Number of hitpoints of the unit. The unit dies once this number reachs 0">Health</span></div>
+            <input type="hslider" min="0" max="25000" value="5" step="1" buddy="health-buddy" #health />
+            <b id="health-buddy"></b>
+            <br />
+
+            <div style="width: 10em;"><span title="Time duration between two shots">Attack Cooldown</span></div>
+            <input type="hslider" max="0" max="5" value="1" step="0.001" buddy="attack-cooldown-buddy" #attack-cooldown />
+            <b id="attack-cooldown-buddy"></b><b>s</b>
+            <br />
+
+            <div style="width: 10em;"><span title="How far the unit can shoot">Attack range</span></div>
+            <input type="hslider" min="0" max="250" value="100" step="1" buddy="attack-range-buddy" #attack-range />
+            <b id="attack-range-buddy"></b><b>pixels</b>
+            <br />
+
+            <div style="width: 8em;"><span title="Damage inflicted by the unit (missiles of the unit)">Attack damage</span></div>
+            <input type="hslider" min="0" max="10000" value="100" step="1" buddy="attack-damage-buddy" #attack-damage />
+            <b id="attack-damage-buddy"></b>
+            <br />
+
+            <div style="width: 10em;"><span title="Explosion radius of the unit's missile">Damage radius</span></div>
+            <input type="hslider" min="0" max="200" value="100" step="1" buddy="damage-radius-buddy" #damage-radius />
+            <b id="damage-radius-buddy"></b><b>pixels</b>
+            <br />
+
+            <div style="width: 10em;"><span title="Probability that a shot of this unit hits the target">Damage chance</span></div>
+            <input type="hslider" min="0" max="1" value="0.01" step="0.01" buddy="damage-chance-buddy" #damage-chance />
+            <b id="damage-chance-buddy"></b><b>%</b>
+            <br />
+
+            <div style="width: 8em;"><span title="Probability that a shot of this unit hits the driver and snipes him">Snipe chance</span></div>
+            <input type="hslider" min="0" max="1" value="0.01" step="0.01" buddy="snipe-chance-buddy" #snipe-chance />
+            <b id="snipe-chance-buddy"></b><b>%</b>
+            <br />
+
+            <div style="width: 8em;"><span title="Speed of the projectiles fired by this unit">Missile speed</span></div>
+            <input type="hslider" min="0" max="500" value="5" step="1" buddy="missile-speed-buddy" #missile-speed />
+            <b id="missile-speed-buddy"></b><b>pixels/s</b>
+            <br />
+
+            <div style="width: 8em;"><span title="Time this unit can run if it has full stamina">Max run time</span></div>
+            <input type="hslider" min="0" max="20" value="0.1" step="0.1" buddy="run-time-buddy" #run-time />
+            <b id="run-time-buddy"></b><b>s</b>
+            <br />
+
+            <div style="width: 8em;"><span title="Base time in seconds it takes to build this unit">Build time</span></div>
+            <input type="hslider" min="0" max="1000" value="5" step="1" buddy="build-time-buddy" #build-time />
+            <b id="build-time-buddy"></b><b>s</b>
+            <br />
+
+            <div style="width: 10em;">Vision diameter</div>
+            <input type="hslider" min="0" max="1000" value="5" step="1" buddy="vision-buddy" #vision />
+            <b id="vision-buddy"></b><b>pixels</b>
+            <br />
+
+
+    </div>
+
+
+
+
+
+
+</td>
+<td style="width: 25em;">
+
+
+    <div style="width: 10em;">Fort health</div>
+    <input type="hslider" min="0" max="500000" value="5" step="1" buddy="fort-health-buddy" #fort-health />
+    <b id="fort-health-buddy"></b>
+    <br />
+
+    <div style="width: 15em;">Robot factory health</div>
+    <input type="hslider" min="0" max="500000" value="5" step="1" buddy="robot-health-buddy" #robot-health />
+    <b id="robot-health-buddy"></b>
+    <br />
+
+    <div style="width: 15em;">Vehicle factory health</div>
+    <input type="hslider" min="0" max="500000" value="5" step="1" buddy="vehicle-health-buddy" #vehicle-health />
+    <b id="vehicle-health-buddy"></b>
+    <br />
+
+    <div style="width: 12em;">Repair station health</div>
+    <input type="hslider" min="0" max="500000" value="5" step="1" buddy="repair-health-buddy" #repair-health />
+    <b id="repair-health-buddy"></b>
+    <br />
+
+    <div style="width: 10em;">Radar health</div>
+    <input type="hslider" min="0" max="500000" value="5" step="1" buddy="radar-health-buddy" #radar-health />
+    <b id="radar-health-buddy"></b>
+    <br />
+
+    <div style="width: 10em;">Bridge health</div>
+    <input type="hslider" min="0" max="500000" value="5" step="1" buddy="bridge-health-buddy" #bridge-health />
+    <b id="bridge-health-buddy"></b>
+    <br />
+
+
+
+</td></tr>
+
+
+<tr>
+    <td colspan="2">
+        <div style="margin-top: 3em;">
+            <button class="bigbutton" #save_unit_stat>Save unit</button>
+            <button class="bigbutton" #return_to_lobby>Back</button>
+        </div>
+    </td>
+</tr>
+</table>
