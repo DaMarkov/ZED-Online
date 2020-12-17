@@ -2767,8 +2767,8 @@ ui\grunt.png
 4592
 26e08dbc
 ui\index.html
-83873
-9ffce9e4
+87060
+ac18bd1
 ui\it.png
 100
 17370996
@@ -2785,8 +2785,8 @@ ui\loading.html
 508
 c49f7c77
 ui\lobby.html
-3616
-3b4ca383
+3729
+b2f00eff
 ui\login.html
 677
 62de863b
@@ -2829,6 +2829,9 @@ f58a3ba8
 ui\transfer_maps.html
 1130
 18fe60a3
+ui\unit_stats.html
+7691
+22164e01
 ui\updater.html
 2422
 22f28348
@@ -10841,5 +10844,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-6dbe65a9cc54f891bc64eb3f43d082beb0509194e9bfae440106241f4f84675cc532b342747cacaa7a52fda382a9793011a6ad6bb4b9de4263d50e70b1177b46
-J6eeNVefiXXgYrofhtS+XEohqs85WxowWXXwLujbDqgbbjakhj8qJE8XwG0Jvxd1ktDUX5ZB+XcXw6SJX6BIBg==
+e19e1c725078942d415fd63eec023b81f39cac0373617053581daf5ea02aae5be51d3df44f68f6b379df6592f68f2d1ee22aa5a9aa7eb452447a7dca04d8a0fa
+O24sX5D/0SfJVuKP8e7zQPySMTKdE4+wBmudLpj34W5hpepMY5cURmWctsTVQuKNpU98UzFufEpadTieb2lgBw==
