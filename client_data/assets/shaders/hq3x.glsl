@@ -1,5 +1,3 @@
-#version 120
-
 /*
 * Copyright (C) 2003 Maxim Stepin ( maxst@hiend3d.com )
 *
