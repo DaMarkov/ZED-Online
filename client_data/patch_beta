@@ -61,17 +61,17 @@ ZED Online Server
 3085584
 2c775205
 ZED Online Server.exe
-2965504
-fcc2feb9
+2966528
+e1ca4962
 ZED Online Updater
 6328
 523a247d
 ZED Online Updater.exe
-98816
-3dbb4a0b
+96256
+376faa53
 ZED Online.exe
-6814720
-2871f721
+6685696
+12d6c37c
 zlib1.dll
 128000
 2522ada
@@ -2812,11 +2812,11 @@ ui\fr.png
 100
 dcee0a0
 ui\grunt.png
-4592
-26e08dbc
+3978
+57e435b4
 ui\index.html
-87060
-ac18bd1
+86963
+4a22e60c
 ui\it.png
 100
 17370996
@@ -2833,14 +2833,14 @@ ui\loading.html
 508
 c49f7c77
 ui\lobby.html
-3729
-b2f00eff
+3747
+26bb81d
 ui\login.html
 677
 62de863b
 ui\main.html
-2156
-44c44130
+1477
+cc06f4a4
 ui\online.html
 2943
 1d0c80c9
@@ -2848,11 +2848,11 @@ ui\options.html
 31893
 f4f7cba3
 ui\psycho.png
-4695
-90c9cfe9
+4370
+7b37539d
 ui\pyro.png
-4765
-8fe52b9f
+4074
+96bafed9
 ui\replays.html
 1589
 397b733c
@@ -2863,8 +2863,8 @@ ui\single_player.html
 5340
 75adc1da
 ui\sniper.png
-5146
-e6337b85
+4485
+24fbfae3
 ui\stats.html
 15337
 fc316a1b
@@ -2872,8 +2872,8 @@ ui\std-menu.css
 4508
 12724587
 ui\tough.png
-4418
-f58a3ba8
+3700
+9cde7794
 ui\transfer_maps.html
 1130
 18fe60a3
@@ -4125,7 +4125,7 @@ assets\hud_de\unit_label_grunt_null.png
 assets\hud_de\unit_label_sniper_null.png
 618
 d7320bf4
-assets\hud_de\unit_label_tough_nul.png
+assets\hud_de\unit_label_tough_null.png
 672
 4bbc647d
 [PACK:4]
@@ -10892,5 +10892,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-e05e6e2523f7fa8c4954fd4c991c7b6ca968dac61c4612872c52bbb2fb98e035f4cf2dd37c92fedc8c675bec68e0e382091326c6a3c24515e674189569bd7120
-J3N5NeVowJ573aCQ6y2aVn1OzEBKxMWolyOqsd3mmKE50s82P9jiYCZ7Ah1kecxe63z1aj0hP6tFhHUDNWCwBQ==
+f16be145c60e0589a2f4cb7bfdf6be1cf278b47d3e377be8d8eaf3b4adaae4c6245e74e8abe9cf341da620c9c1c53e5d2396bfce246f973d3f830e544d1289b2
+zA8JA1P15py8ix0siJ//pMSOn7XVfRqAlHBdwasuNMKjy3yOSHpYWqlmIgBRbE5bMBhYL0uHCZ9GMvaU4LMtCQ==

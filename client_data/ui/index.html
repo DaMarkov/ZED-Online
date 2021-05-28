@@ -222,12 +222,8 @@ button[type=checkbox]:hover
             loadFrame("login");
             $(#main).state.disabled = true;
         }
-
-        if (view.getOS() == "Linux")
-        {
-            $(#lan).state.disabled = true;
-            $(#editor).state.disabled = true;
-        }
+        else
+            loadFrame("main");
     }
 
 
@@ -258,6 +254,7 @@ button[type=checkbox]:hover
             $(#username).value = view.getUsername();
             $(#gateway).value  = view.getGatewayName();
             $(#rank).value     = view.getStatsRank();
+            view.getGatewayNews();
 
             if (view.getOS() == "Linux")
             {
@@ -2151,7 +2148,7 @@ button[type=checkbox]:hover
 		</footer>
 		<main>
 			<section #mainmenu>
-				<include src="main.html"/>
+				
 			</section>
 			<div style="margin-top: 1*;">
 				A remake of the 1996 classic
