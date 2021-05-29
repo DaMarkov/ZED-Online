@@ -55,23 +55,23 @@ swscale-5.dll
 516608
 ea90f5e9
 ZED Online
-5403128
-e7f676a
+5766848
+4c642c8e
 ZED Online Server
-3085584
-2c775205
+3491320
+f3276cf8
 ZED Online Server.exe
-2966528
-1e783ee3
+2929664
+84666a99
 ZED Online Updater
-6328
-523a247d
+14672
+816aeea3
 ZED Online Updater.exe
 96256
-a8cab70
+24ea655
 ZED Online.exe
-6685696
-b55935d8
+6603264
+71e5c86e
 zlib1.dll
 128000
 2522ada
@@ -2499,6 +2499,9 @@ c5592e01
 assets\menus\list\list_top_right.png
 551
 574e2851
+assets\menus\login.png
+4619
+749cbf1e
 assets\menus\menu_bottom.png
 664
 efb1ad76
@@ -2719,26 +2722,26 @@ assets\menus\warning_menu.png
 3519
 59234518
 assets\shaders\hq2x.glsl
-4413
-a3e949e0
+4398
+37cedf2b
 assets\shaders\hq2x.png
 2793
 445bce4d
 assets\shaders\hq3x.glsl
-4303
-ed753113
+4289
+9a0e8c1d
 assets\shaders\hq3x.png
 4665
 1b561884
 assets\shaders\hq4x.glsl
-4138
-5f820ba5
+4123
+96cf926e
 assets\shaders\hq4x.png
 11913
 ce4864f0
 assets\planets.zgfx
-3405779
-600b49f0
+3407359
+c152c59b
 assets\units.zgfx
 3522792
 89db1bc2
@@ -2746,11 +2749,11 @@ assets\hut_animals.zgfx
 792736
 3a154ddd
 assets\portraits.zgfx
-855825
-9b0ca45f
+13072456
+ed6ed7f1
 assets\buildings.zgfx
-10345819
-47d55344
+10571356
+d736ddf9
 ui\accounts.html
 612
 2091914d
@@ -3430,9 +3433,6 @@ assets\sounds_common\PINGU2.wav
 assets\sounds_common\PINGU3.wav
 7800
 cf960b29
-assets\sounds_common\radar_sound-old1.wav
-0
-0
 assets\sounds_common\radar_sound.wav
 23222
 51b087e3
@@ -10892,5 +10892,5 @@ assets_hd\cinemas\vwint3.h264
 1449861
 5665b7f6
 [END]
-2e594fc1300446b7ab075c03fa739cb051d2b88d637636f3692ab136c1c9c42e0c6e106350c17092c06db2f3141b883707ff9da8f10f57eec0035764fae9a182
-4bR2TG0knOVWxIr+v904CT9fs9vj1jFnO392fw7N5Wm9UEcDmbCfzvdFEslAOTZ836WrUzMzFrdtW2Ajw0HTDA==
+3b3c97a16b366e64e0719f52bdba1fb6e4d74b0e677ffa0d1b17c547381e7ab00c120b8aaa69193cc0c84a357f50c7632d8a46f02a0001736db7f8e661a553fa
+p+IEMFfwduQFrr/0HKGsNBpsVbScSMQnMoJfu/xsG/dKcndvxXFlx34xntwM20isNHudVIQ8YQi3RMID6FC6CA==
